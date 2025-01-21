@@ -175,6 +175,7 @@ const getIcon = (name) => {
             return <FiSliders />
         case "feather-framer":
             return <FiFramer />
+       
 
 
 

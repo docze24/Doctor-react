@@ -6,11 +6,12 @@ import Home from "../pages/home";
 // import ReportsLeads from "../pages/reports-leads";
 // import ReportsProject from "../pages/reports-project";
   import AppsChat from "../pages/apps-chat";
-  import LayoutApplications from "../layout/layoutApplications";
+  import LayoutPatient from '../layout/layoutPatient';
+ // import LayoutApplications from "../layout/layoutPatient";
 // import AppsEmail from "../pages/apps-email";
 // import ReportsTimesheets from "../pages/reports-timesheets";
 // import LoginCover from "../pages/login-cover";
- import AppsTasks from "../pages/apps-tasks";
+ //import AppsTasks from "../pages/apps-tasks";
 // import AppsNotes from "../pages/apps-notes";
  import AppsCalender from "../pages/apps-calender";
 // import AppsStorage from "../pages/apps-storage";
@@ -72,6 +73,8 @@ import Home from "../pages/home";
 import LayoutAppointment from "../layout/layoutappointment";
 // import AppsCalender from "../pages/AppCalendar";
 
+//import ProfileModal from "@/components/shared/header/ProfileModal";
+
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -84,141 +87,19 @@ export const router = createBrowserRouter([
                    path: "/dashboards/analytics", 
                    element: <Analytics />
              },
-            // {
-            //     path: "/reports/sales",
-            //     element: <ReportsSales />
-            // },
-            // {
-            //     path: "/reports/leads",
-            //     element: <ReportsLeads />
-            // },
-            // {
-            //     path: "/reports/project",
-            //     element: <ReportsProject />
-            // },
-            // {
-            //     path: "/reports/timesheets",
-            //     element: <ReportsTimesheets />
-            // },
-            // {
-            //     path: "/proposal/list",
-            //     element: <Proposalist />
-            // },
-            // {
-            //     path: "/proposal/view",
-            //     element: <ProposalView />
-            // },
-            // {
-            //     path: "/proposal/edit",
-            //     element: <ProposalEdit />
-            // },
-            // {
-            //     path: "/proposal/create",
-            //     element: <ProposalCreate />
-            // },
-            // {
-            //     path: "/payment/list",
-            //     element: <PaymentList />
-            // },
-            // {
-            //     path: "/payment/view",
-            //     element: <PaymentView />
-            // },
-            // {
-            //     path: "/payment/create",
-            //     element: <PaymentCreate />
-            // },
-            // {
-            //     path: "/customers/list",
-            //     element: <CustomersList />
-            // },
-            // {
-            //     path: "/customers/view",
-            //     element: <CustomersView />
-            // },
-            // {
-            //     path: "/customers/create",
-            //     element: <CustomersCreate />
-            // },
-            // {
-            //     path: "/leads/list",
-            //     element: <LeadsList />
-            // },
-            // {
-            //     path: "/leads/view",
-            //     element: <LeadsView />
-            // },
-            // {
-            //     path: "/leads/create",
-            //     element: <LeadsCreate />
-            // },
-            // {
-            //     path: "/projects/list",
-            //     element: <ProjectsList />
-            // },
-            // {
-            //     path: "/projects/view",
-            //     element: <ProjectsView />
-            // },
-            // {
-            //     path: "/projects/create",
-            //     element: <ProjectsCreate />
-            // },
-            // {
-            //     path: "/widgets/lists",
-            //     element: <WidgetsLists />
-            // },
-            // {
-            //     path: "/widgets/tables",
-            //     element: <WidgetsTables />
-            // },
-            // {
-            //     path: "/widgets/charts",
-            //     element: <WidgetsCharts/>
-            // },
-            // {
-            //     path: "/widgets/statistics",
-            //     element: <WidgetsStatistics/>
-            // },
-            // {
-            //     path: "/widgets/miscellaneous",
-            //     element: <WidgetsMiscellaneous/>
-            // },
-            // {
-            //     path: "/help/knowledgebase",
-            //     element: <HelpKnowledgebase />
-            // },
+           
 
         ]
     },
     {
         path: "/",
-        element: <LayoutApplications />,
+        element: <LayoutPatient />,
         children: [
-            // {
-            //     path: "/applications/chat",
-            //     element: <AppsChat />
-            // },
-            // {
-            //     path: "/applications/email",
-            //     element: <AppsEmail />
-            // },
-            // {
-            //     path: "/applications/tasks",
-            //     element: <AppsTasks />
-            // },
-            // {
-            //     path: "/applications/notes",
-            //     element: <AppsNotes />
-            // },
-            // {
-            //     path: "/applications/calender",
-            //     element: <AppsCalender />
-            // },
-            // {
-            //     path: "/applications/storage",
-            //     element: <AppsStorage />
-            // },
+            {
+                path: "/patients/patient-list",
+                element: <AppsChat />
+            },
+          
         ]
     },
     {
@@ -366,17 +247,23 @@ export const router = createBrowserRouter([
                  element: <AppsCalender/>  
             },
             {
-                path: "/appointment/chat", 
+                path: "/appointment/appointment-list", 
                  element: <AppsChat/>  
             },
-            {
-                path: "/appointment/task", 
-                 element: <AppsTasks/>
-            },
-            
-            
-
             
         ]
     },
+    // {
+    //     path:"/",
+    //     element:<ProfileModal/>,
+    //     children:[
+    //         {
+    //             path: "/settings/organisation", 
+    //              element: <AppsCalender/>  
+    //         },
+
+    //     ]
+    // }
+
+
 ])

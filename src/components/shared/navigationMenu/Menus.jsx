@@ -12,15 +12,22 @@ const Menus = () => {
     const pathName = useLocation().pathname;
 
     const handleMainMenu = (e, name) => {
+        e.stopPropagation();
         if (openDropdown === name) {
             setOpenDropdown(null);
+            setOpenSubDropdown(null);
         } else {
             setOpenDropdown(name);
+            if(name === "appointment"){
+                setOpenSubDropdown("Calendar;")
+            }else{
+                setOpenSubDropdown(null);
+            }
         }
     };
 
     const handleDropdownMenu = (e, name) => {
-        e.stopPropagation();
+         e.stopPropagation();
         if (openSubDropdown === name) {
             setOpenSubDropdown(null);
         } else {
@@ -31,7 +38,7 @@ const Menus = () => {
     useEffect(() => {
         if (pathName !== "/") {
             const x = pathName.split("/");
-            setActiveParent(x[1]);
+           setActiveParent(x[1]);
             setActiveChild(x[2]);
             setOpenDropdown(x[1]);
             setOpenSubDropdown(x[2]);
@@ -43,10 +50,10 @@ const Menus = () => {
 
 
 
-    console.log('menu list',menuList)
+
     return (
         <>
-            {menuList.map(({ dropdownMenu, id, name, path, icon,title }) => {
+            {menuList.map(({ dropdownMenu, id, name, path, icon, }) => {
                 return (
                     <li
                         key={id}
@@ -66,6 +73,7 @@ const Menus = () => {
                             className={`nxl-submenu ${openDropdown === name ? "nxl-menu-visible" : "nxl-menu-hidden"}`}
                         >
                             {dropdownMenu.map(({ id, name, path, subdropdownMenu ,icon  }) => {
+            
                                 const x = name;
                                 return (
                                     <Fragment key={id}>
@@ -87,7 +95,7 @@ const Menus = () => {
                                                 </Link>
                                                 {subdropdownMenu.map(({ id, name, path ,icon  }) => {
 
-                                                    console.log('subdropdown',name)
+                                                    // console.log('subdropdown',name)
                                                     return (
                                                         <ul
                                                             key={id}
