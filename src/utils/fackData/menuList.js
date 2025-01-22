@@ -10,24 +10,11 @@ export const menuList = [
             {
                 id: 1,
                 name: "Today's Appointment",
-                path: "/dashboards/analytics",
+                path: "/dashboards",
                 icon:'analytics',
                 subdropdownMenu: false
             },
-            {
-                id: 2,
-                name: "Pending Tasks",
-                path: "/dashboards/pending-task",
-                icon:'task',
-                subdropdownMenu: false
-            },
-            {
-                id: 3,
-                name: "Recent Messages",
-                path: "/dashboards/messages",
-                icon:'analytics',
-                subdropdownMenu: false
-            }
+           
         ]
     },
     {
@@ -43,21 +30,6 @@ export const menuList = [
                 icon: 'calendar',
                 subdropdownMenu: false
             },
-            {
-                id: 5,
-                name: "List View",
-                path: "/appointment/appointment-list",
-                icon: 'feather-umbrella',
-                subdropdownMenu: false
-            },
-            {
-                id: 6,
-                name: "Management Actions",
-                path: "/appointment/actions",
-                icon: 'action',
-                subdropdownMenu: false
-            },
-           
         ]
     },
      {
@@ -75,39 +47,12 @@ export const menuList = [
             },
             {
                 id: 6,
-                name: "Pending Appointment Confirmations",
-                path: "/patients/pending-appintment-confirmation",
+                name: " Create Patient",
+                path: "/patients/patient-create",
                 icon:'analytics',
                 subdropdownMenu: false
             },
-            {
-                id: 7,
-                name: "Upcoming Consultations",
-                path: "/patients/upcoming-consultations",
-                icon:'analytics',
-                subdropdownMenu: false
-            },
-            {
-                id: 8,
-                name: "Waiting List",
-                path: "/patients/waiting-list",
-                icon:'analytics',
-                subdropdownMenu: false
-            },
-            {
-                id: 9,
-                name: "Medical Record Updates",
-                path: "/patients/medical-record-updates",
-                icon:'analytics',
-                subdropdownMenu: false
-            },
-            {
-                id: 10,
-                name: "Post Consultation Follow-ups",
-                path: "/patients/consultation-follows-up",
-                icon:'analytics',
-                subdropdownMenu: false
-            },
+            
            
           ]
      },

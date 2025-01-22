@@ -11,6 +11,8 @@ import SideBarToggleProvider from './contentApi/sideBarToggleProvider';
 import ThemeCustomizer from './components/shared/ThemeCustomizer';
 
 const App = () => {
+
+  console.log("AAAAAAAAAAAAAAAA")
   return (
     <>
       <NavigationProvider>
