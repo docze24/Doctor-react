@@ -7,7 +7,7 @@ import SearchModal from './SearchModal';
 //import TimesheetsModal from './TimesheetsModal';
 import HeaderDropDownModal from './HeaderDropDownModal';
 // import MegaMenu from './megaManu/MegaMenu';
-import { NavigationContext } from '../../../contentApi/navigationProvider';
+import { NavigationContext } from '../../contentApi/navigationProvider';
 
 
 const Header = () => {

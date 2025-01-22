@@ -53,9 +53,9 @@ const LeadsHeader = () => {
 
             <div id="collapseOne" className="accordion-collapse collapse page-header-collapse">
                 <div className="accordion-body pb-2">
-                    <div className="row">
+                    {/* <div className="row">
                         <LeadsStatisticsTwo />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>
