@@ -3,9 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 // import ReportsSales from "../pages/reports-sales";
 // import ReportsLeads from "../pages/reports-leads";
 // import ReportsProject from "../pages/reports-project";
-//  import AppsChat from "../pages/apps-chat";
 //  import LayoutPatient from '../layout/layoutPatient';
- // import LayoutApplications from "../layout/layoutPatient";
 // import AppsEmail from "../pages/apps-email";
 // import ReportsTimesheets from "../pages/reports-timesheets";
 // import LoginCover from "../pages/login-cover";
@@ -15,7 +13,7 @@ import { createBrowserRouter } from "react-router-dom";
 // import AppsStorage from "../pages/apps-storage";
 // import Proposalist from "../pages/proposal-list";
 // import CustomersList from "../pages/customers-list";
-// import ProposalView from "../pages/proposal-view";
+ //import ProposalView from "../pages/proposal-view";
 // import ProposalEdit from "../pages/proposal-edit";
 // import LeadsList from "../pages/leadsList";
 // import CustomersView from "../pages/customers-view";
@@ -91,9 +89,9 @@ import PatientList from "../pages/patient/patientList";
 //import patientView from "../pages/patient/patientView";
 
 
-import Proposalist from "../pages/proposal/proposal-list";
-// import ProposalCreate from "../pages/proposal/proposal-create";
-// import ProposalView from "../pages/proposal/proposal-view";
+ import Proposalist from "../pages/proposal/proposal-list";
+ import ProposalView from "../pages/proposal/proposal-view";
+ import ProposalCreate from "../pages/proposal/proposal-create";
 // import ProposalEdit from "../pages/proposal/proposal-edit";
 
 
@@ -101,6 +99,13 @@ import Proposalist from "../pages/proposal/proposal-list";
 //import CustomersList from "../pages/customers-list";
 import ProfileView from "../pages/profile-view";
 import ProfileEdit from "../pages/profile-edit";
+
+
+/******************ROOT APPLICATION************************** */
+/*########################################################*/
+
+import LayoutApplication from "../layout/layoutApplication";
+import AppsChat from "../pages/apps-chat";
 
 
 
@@ -125,17 +130,33 @@ export const router = createBrowserRouter([
              //{ path: "/",    element: <Home />  },
              { path: "/dashboards",  element: <Analytics />},
              { path: "/patients/patient-list",element: <PatientList />},
+            //  { path: "/patients/patient-create",element:<PatientCreate/>},
             
            
-              { path: "/profile",element: <ProfileView />},
-              { path: "/profile/edit", element: <ProfileEdit/> },
+                { path: "/profile/overview",element: <ProfileView />},
+                { path: "/profile/edit", element: <ProfileEdit/> },
 
-              { path: "/proposal/list",element: <Proposalist />},
-            //   { path: "/proposal/crate", element: <ProposalCreate/> },
-            //   { path: "/proposal/view",element: <ProposalView />},
-            //   { path: "/proposal/edit", element: <ProposalEdit/> },
+                { path: "/proposal/proposal-list",element: <Proposalist />},
+                { path: "/proposal/proposal-create", element: <ProposalCreate/> },
+                { path: "/proposal/proposal-view",element: <ProposalView />},
+                //  { path: "/proposal/edit", element: <ProposalEdit/> },
+
+
+
+            
            
              
+        ]
+    },
+    
+    {
+        path: "/",
+        element: <LayoutApplication />,
+        children: [
+            {
+                path: "/application/chat",
+                element: <AppsChat />
+            },
         ]
     },
     

@@ -4,8 +4,8 @@ import LanguagesModal from './LanguagesModal';
 import NotificationsModal from './NotificationsModal';
 import ProfileModal from './ProfileModal';
 import SearchModal from './SearchModal';
-//import TimesheetsModal from './TimesheetsModal';
-import HeaderDropDownModal from './HeaderDropDownModal';
+import TimesheetsModal from './TimesheetsModal';
+//import HeaderDropDownModal from './HeaderDropDownModal';
 // import MegaMenu from './megaManu/MegaMenu';
 import { NavigationContext } from '../../../contentApi/navigationProvider';
 
@@ -202,7 +202,7 @@ const Header = () => {
                                 <FiSun size={20} />
                             </div>
                         </div>
-                        {/* <TimesheetsModal /> */}
+                        <TimesheetsModal />
                         <NotificationsModal />
                         <ProfileModal />
                     </div>

@@ -1,40 +1,29 @@
-import React, { Fragment, useState } from "react";
-import {
-  FiBell,
-  FiLogOut,
-  FiSettings,
-  FiUser,
-  
-} from "react-icons/fi";
-
+import React, { useState } from "react";
+import { FiLogOut, FiUser, FiSettings } from "react-icons/fi";
+import { Link, useNavigate } from "react-router-dom";
 
 const dropdownItems = {
-  "Settings": ["Manage Organisation", "Appointment preferences", "Advance options"],
-  "Languages": ["English", "French", "Luxembourg"],
-  "Notifications": ["View All Notifications", "Set Preferences", "Alerts"],
-  "Profile": ["Doctor Profile", "Account Settings", "Switch Clinic"],
+  "Profile": "/profile/overview",
+  "Account Settings": "/profile/edit",
+  
 };
 
 const ProfileModal = () => {
-  // Track which dropdown is currently active
-  const [activeDropdown, setActiveDropdown] = useState(null);
   const [profileHover, setProfileHover] = useState(false);
+  const navigate = useNavigate();
 
-  // Handle hover events
-  const handleMouseEnter = (key) => {
-    setActiveDropdown(key);
+  // Handle profile hover
+  const handleProfileHover = () => setProfileHover(true);
+  const handleProfileLeave = () => setProfileHover(false);
+
+  // Handle navigation
+  const handleItemClick = (route) => {
+    navigate(route); // Navigate to the specified route
   };
 
-  const handleMouseLeave = () => {
-    setActiveDropdown(null);
-  };
-
-  const handleProfileHover = () => {
-    setProfileHover(true);
-  };
-
-  const handleProfileLeave = () => {
-    setProfileHover(false);
+  const handleLogout = () => {
+    // Perform logout logic (like clearing tokens, etc.)
+    navigate("/login"); // Navigate to the /login route
   };
 
   return (
@@ -43,15 +32,10 @@ const ProfileModal = () => {
       onMouseEnter={handleProfileHover}
       onMouseLeave={handleProfileLeave}
     >
-      <a
-        href="#"
-        data-bs-toggle="dropdown"
-        role="button"
-       
-      >
+      <a href="#" role="button">
         <img
           src="/images/avatar/1.png"
-          alt="user-image"
+          alt="user-avatar"
           className="img-fluid user-avtar me-0"
         />
       </a>
@@ -64,7 +48,7 @@ const ProfileModal = () => {
           <div className="d-flex align-items-center">
             <img
               src="/images/avatar/1.png"
-              alt="user-image"
+              alt="user-avatar"
               className="img-fluid user-avtar"
             />
             <div>
@@ -81,65 +65,44 @@ const ProfileModal = () => {
           </div>
         </div>
 
-        {/* Generate Dropdowns Dynamically */}
-        {Object.entries(dropdownItems).map(([label, items], index) => (
-          <Fragment key={index}>
-            <div
-              className={`dropdown ${activeDropdown === label ? "show" : ""}`}
-              onMouseEnter={() => handleMouseEnter(label)}
-              onMouseLeave={handleMouseLeave}
+        {/* Render Dropdown Items Dynamically */}
+        {Object.entries(dropdownItems).map(([label, route], index) => (
+          <div className="dropdown" key={index}>
+            <a
+            
+              className="dropdown-item"
+              role="button" 
+              onClick={() => handleItemClick(route)}
             >
-              <a href="#" className="dropdown-item ">
-                <span className="hstack">
-                  <i className="me-2">{getIcon(label)}</i>
-                  <span>{label}</span>
-                </span>
-              </a>
-              <div
-                className={`dropdown-menu ${
-                  activeDropdown === label ? "show" : ""
-                }`}
-              >
-                {items.map((item, idx) => (
-                  <a href="#" className="dropdown-item" key={idx}>
-                    {item}
-                  </a>
-                ))}
-              </div>
-            </div>
-            {index < Object.entries(dropdownItems).length - 1 && (
-              <div className="dropdown-divider"></div>
-            )}
-          </Fragment>
+              <span className="hstack">
+                <i className="me-2">
+                  {label === "Profile" ? <FiUser /> : <FiSettings />}
+                </i>
+                <span>{label}</span>
+              </span>
+            </a>
+          </div>
         ))}
 
         <div className="dropdown-divider"></div>
 
-        {/* Logout */}
-        <a href="./auth-login-minimal.html" className="dropdown-item">
+        
+
+
+        <div
+          className="dropdown-item"
+          role="button"
+          onClick={handleLogout} // Trigger logout function
+        >
           <i>
             <FiLogOut />
           </i>
           <span>Logout</span>
-        </a>
+        </div>
+
       </div>
     </div>
   );
 };
 
 export default ProfileModal;
-
-const getIcon = (label) => {
-  switch (label) {
-    case "Settings":
-      return <FiSettings />;
-    case "Languages":
-      return <FiBell />;
-    case "Notifications":
-      return <FiBell />;
-    case "Profile":
-      return <FiUser />;
-    default:
-      return null;
-  }
-};

@@ -24,7 +24,7 @@ export const menuList = [
         icon: 'feather-cast',
         dropdownMenu: [
             {
-                id: 4,
+                id: 2,
                 name: "Calendar",
                 path: "/appointment/calendar",
                 icon: 'calendar',
@@ -39,14 +39,14 @@ export const menuList = [
         icon: 'feather-send',
         dropdownMenu: [
             {
-                id: 5,
+                id: 3,
                 name: "Patient List",
                 path: "/patients/patient-list",
                 icon:'feather-compass',
                 subdropdownMenu: false
             },
             {
-                id: 6,
+                id: 4,
                 name: " Create Patient",
                 path: "/patients/patient-create",
                 icon:'analytics',
@@ -58,17 +58,57 @@ export const menuList = [
      },
     {
         id: 3,
-        name: "others",
+        name: "Proposals",
         path: "#",
-        icon: 'feather-power',
+        icon: 'feather-layout',
         dropdownMenu: [
             {
-                id: 11,
-                name: "Setting",
-                path: "/others/setting",
+                id: 5,
+                name: "Proposal List",
+                path: "/proposal/proposal-list",
+                icon:'feather-activity',
+                subdropdownMenu: false
+            },
+            {
+                id: 6,
+                name: "Proposal View",
+                path: "/proposal/proposal-view",
+                icon:'feather-tablet',
+                subdropdownMenu: false
+            },
+            
+            {
+                id: 7,
+                name: "Proposal Create",
+                path: "/proposal/proposal-create",
+                icon:'feather-tablet',
+                subdropdownMenu: false
+            },
+            
+           
+        ],
+    },
+    {
+        id: 4,
+        name: "Application",
+        path: "#",
+        icon: 'feather-message-square',
+        dropdownMenu: [
+            {
+                id: 7,
+                name: "Messages",
+                path: "/application/message",
                 icon:'setting',
                 subdropdownMenu: false
             },
+            {
+                id: 8,
+                name: "Chat",
+                path: "/application/chat",
+                icon:'feather-send',
+                subdropdownMenu: false
+            },
+            
             
            
         ],

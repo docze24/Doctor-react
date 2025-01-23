@@ -2,25 +2,18 @@ import React from 'react'
 import Header from '@/components/shared/header/Header'
 import NavigationManu from '@/components/shared/navigationMenu/NavigationMenu'
 import { Outlet, useLocation } from 'react-router-dom'
-//import VoiceCall from '@/components/chats/VoiceCall'
-//import VideoCall from '@/components/chats/VideoCall'
-//import StorageDetails from '@/components/storage/StorageDetails'
-//import AddsNote from '@/components/notes/AddsNote'
-//import TasksDetails from '@/components/tasks/TasksDetails'
-//import AddTask from '@/components/tasks/AddTask'
 import useBootstrapUtils from '@/hooks/useBootstrapUtils'
-//import ChatProfileInfo from '@/components/chats/ChatProfileInfo'
-//import ComposeMailPopUp from '@/components/emails/ComposeMailPopup'
 
-const  LayoutPatient = () => {
+const ProfileLayout = () => {
     const pathName = useLocation().pathname
-    useBootstrapUtils(pathName)
+     useBootstrapUtils(pathName)
 
     const getClassName = (pathName) => {
         switch (pathName) {
-            case "/patients/patients-list":
-                return "apps-email"
-            
+            case "/settings/organisation":
+                return "manage-organisation"
+            case "/profile/overview":
+                return "apps-calendar"
 
             default:
                 return null
@@ -42,4 +35,4 @@ const  LayoutPatient = () => {
     )
 }
 
-export default LayoutPatient;
+export default ProfileLayout;
