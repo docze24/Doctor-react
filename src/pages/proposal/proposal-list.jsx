@@ -1,7 +1,7 @@
 import React from 'react'
 import ProposalTable from '@/components/proposal/ProposalTable'
 import ProposalHeadr from '@/components/proposal/ProposalHeadr'
-import PageHeader from '@/components/pageHeader/PageHeader'
+import PageHeader from '@/components/PageHeader/PageHeader'
 import ProposalHeaderContent from '@/components/proposal/ProposalHeaderContent'
 import Footer from '@/components/shared/Footer'
 
@@ -25,6 +25,6 @@ const ProposalList = () => {
     )
 }
 
-export default ProposalList
+export default ProposalList;
 
 

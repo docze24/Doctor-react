@@ -1,11 +1,11 @@
 import React from 'react'
-import PageHeader from '@/components/shared/pageHeader/PageHeader'
-import ProposalViewHeader from '@/components/proposalView/ProposalViewHeader'
-import ProposalViewTab from '@/components/proposalView/ProposalViewTab'
-import ProposalTabContent from '@/components/proposalView/ProposalTabContent'
-import TasksTabContent from '@/components/proposalView/TasksTabContent'
-import NotesTabContent from '@/components/proposalView/NotesTabContent'
-import CommentTabContent from '@/components/proposalView/CommentTabContent'
+import PageHeader from '@/components/pageHeader/PageHeader'
+import ProposalViewHeader from '@/components/proposal/ProposalViewHeader'
+import ProposalViewTab from '@/components/proposal/ProposalViewTab'
+import ProposalTabContent from '@/components/proposal/ProposalTabContent'
+import TasksTabContent from '@/components/proposal/TasksTabContent'
+import NotesTabContent from '@/components/proposal/NotesTabContent'
+import CommentTabContent from '@/components/proposal/CommentTabContent'
 import ProposalSent from '@/components/proposalEditCreate/ProposalSent'
 
 const ProposalView = () => {
