@@ -1,0 +1,13 @@
+
+{
+    "navigation": "Navigation",
+      "header": "En-tête",
+      "skins": "Apparences",
+      "typography": "Typographie",
+      "light": "Clair",
+      "dark": "Sombre",
+      "location": "Emplacement",
+    "phone": "Téléphone",
+    "email": "E-mail"
+
+}

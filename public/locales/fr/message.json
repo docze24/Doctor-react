@@ -1,0 +1,32 @@
+
+  {
+
+    "registerTitle": "S'inscrire",
+    "registerSubtitle": "Gérez tout votre Docze CRM",
+    "registerDescription": "Mettons tout en place pour que vous puissiez vérifier votre compte personnel et commencer à configurer votre profil.",
+    "generatePassword": "Générer un mot de passe",
+    "showHidePassword": "Afficher/Masquer le mot de passe",
+    "passwordAgain": "Mot de passe à nouveau",
+    "receiveEmails": "Oui, je souhaite recevoir les e-mails de la communauté Duralux",
+    "agreeTerms": "J'accepte tous les Termes & Conditions et les frais.",
+    "createAccount": "Créer un compte",
+    "alreadyHaveAccount": "Vous avez déjà un compte?",
+    "login": "Connexion",
+
+    "loginSubtitle": "Connectez-vous à votre compte",
+    "welcomeMessage": "Merci de revenir sur les applications web Docze , accédez à nos meilleures recommandations pour vous.",
+    "orDivider": "ou",
+    "dontHaveAccount": "Vous n'avez pas de compte ?",
+
+    "resetTitle": "Réinitialiser",
+    "resetSubtitle": "Réinitialiser votre nom d'utilisateur/mot de passe",
+    "resetDescription": "Entrez votre e-mail et un lien de réinitialisation vous sera envoyé, accédez à nos meilleures recommandations pour vous.",
+    "createAccountText": "Vous n'avez pas de compte?",
+      
+    "noData": "Aucune donnée disponible",
+    "loading": "Chargement des données...",
+    "emailExample": "alex.della@outlook.com",
+    "locationExample": "Californie, États-Unis",
+    "phoneExample": "+01 (375) 2589 645"
+  }
+ 

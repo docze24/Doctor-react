@@ -1,6 +1,7 @@
 import React from 'react'
 import { FiBell, FiCheck, FiX } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const notificationsList = [
     {
@@ -27,6 +28,8 @@ const notificationsList = [
 
 ]
 const NotificationsModal = () => {
+
+    const { t } = useTranslation(["input","heading"]);
     return (
         <div className="dropdown nxl-h-item">
             <div className="nxl-head-link me-3" data-bs-toggle="dropdown" role="button" data-bs-auto-close="outside">
@@ -35,10 +38,10 @@ const NotificationsModal = () => {
             </div>
             <div className="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-notifications-menu">
                 <div className="d-flex justify-content-between align-items-center notifications-head">
-                    <h6 className="fw-bold text-dark mb-0">Notifications</h6>
+                    <h6 className="fw-bold text-dark mb-0">{t("notificationsTitle", { ns: "heading" })}</h6>
                     <Link to="#" className="fs-11 text-success text-end ms-auto" data-bs-toggle="tooltip" title="Make as Read">
                         <FiCheck size={16} />
-                        <span>Make as Read</span>
+                        <span> {t("makeAsRead", { ns: "input" })}</span>
                     </Link>
                 </div>
                 {
@@ -46,7 +49,7 @@ const NotificationsModal = () => {
                 }
 
                 <div className="text-center notifications-footer">
-                    <Link to="#" className="fs-13 fw-semibold text-dark">Alls Notifications</Link>
+                    <Link to="#" className="fs-13 fw-semibold text-dark"> {t("allNotifications", { ns: "input" })}</Link>
                 </div>
             </div>
         </div>

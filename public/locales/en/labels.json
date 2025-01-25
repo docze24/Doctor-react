@@ -1,0 +1,11 @@
+{
+    "navigation": "Navigation",
+      "header": "Header",
+      "skins": "Skins",
+      "typography": "Typography",
+      "light": "Light",
+      "dark": "Dark",
+      "location": "Location",
+       "phone": "Phone",
+       "email": "Email"
+}

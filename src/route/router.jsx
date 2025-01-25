@@ -1,4 +1,5 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import LanguageWrapper from "@/components/LanguageWrapper";
 
 // import ReportsSales from "../pages/reports-sales";
 // import ReportsLeads from "../pages/reports-leads";
@@ -111,12 +112,11 @@ import AppsChat from "../pages/apps-chat";
 import RequireAuth from "../contentApi/RequireAuth";
 
 
-
 export const router = createBrowserRouter([
 
     {
-        path: "/",
-        element: <LayoutAuth />,
+        path: "/:lang",
+        element: (<LanguageWrapper><LayoutAuth /> </LanguageWrapper>),
         children: [
             { path: "/", element: <Login /> },
             { path: "/login", element: <Login /> },
@@ -125,13 +125,17 @@ export const router = createBrowserRouter([
 
         ]
     },
+    {
+        path: "/",
+        element: <Navigate to="/en/login" replace />, // Automatically redirect to /en
+    },
 
     {
         path: '/',
         element: <RequireAuth />,
         children: [
             {
-                path: "/",
+                path: "/:lang",
                 element: <RootLayout />,
                 children: [
                     //{ path: "/",    element: <Home />  },
@@ -153,13 +157,12 @@ export const router = createBrowserRouter([
         ],
     },
 
-
     {
-        path: "/",
+        path: "/:lang",
         element: <LayoutApplication />,
         children: [
             {
-                path: "/application/chat",
+                path: "application/chat",
                 element: <AppsChat />
             },
         ]

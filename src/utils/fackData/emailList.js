@@ -2,42 +2,60 @@ export const emailList = {
   overviews: [
     {
       id: 1,
-      name: "Total Email",
+      name: {
+        en: "Total Email",
+        fr: "E-mails totaux"
+      },
       count: "50,545",
       icon: "bi-envelope",
       color: "primary"
     },
     {
       id: 2,
-      name: "Email Sent",
+      name: {
+        en: "Email Sent",
+        fr: "E-mails envoyés"
+      },
       count: "25,000",
       icon: "bi-envelope-plus",
       color: "warning"
     },
     {
       id: 3,
-      name: "Emais Delivered",
+      name: {
+        en: "Emails Delivered",
+        fr: "E-mails livrés"
+      },
       count: "20,354",
       icon: "bi-envelope-check",
       color: "success"
     },
     {
       id: 4,
-      name: "Email Opened",
+      name: {
+        en: "Email Opened",
+        fr: "E-mails ouverts"
+      },
       count: "12,422",
       icon: "bi-envelope-open",
       color: "indigo"
     },
     {
       id: 5,
-      name: "Email Clicked",
+      name: {
+        en: "Email Clicked",
+        fr: "E-mails cliqués"
+      },
       count: "6,248",
       icon: "bi-envelope-heart",
       color: "teal"
     },
     {
       id: 6,
-      name: "Email Bounce",
+      name: {
+        en: "Email Bounce",
+        fr: "E-mails rejetés"
+      },
       count: "2,047",
       icon: "bi-envelope-slash",
       color: "danger"

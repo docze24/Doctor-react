@@ -8,8 +8,10 @@ import TabConnections from './TabConnections'
 import TabSecurity from './TabSecurity'
 import Profile from '../widgetsList/Profile'
 import CustomerSocalFlower from './CustomerSocalFlower'
+import { useTranslation } from 'react-i18next'
 
 const CustomerContent = () => {
+    const { t  } = useTranslation([ 'button']);
     return (
         <>
             <div className="col-xxl-4 col-xl-6">
@@ -22,7 +24,7 @@ const CustomerContent = () => {
                     <div className="card-header p-0">
                         <ul className="nav nav-tabs flex-wrap w-100 text-center customers-nav-tabs" id="myTab" role="tablist">
                             <li className="nav-item flex-fill border-top" role="presentation">
-                                <a href="#" className="nav-link active" data-bs-toggle="tab" data-bs-target="#overviewTab" role="tab">Overview</a>
+                                <a href="#" className="nav-link active" data-bs-toggle="tab" data-bs-target="#overviewTab" role="tab">{t("overview", { ns: "button" })}</a>
                             </li>
                             <li className="nav-item flex-fill border-top" role="presentation">
                                 <a href="#" className="nav-link" data-bs-toggle="tab" data-bs-target="#billingTab" role="tab">Billing</a>
