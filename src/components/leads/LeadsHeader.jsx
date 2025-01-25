@@ -3,7 +3,8 @@ import { FiBarChart, FiBriefcase, FiDollarSign, FiEye, FiFilter, FiFlag, FiPaper
 import { BsFiletypeCsv, BsFiletypeExe, BsFiletypePdf, BsFiletypeTsx, BsFiletypeXml, BsPrinter } from 'react-icons/bs';
 import Dropdown from '@/components/shared/Dropdown';
 import { Link } from 'react-router-dom';
-import LeadsStatisticsTwo from "../widgetsStatistics/LeadsStatisticsTwo"
+import { useTranslation } from 'react-i18next';
+// import LeadsStatisticsTwo from "../widgetsStatistics/LeadsStatisticsTwo"
 
 const filterAction = [
     { label: "All", icon: <FiEye /> },
@@ -24,6 +25,7 @@ export const fileType = [
 ];
 
 const LeadsHeader = () => {
+    const { t } = useTranslation(['button']);
     return (
         <>
             <div className="d-flex align-items-center gap-2 page-header-right-items-wrapper">
@@ -47,7 +49,7 @@ const LeadsHeader = () => {
                 />
                 <Link to="/leads/create" className="btn btn-primary">
                     <FiPlus size={16} className='me-2' />
-                    <span>Create Customer</span>
+                    <span>{t("createcustomer", { ns: "button" })}</span>
                 </Link>
             </div>
 

@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { FiAlignRight, FiArrowLeft } from 'react-icons/fi'
+import { useTranslation } from 'react-i18next'
 
 const PatientHeader = ({ children }) => {
     const [openSidebar, setOpenSidebar] = useState(false)
     const pathName = useLocation().pathname
+
+     const { t } = useTranslation(['button', 'heading']);
    
     return (
         <div className="page-header">
             <div className="page-header-left d-flex align-items-center">
                 <div className="page-header-title">
-                    <h5 className="m-b-10 text-capitalize">Patient Managment</h5>
+                    <h5 className="m-b-10 text-capitalize">{t("patientmanagement", { ns: "heading" })}</h5>
                 </div>
             </div>
             <div className="page-header-right ms-auto">
@@ -18,7 +21,7 @@ const PatientHeader = ({ children }) => {
                     <div className="d-flex d-md-none">
                         <Link to="#" onClick={() => setOpenSidebar(false)} className="page-header-right-close-toggle">
                             <FiArrowLeft size={16} className="me-2" />
-                            <span>Back</span>
+                            <span>{t("back", { ns: "button" })}</span>
                         </Link>
                     </div>
                     {children}
