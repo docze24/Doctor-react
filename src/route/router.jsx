@@ -7,13 +7,13 @@ import { createBrowserRouter } from "react-router-dom";
 // import AppsEmail from "../pages/apps-email";
 // import ReportsTimesheets from "../pages/reports-timesheets";
 // import LoginCover from "../pages/login-cover";
- //import AppsTasks from "../pages/apps-tasks";
+//import AppsTasks from "../pages/apps-tasks";
 // import AppsNotes from "../pages/apps-notes";
- //import AppsCalender from "../pages/apps-calender";
+//import AppsCalender from "../pages/apps-calender";
 // import AppsStorage from "../pages/apps-storage";
 // import Proposalist from "../pages/proposal-list";
 // import CustomersList from "../pages/customers-list";
- //import ProposalView from "../pages/proposal-view";
+//import ProposalView from "../pages/proposal-view";
 // import ProposalEdit from "../pages/proposal-edit";
 // import LeadsList from "../pages/leadsList";
 // import CustomersView from "../pages/customers-view";
@@ -45,7 +45,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 // import LoginMinimal from "../pages/login-minimal";
 
- // import LoginCreative from "../pages/login-creative";
+// import LoginCreative from "../pages/login-creative";
 // import RegisterCover from "../pages/register-cover";
 // import RegisterMinimal from "../pages/register-minimal";
 // import RegisterCreative from "../pages/register-creative";
@@ -89,9 +89,9 @@ import PatientList from "../pages/patient/patientList";
 //import patientView from "../pages/patient/patientView";
 
 
- import Proposalist from "../pages/proposal/proposal-list";
- import ProposalView from "../pages/proposal/proposal-view";
- import ProposalCreate from "../pages/proposal/proposal-create";
+import Proposalist from "../pages/proposal/proposal-list";
+import ProposalView from "../pages/proposal/proposal-view";
+import ProposalCreate from "../pages/proposal/proposal-create";
 // import ProposalEdit from "../pages/proposal/proposal-edit";
 
 
@@ -107,6 +107,9 @@ import ProfileEdit from "../pages/profile-edit";
 import LayoutApplication from "../layout/layoutApplication";
 import AppsChat from "../pages/apps-chat";
 
+// Require auth
+import RequireAuth from "../contentApi/RequireAuth";
+
 
 
 export const router = createBrowserRouter([
@@ -114,41 +117,43 @@ export const router = createBrowserRouter([
     {
         path: "/",
         element: <LayoutAuth />,
-        children: [  
-             { path: "/",    element: <Login />  },
-             { path: "/login",    element: <Login />  },
-             { path: "/signup",    element: <Signup />  },
-             { path: "/forgot-password",    element: <Forgotpassword />  },
-             
+        children: [
+            { path: "/", element: <Login /> },
+            { path: "/login", element: <Login /> },
+            { path: "/signup", element: <Signup /> },
+            { path: "/forgot-password", element: <Forgotpassword /> },
+
         ]
     },
 
     {
-        path: "/",
-        element: <RootLayout />,
-        children: [  
-             //{ path: "/",    element: <Home />  },
-             { path: "/dashboards",  element: <Analytics />},
-             { path: "/patients/patient-list",element: <PatientList />},
-            //  { path: "/patients/patient-create",element:<PatientCreate/>},
-            
-           
-                { path: "/profile/overview",element: <ProfileView />},
-                { path: "/profile/edit", element: <ProfileEdit/> },
-
-                { path: "/proposal/proposal-list",element: <Proposalist />},
-                { path: "/proposal/proposal-create", element: <ProposalCreate/> },
-                { path: "/proposal/proposal-view",element: <ProposalView />},
-                //  { path: "/proposal/edit", element: <ProposalEdit/> },
+        path: '/',
+        element: <RequireAuth />,
+        children: [
+            {
+                path: "/",
+                element: <RootLayout />,
+                children: [
+                    //{ path: "/",    element: <Home />  },
+                    { path: "/dashboards", element: <Analytics /> },
+                    { path: "/patients/patient-list", element: <PatientList /> },
+                    //  { path: "/patients/patient-create",element:<PatientCreate/>},
 
 
+                    { path: "/profile/overview", element: <ProfileView /> },
+                    { path: "/profile/edit", element: <ProfileEdit /> },
 
-            
-           
-             
-        ]
+                    { path: "/proposal/proposal-list", element: <Proposalist /> },
+                    { path: "/proposal/proposal-create", element: <ProposalCreate /> },
+                    { path: "/proposal/proposal-view", element: <ProposalView /> },
+                    //  { path: "/proposal/edit", element: <ProposalEdit/> },
+
+                ]
+            }
+        ],
     },
-    
+
+
     {
         path: "/",
         element: <LayoutApplication />,
@@ -159,6 +164,6 @@ export const router = createBrowserRouter([
             },
         ]
     },
-    
-   
+
+
 ])
