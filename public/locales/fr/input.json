@@ -1,0 +1,37 @@
+{
+    "fullName": "Nom complet",
+    "email": "E-mail",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+
+    "emailOrUsername": "E-mail ou nom d'utilisateur",
+  "rememberMe": "Se souvenir de moi",
+  "forgetPassword": "Mot de passe oublié ?",
+  "loginWithFacebook": "Se connecter avec Facebook",
+  "loginWithTwitter": "Se connecter avec Twitter",
+  "loginWithGithub": "Se connecter avec Github",
+  "createAccount": "Créer un compte",
+
+   
+    "resetButton": "Réinitialiser maintenant",
+
+    
+    "profile": "Profil",
+    "accountSettings": "Paramètres du compte",
+    "logout": "Se déconnecter",
+    "userName": "Dr Michael Davis",
+    "userRole": "Administrateur de l'organisation",
+
+     "select-language":"Sélectionnez la langue",
+
+      "makeAsRead": "Marquer comme lu",
+    "allNotifications": "Toutes les notifications",
+
+     "viewAll": "Voir tout",
+
+     "filter": "Filtrer",
+     "createNew": "Créer Nouveau",
+     "manageFilter": "Gérer le Filtre"
+  }
+  

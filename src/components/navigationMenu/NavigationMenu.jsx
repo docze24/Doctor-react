@@ -3,11 +3,8 @@ import { Link, useLocation } from 'react-router-dom'
 import PerfectScrollbar from "react-perfect-scrollbar";
 import Menus from './Menus';
 import { NavigationContext } from '../../contentApi/navigationProvider';
-import { useTranslation } from 'react-i18next';
 
 const NavigationManu = () => {
-    const{t} = useTranslation();
-
     const { navigationOpen, setNavigationOpen } = useContext(NavigationContext)
     const pathName = useLocation().pathname
     useEffect(() => {
@@ -28,7 +25,7 @@ const NavigationManu = () => {
                     <PerfectScrollbar>
                         <ul className="nxl-navbar">
                             <li className="nxl-item nxl-caption">
-                                <label>{t('navigation.overview')}</label>
+                                <label>OverView</label>
                             </li>
                             <Menus />
                         </ul>

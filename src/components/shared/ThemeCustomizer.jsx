@@ -1,32 +1,35 @@
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import React, { useEffect, useState } from 'react'
 import { FiSettings, FiX } from 'react-icons/fi'
+import { useTranslation } from 'react-i18next'
 
 const fontFalmily = [
-    { isChecked: false, value: "app-font-family-lato", label: "Lato" },
-    { isChecked: false, value: "app-font-family-rubik", label: "Rubik" },
-    { isChecked: true, value: "app-font-family-inter", label: "Inter" },
-    { isChecked: false, value: "app-font-family-cinzel", label: "Cinzel" },
-    { isChecked: false, value: "app-font-family-nunito", label: "Nunito" },
-    { isChecked: false, value: "app-font-family-roboto", label: "Roboto" },
-    { isChecked: false, value: "app-font-family-ubuntu", label: "Ubuntu" },
-    { isChecked: false, value: "app-font-family-poppins", label: "Poppins" },
-    { isChecked: false, value: "app-font-family-raleway", label: "Raleway" },
-    { isChecked: false, value: "app-font-family-system-ui", label: "System UI" },
-    { isChecked: false, value: "app-font-family-noto-sans", label: "Noto Sans" },
-    { isChecked: false, value: "app-font-family-fira-sans", label: "Fira Sans" },
-    { isChecked: false, value: "app-font-family-work-sans", label: "Work Sans" },
-    { isChecked: false, value: "app-font-family-open-sans", label: "Open Sans" },
-    { isChecked: false, value: "app-font-family-maven-pro", label: "Maven Pro" },
-    { isChecked: false, value: "app-font-family-quicksand", label: "Quicksand" },
-    { isChecked: false, value: "app-font-family-montserrat", label: "Montserrat" },
-    { isChecked: false, value: "app-font-family-josefin-sans", label: "Josefin Sans" },
-    { isChecked: false, value: "app-font-family-ibm-plex-sans", label: "Ibm Plex Sans" },
-    { isChecked: false, value: "app-font-family-source-sans-pro", label: "Source Sans Pro" },
-    { isChecked: false, value: "app-font-family-montserrat-alt", label: "Montserrat Alt" },
-    { isChecked: false, value: "app-font-family-roboto-slab", label: "Roboto Slab" },
+    { isChecked: false, value: "app-font-family-lato", label: { en: "Lato", fr: "Lato" } },
+    { isChecked: false, value: "app-font-family-rubik", label: { en: "Rubik", fr: "Rubik" } },
+    { isChecked: true, value: "app-font-family-inter", label: { en: "Inter", fr: "Inter" } },
+    { isChecked: false, value: "app-font-family-cinzel", label: { en: "Cinzel", fr: "Cinzel" } },
+    { isChecked: false, value: "app-font-family-nunito", label: { en: "Nunito", fr: "Nunito" } },
+    { isChecked: false, value: "app-font-family-roboto", label: { en: "Roboto", fr: "Roboto" } },
+    { isChecked: false, value: "app-font-family-ubuntu", label: { en: "Ubuntu", fr: "Ubuntu" } },
+    { isChecked: false, value: "app-font-family-poppins", label: { en: "Poppins", fr: "Poppins" } },
+    { isChecked: false, value: "app-font-family-raleway", label: { en: "Raleway", fr: "Raleway" } },
+    { isChecked: false, value: "app-font-family-system-ui", label: { en: "System UI", fr: "Interface système" } },
+    { isChecked: false, value: "app-font-family-noto-sans", label: { en: "Noto Sans", fr: "Noto Sans" } },
+    { isChecked: false, value: "app-font-family-fira-sans", label: { en: "Fira Sans", fr: "Fira Sans" } },
+    { isChecked: false, value: "app-font-family-work-sans", label: { en: "Work Sans", fr: "Work Sans" } },
+    { isChecked: false, value: "app-font-family-open-sans", label: { en: "Open Sans", fr: "Open Sans" } },
+    { isChecked: false, value: "app-font-family-maven-pro", label: { en: "Maven Pro", fr: "Maven Pro" } },
+    { isChecked: false, value: "app-font-family-quicksand", label: { en: "Quicksand", fr: "Quicksand" } },
+    { isChecked: false, value: "app-font-family-montserrat", label: { en: "Montserrat", fr: "Montserrat" } },
+    { isChecked: false, value: "app-font-family-josefin-sans", label: { en: "Josefin Sans", fr: "Josefin Sans" } },
+    { isChecked: false, value: "app-font-family-ibm-plex-sans", label: { en: "IBM Plex Sans", fr: "IBM Plex Sans" } },
+    { isChecked: false, value: "app-font-family-source-sans-pro", label: { en: "Source Sans Pro", fr: "Source Sans Pro" } },
+    { isChecked: false, value: "app-font-family-montserrat-alt", label: { en: "Montserrat Alt", fr: "Montserrat Alt" } },
+    { isChecked: false, value: "app-font-family-roboto-slab", label: { en: "Roboto Slab", fr: "Roboto Slab" } }
 ]
-const ThemeCustomizer = () => {
+const ThemeCustomizer = ({ language = "en" }) => {
+    const getFontLabel = (font) => font.label[language];
+    const { t  } = useTranslation(['button', 'heading','labels']);
     const [open, setOpen] = useState(false)
     const handleNavigationTheme = (type) => {
         if (type === "dark") {
@@ -125,7 +128,7 @@ const ThemeCustomizer = () => {
             </div>
             <div className="customizer-sidebar-wrapper">
                 <div className="customizer-sidebar-header px-4 ht-80 border-bottom d-flex align-items-center justify-content-between">
-                    <h5 className="mb-0">Theme Settings</h5>
+                    <h5 className="mb-0">{t("themesetting",{ns:'heading'})}</h5>
                     <a href="#" className="cutomizer-close-trigger d-flex" onClick={(e) => {e.preventDefault(), setOpen(false)}}>
                         <FiX size={16} />
                     </a>
@@ -134,59 +137,59 @@ const ThemeCustomizer = () => {
                     <PerfectScrollbar>
                         {/*! BEGIN: [Navigation] !*/}
                         <div className="position-relative px-3 pb-3 pt-4 mt-3 mb-5 border border-gray-2 theme-options-set">
-                            <label className="py-1 px-2 fs-8 fw-bold text-uppercase text-muted text-spacing-2 bg-white border border-gray-2 position-absolute rounded-2 options-label" style={{ top: '-12px' }}>Navigation</label>
+                            <label className="py-1 px-2 fs-8 fw-bold text-uppercase text-muted text-spacing-2 bg-white border border-gray-2 position-absolute rounded-2 options-label" style={{ top: '-12px' }}>{t("navigation",{ns:'labels'})}</label>
                             <div className="row g-2 theme-options-items app-navigation" id="appNavigationList">
                                 <div className="col-6 text-center single-option" onClick={() => handleNavigationTheme("light")}>
                                     <input type="radio" className="btn-check" name="app-navigation" id="app-navigation-light" defaultValue={1} data-app-navigation="app-navigation-light" defaultChecked />
-                                    <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor="app-navigation-light">Light</label>
+                                    <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor="app-navigation-light">{t("light",{ns:'labels'})}</label>
                                 </div>
                                 <div className="col-6 text-center single-option" onClick={() => handleNavigationTheme("dark")}>
                                     <input type="radio" className="btn-check" name="app-navigation" id="app-navigation-dark" defaultValue={2} data-app-navigation="app-navigation-dark" />
-                                    <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor="app-navigation-dark">Dark</label>
+                                    <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor="app-navigation-dark">{t("dark",{ns:'labels'})}</label>
                                 </div>
                             </div>
                         </div>
                         {/*! END: [Navigation] !*/}
                         {/*! BEGIN: [Header] !*/}
                         <div className="position-relative px-3 pb-3 pt-4 mt-3 mb-5 border border-gray-2 theme-options-set mt-5">
-                            <label className="py-1 px-2 fs-8 fw-bold text-uppercase text-muted text-spacing-2 bg-white border border-gray-2 position-absolute rounded-2 options-label" style={{ top: '-12px' }}>Header</label>
+                            <label className="py-1 px-2 fs-8 fw-bold text-uppercase text-muted text-spacing-2 bg-white border border-gray-2 position-absolute rounded-2 options-label" style={{ top: '-12px' }}>{t("header",{ns:'labels'})}</label>
                             <div className="row g-2 theme-options-items app-header" id="appHeaderList">
                                 <div className="col-6 text-center single-option" onClick={() => handleHeaderTheme("light")}>
                                     <input type="radio" className="btn-check" name="app-header" id="app-header-light" defaultValue={1} data-app-header="app-header-light" defaultChecked />
-                                    <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor="app-header-light">Light</label>
+                                    <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor="app-header-light">{t("light",{ns:'labels'})}</label>
                                 </div>
                                 <div className="col-6 text-center single-option" onClick={() => handleHeaderTheme("dark")}>
                                     <input type="radio" className="btn-check" name="app-header" id="app-header-dark" defaultValue={2} data-app-header="app-header-dark" />
-                                    <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor="app-header-dark">Dark</label>
+                                    <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor="app-header-dark">{t("dark",{ns:'labels'})}</label>
                                 </div>
                             </div>
                         </div>
                         {/*! END: [Header] !*/}
                         {/*! BEGIN: [Skins] !*/}
                         <div className="position-relative px-3 pb-3 pt-4 mt-3 mb-5 border border-gray-2 theme-options-set">
-                            <label className="py-1 px-2 fs-8 fw-bold text-uppercase text-muted text-spacing-2 bg-white border border-gray-2 position-absolute rounded-2 options-label" style={{ top: '-12px' }}>Skins</label>
+                            <label className="py-1 px-2 fs-8 fw-bold text-uppercase text-muted text-spacing-2 bg-white border border-gray-2 position-absolute rounded-2 options-label" style={{ top: '-12px' }}>{t("skins",{ns:'labels'})}</label>
                             <div className="row g-2 theme-options-items app-skin" id="appSkinList">
                                 <div className="col-6 text-center position-relative single-option light-button" onClick={() => handleSkinTheme("light")}>
                                     <input type="radio" className="btn-check" id="app-skin-light" name="app-skin" defaultValue={1} data-app-skin="app-skin-light" defaultChecked />
-                                    <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor="app-skin-light">Light</label>
+                                    <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor="app-skin-light">{t("light",{ns:'labels'})}</label>
                                 </div>
                                 <div className="col-6 text-center position-relative single-option dark-button" onClick={() => handleSkinTheme("dark")}>
                                     <input type="radio" className="btn-check" id="app-skin-dark" name="app-skin" defaultValue={2} data-app-skin="app-skin-dark" />
-                                    <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor="app-skin-dark">Dark</label>
+                                    <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor="app-skin-dark">{t("dark",{ns:'labels'})}</label>
                                 </div>
                             </div>
                         </div>
                         {/*! END: [Skins] !*/}
                         {/*! BEGIN: [Typography] !*/}
                         <div className="position-relative px-3 pb-3 pt-4 mt-3 mb-0 border border-gray-2 theme-options-set">
-                            <label className="py-1 px-2 fs-8 fw-bold text-uppercase text-muted text-spacing-2 bg-white border border-gray-2 position-absolute rounded-2 options-label" style={{ top: '-12px' }}>Typography</label>
+                            <label className="py-1 px-2 fs-8 fw-bold text-uppercase text-muted text-spacing-2 bg-white border border-gray-2 position-absolute rounded-2 options-label" style={{ top: '-12px' }}>{t("typography",{ns:'labels'})}</label>
                             <div className="row g-2 theme-options-items font-family" id="fontFamilyList">
                                 {
                                     fontFalmily.map(({ label, value, isChecked }, index) => {
                                         return (
                                             <div key={index} className="col-6 text-center single-option" onClick={() => handleFontFamily(value)}>
                                                 <input type="radio" className="btn-check" id={value} name="font-family" defaultValue={index + 1} data-font-family={value} defaultChecked={isChecked} />
-                                                <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor={value} >{label}</label>
+                                                <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" htmlFor={value} >{getFontLabel({ label })}</label>
                                             </div>
                                         )
                                     })
@@ -197,10 +200,10 @@ const ThemeCustomizer = () => {
                 </div>
                 <div className="customizer-sidebar-footer px-4 ht-60 border-top d-flex align-items-center gap-2">
                     <div className="flex-fill w-50">
-                        <a href="#" className="btn btn-danger" data-style="reset-all-common-style" onClick={handleResetAll}>Reset</a>
+                        <a href="#" className="btn btn-danger" data-style="reset-all-common-style" onClick={handleResetAll}>{t("reset",{ns:'button'})}</a>
                     </div>
                     <div className="flex-fill w-50">
-                        <a href="#" className="btn btn-primary">Download</a>
+                        <a href="#" className="btn btn-primary">{t("download",{ns:'button'})}</a>
                     </div>
                 </div>
             </div>
