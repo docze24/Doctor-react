@@ -32,7 +32,7 @@ const LoginForm = ({ registerPath, resetPath }) => {
                 console.log(response?.data?.message);
                 alert(response?.data?.message);
                 setTimeout(() => {
-                    navigate('/dashboards');
+                    navigate('/en/dashboards');
                 }, 2000)
             } else {
                 console.log(`${response?.data?.name}:${response?.data?.message}`);

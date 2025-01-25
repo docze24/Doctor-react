@@ -118,10 +118,10 @@ export const router = createBrowserRouter([
         path: "/:lang",
         element: (<LanguageWrapper><LayoutAuth /> </LanguageWrapper>),
         children: [
-            { path: "/", element: <Login /> },
-            { path: "/login", element: <Login /> },
-            { path: "/signup", element: <Signup /> },
-            { path: "/forgot-password", element: <Forgotpassword /> },
+            // { path: "/", element: <Login /> },
+            { path: "login", element: <Login /> },
+            { path: "signup", element: <Signup /> },
+            { path: "forgot-password", element: <Forgotpassword /> },
 
         ]
     },
@@ -129,7 +129,6 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Navigate to="/en/login" replace />, // Automatically redirect to /en
     },
-
     {
         path: '/',
         element: <RequireAuth />,
@@ -139,33 +138,32 @@ export const router = createBrowserRouter([
                 element: <RootLayout />,
                 children: [
                     //{ path: "/",    element: <Home />  },
-                    { path: "/dashboards", element: <Analytics /> },
-                    { path: "/patients/patient-list", element: <PatientList /> },
+                    { path: "dashboards", element: <Analytics /> },
+                    { path: "patients/patient-list", element: <PatientList /> },
                     //  { path: "/patients/patient-create",element:<PatientCreate/>},
 
 
-                    { path: "/profile/overview", element: <ProfileView /> },
-                    { path: "/profile/edit", element: <ProfileEdit /> },
+                    { path: "profile/overview", element: <ProfileView /> },
+                    { path: "profile/edit", element: <ProfileEdit /> },
 
-                    { path: "/proposal/proposal-list", element: <Proposalist /> },
-                    { path: "/proposal/proposal-create", element: <ProposalCreate /> },
-                    { path: "/proposal/proposal-view", element: <ProposalView /> },
+                    { path: "proposal/proposal-list", element: <Proposalist /> },
+                    { path: "proposal/proposal-create", element: <ProposalCreate /> },
+                    { path: "proposal/proposal-view", element: <ProposalView /> },
                     //  { path: "/proposal/edit", element: <ProposalEdit/> },
 
                 ]
-            }
-        ],
-    },
-
-    {
-        path: "/:lang",
-        element: <LayoutApplication />,
-        children: [
-            {
-                path: "application/chat",
-                element: <AppsChat />
             },
-        ]
+            {
+                path: "/:lang",
+                element: <LayoutApplication />,
+                children: [
+                    {
+                        path: "application/chat",
+                        element: <AppsChat />
+                    },
+                ]
+            },
+        ],
     },
 
 

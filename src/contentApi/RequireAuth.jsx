@@ -7,7 +7,7 @@ const RequireAuth = () => {
   const { user } = useContext(UserContext);
 
   // If user is not logged in, redirect to login page
-  return user ? <Outlet /> : <Navigate to="/login" />;
+  return user ? <Outlet /> : <Navigate to="/en/login" />;
 };
 
 export default RequireAuth;
