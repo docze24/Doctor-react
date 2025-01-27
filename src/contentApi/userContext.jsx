@@ -22,15 +22,16 @@ export const UserProvider = ({ children }) => {
     deleteCookie('refreshToken');
   };
 
+  const savedUser = getCookie('user');
   useEffect(() => {
-    const savedUser = getCookie('user');
+    // console.log({savedUser:savedUser});
     if (savedUser) {
       setUser(JSON.parse(savedUser)); 
     }
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, login, logout, savedUser }}>
       {children}
     </UserContext.Provider>
   );
