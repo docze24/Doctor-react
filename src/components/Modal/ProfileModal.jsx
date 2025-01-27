@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../contentApi/userContext";
 import { FiLogOut, FiUser, FiSettings } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -9,6 +10,7 @@ const dropdownItems = {
 };
 
 const ProfileModal = () => {
+  const { user, logout } = useContext(UserContext);
   const [profileHover, setProfileHover] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation(["input"]);
@@ -23,8 +25,8 @@ const ProfileModal = () => {
   };
 
   const handleLogout = () => {
-    // Perform logout logic (like clearing tokens, etc.)
-    navigate("/en/login"); // Navigate to the /login route
+    logout();
+    navigate("/en/login"); 
   };
 
   return (

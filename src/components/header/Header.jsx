@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { FiAlignLeft, FiArrowLeft, FiArrowRight, FiChevronRight, FiMaximize, FiMinimize, FiMoon, FiPlus, FiSun, } from "react-icons/fi";
-import LanguagesModal from '../modal/LanguagesModal';
-import NotificationsModal from '../modal/NotificationsModal';
-import ProfileModal from '../modal/ProfileModal';
-import SearchModal from '../modal/SearchModal';
+// import LanguagesModal from '../modal/LanguagesModal';
+// import NotificationsModal from '../modal/NotificationsModal';
+import ProfileModal from '../Modal/ProfileModal';
+// import SearchModal from '../modal/SearchModal';
 //import TimesheetsModal from './TimesheetsModal';
-import HeaderDropDownModal from '../modal/HeaderDropDownModal';
+// import HeaderDropDownModal from '../modal/HeaderDropDownModal';
 // import MegaMenu from './megaManu/MegaMenu';
 import { NavigationContext } from '../../contentApi/navigationProvider';
 
@@ -184,8 +184,8 @@ const Header = () => {
                 <!--! [Start] Header Right !--> */}
                 <div className="header-right ms-auto">
                     <div className="d-flex align-items-center">
-                        <SearchModal />
-                        <LanguagesModal />
+                        {/* <SearchModal /> */}
+                       {/* <LanguagesModal />*/}
                         <div className="nxl-h-item d-none d-sm-flex" >
                             <div className="full-screen-switcher">
                                 <span className="nxl-head-link me-0">
@@ -203,7 +203,7 @@ const Header = () => {
                             </div>
                         </div>
                         {/* <TimesheetsModal /> */}
-                        <NotificationsModal />
+                        {/* <NotificationsModal /> */}
                         <ProfileModal />
                     </div>
                 </div>

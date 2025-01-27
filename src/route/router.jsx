@@ -108,67 +108,62 @@ import ProfileEdit from "../pages/profile-edit";
 import LayoutApplication from "../layout/layoutApplication";
 import AppsChat from "../pages/apps-chat";
 
+// Require auth
+import RequireAuth from "../contentApi/RequireAuth";
+
 
 export const router = createBrowserRouter([
 
-
-
-    
-    {
-        path: "/",
-        element: <Navigate to="/en/login" replace />, // Automatically redirect to /en
-      },
-      
-
     {
         path: "/:lang",
-        element:   (<LanguageWrapper><LayoutAuth /> </LanguageWrapper>),
+        element: (<LanguageWrapper><LayoutAuth /> </LanguageWrapper>),
         children: [
-            // { path: "", element: <Login /> },
+            // { path: "/", element: <Login /> },
             { path: "login", element: <Login /> },
             { path: "signup", element: <Signup /> },
             { path: "forgot-password", element: <Forgotpassword /> },
 
         ]
     },
-
-    
-
     {
-        path: "/:lang",
-        element: <RootLayout />,
-        children: [
-            //   { path: "/",    element: <Home />  },
-            { path: "dashboards", element: <Analytics /> },
-            { path: "patients/patient-list", element: <PatientList /> },
-            //  { path: "/patients/patient-create",element:<PatientCreate/>},
-
-
-            { path: "profile/overview", element: <ProfileView /> },
-            { path: "profile/edit", element: <ProfileEdit /> },
-
-            { path: "proposal/proposal-list", element: <Proposalist /> },
-            { path: "proposal/proposal-create", element: <ProposalCreate /> },
-            { path: "proposal/proposal-view", element: <ProposalView /> },
-            //  { path: "/proposal/edit", element: <ProposalEdit/> },
-
-
-
-
-
-
-        ]
+        path: "/",
+        element: <Navigate to="/en/login" replace />, // Automatically redirect to /en
     },
-
     {
-        path: "/:lang",
-        element: <LayoutApplication />,
+        path: '/',
+        element: <RequireAuth />,
         children: [
             {
-                path: "application/chat",
-                element: <AppsChat />
+                path: "/:lang",
+                element: <RootLayout />,
+                children: [
+                    //{ path: "/",    element: <Home />  },
+                    { path: "dashboards", element: <Analytics /> },
+                    { path: "patients/patient-list", element: <PatientList /> },
+                    //  { path: "/patients/patient-create",element:<PatientCreate/>},
+
+
+                    { path: "profile/overview", element: <ProfileView /> },
+                    { path: "profile/edit", element: <ProfileEdit /> },
+
+                    { path: "proposal/proposal-list", element: <Proposalist /> },
+                    { path: "proposal/proposal-create", element: <ProposalCreate /> },
+                    { path: "proposal/proposal-view", element: <ProposalView /> },
+                    //  { path: "/proposal/edit", element: <ProposalEdit/> },
+
+                ]
             },
-        ]
+            {
+                path: "/:lang",
+                element: <LayoutApplication />,
+                children: [
+                    {
+                        path: "application/chat",
+                        element: <AppsChat />
+                    },
+                ]
+            },
+        ],
     },
 
 
