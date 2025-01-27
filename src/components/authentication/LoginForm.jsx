@@ -5,6 +5,7 @@ import { FiFacebook, FiGithub, FiTwitter } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { authApi } from '../../api';
 import { useTranslation } from 'react-i18next'
+import topTost from '@/utils/topTost';
 
 const LoginForm = ({ registerPath, resetPath }) => {
 
@@ -30,15 +31,17 @@ const LoginForm = ({ registerPath, resetPath }) => {
                 const user = response?.data?.user;
                 login(user, accessToken, refreshToken);
 
-                console.log(response?.data?.message);
-                alert(response?.data?.message);
+                // console.log(response?.data?.message);
+                // alert(response?.data?.message);
+                topTost(response?.data?.message,"success");
                 
                 setTimeout(() => {
                     navigate('/en/dashboards');
                 }, 2000)
             } else {
-                console.log(`${response?.data?.name}:${response?.data?.message}`);
-                alert(`${response?.data?.name}:${response?.data?.message}`);
+                // console.log(`${response?.data?.name}:${response?.data?.message}`);
+                // alert(`${response?.data?.name}:${response?.data?.message}`);
+                topTost(response?.data?.message,"error");
             }
         } catch (err) {
             console.log('Login error:', err);
