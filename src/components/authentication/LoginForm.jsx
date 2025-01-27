@@ -29,8 +29,10 @@ const LoginForm = ({ registerPath, resetPath }) => {
                 const refreshToken = response?.data?.tokens?.refresh_token;
                 const user = response?.data?.user;
                 login(user, accessToken, refreshToken);
+
                 console.log(response?.data?.message);
                 alert(response?.data?.message);
+                
                 setTimeout(() => {
                     navigate('/en/dashboards');
                 }, 2000)
