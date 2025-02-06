@@ -1,33 +1,56 @@
 import React, { useState } from 'react'
-import { FiCalendar, FiCamera } from 'react-icons/fi'
+import { FiCalendar } from 'react-icons/fi'
 import DatePicker from 'react-datepicker'
-import TextArea from '@/components/shared/TextArea'
 import SelectDropdown from '@/components/shared/SelectDropdown'
 import Input from '@/components/shared/Input'
-import { timezonesData } from '@/utils/fackData/timeZonesData'
-import { currencyOptionsData } from '@/utils/fackData/currencyOptionsData'
 import { languagesData } from '@/utils/fackData/languagesData'
 import MultiSelectTags from '@/components/shared/MultiSelectTags'
-import { customerCreatePrivacyOptions, customerListStatusOptions, customerListTagsOptions } from '@/utils/options'
 import useLocationData from '@/hooks/useLocationData'
 import useDatePicker from '@/hooks/useDatePicker'
 
 const TabProfile = () => {
     const [selectedOption, setSelectedOption] = useState(null);
-    const { startDate, endDate, setStartDate, setEndDate, renderFooter } = useDatePicker();
-    const { countries, states, cities, loading, error, fetchStates, fetchCities, } = useLocationData();
-    const group = customerListTagsOptions
-    const status = customerListStatusOptions
+    const { startDate, setStartDate, renderFooter } = useDatePicker();
+    const { countries, states, cities, fetchStates, fetchCities, } = useLocationData();
+    const [streetAddress, setStreetAddress] = useState("");
+    const [houseNumber, setHouseNumber] = useState("");
+    const [apartmentNumber, setApartmentNumber] = useState("");
+    const [zipCode, setZipCode] = useState("");
+    const [postBox, setPostBox] = useState("");
+    const [profileImage, setProfileImage] = useState("/images/avatar/1.png"); // Default image
+    const [imageFile, setImageFile] = useState(null);
+    const [gender, setGender] = useState("male"); // Default gender
+
+
+
+    //  Handle Image Upload
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setProfileImage(reader.result); // Set profile image preview
+            };
+            reader.readAsDataURL(file);
+            setImageFile(file);
+        }
+    };
+
+    //  Handle Remove Image
+    const handleRemoveImage = () => {
+        setProfileImage("/images/avatar/1.png"); // Reset to default image
+        setImageFile(null);
+    };
+
 
     return (
         <div className="tab-pane fade show active" id="profileTab" role="tabpanel">
             <div className="card-body personal-info">
                 <div className="mb-4 d-flex align-items-center justify-content-between">
                     <h5 className="fw-bold mb-0 me-4">
-                        <span className="d-block mb-2">Personal Information:</span>
-                        <span className="fs-12 fw-normal text-muted text-truncate-1-line">Following information is publicly displayed, be careful! </span>
+                        <span className="d-block mb-2">Information:</span>
                     </h5>
-                    <a href="#" className="btn btn-sm btn-light-brand">Add New</a>
+
                 </div>
                 <div className="row mb-4 align-items-center">
                     <div className="col-lg-4">
@@ -36,27 +59,33 @@ const TabProfile = () => {
                     <div className="col-lg-8">
                         <div className="mb-4 mb-md-0 d-flex gap-4 your-brand">
                             <label htmlFor='img' className="wd-100 ht-100 position-relative overflow-hidden border border-gray-2 rounded">
-                                <img src="/images/avatar/1.png" className="upload-pic img-fluid rounded h-100 w-100" alt="" />
-                                <div className="position-absolute start-50 top-50 end-0 bottom-0 translate-middle h-100 w-100 hstack align-items-center justify-content-center c-pointer upload-button">
-                                    <i aria-hidden="true" className='camera-icon'><FiCamera /></i>
-                                </div>
-                                <input className="file-upload" type="file" accept="image/*" id='img' hidden />
+                                <img src="/images/avatar/1.png" className="upload-pic img-fluid rounded h-100 w-100" alt="profile_img" />
+                                <input className="file-upload" type="file" accept="image/*" id='img' hidden onChange={handleImageUpload} />
                             </label>
-                            <div className="d-flex flex-column gap-1">
-                                <div className="fs-11 text-gray-500 mt-2"># Upload your prifile</div>
-                                <div className="fs-11 text-gray-500"># Avatar size 150x150</div>
-                                <div className="fs-11 text-gray-500"># Max upload size 2mb</div>
-                                <div className="fs-11 text-gray-500"># Allowed file types: png, jpg, jpeg</div>
+                            <div className="d-flex flex-column gap-1 mb-2">
+                                <h4 >Profile Image</h4>
+                                <div className='d-flex gap-2 mb-2'>
+                                    <button className='btn btn-primary btn-lg' onClick={() => document.getElementById('img').click()}>Upload</button>
+                                    <button className='btn btn-danger btn-lg' onClick={handleRemoveImage} disabled={!imageFile}>Remove</button>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
                 <Input
                     icon='feather-user'
-                    label={"Name"}
+                    label={"First Name"}
                     labelId={"nameInput"}
-                    placeholder={"Name"}
-                    name={"name"}
+                    placeholder={"First Name"}
+                    name={"firstname"}
+                />
+                <Input
+                    icon='feather-user'
+                    label={"Last Name"}
+                    labelId={"nameInput"}
+                    placeholder={"Last Name"}
+                    name={"lastname"}
                 />
                 <Input
                     icon='feather-mail'
@@ -68,70 +97,20 @@ const TabProfile = () => {
                 />
                 <Input
                     icon='feather-link-2'
-                    label={"Username"}
+                    label={"User Name"}
                     labelId={"usernameInput"}
-                    placeholder={"Username"}
+                    placeholder={"User Name"}
                     name={"username"}
-                    centerLink={true}
+                //centerLink={true}
                 />
                 <Input
                     icon='feather-phone'
-                    label={"Phone"}
+                    label={"Phone Number"}
                     labelId={"phoneInput"}
-                    placeholder={"Phone"}
-                    name={"phone"}
+                    placeholder={"Phone Number"}
+                    name={"phonenumber"}
                 />
-                <Input
-                    icon='feather-compass'
-                    label={"Company"}
-                    labelId={"companyInput"}
-                    placeholder={"Company"}
-                    name={"company"}
-                />
-                <Input
-                    icon='feather-briefcase'
-                    label={"Designation"}
-                    labelId={"designationInput"}
-                    placeholder={"Designation"}
-                    name={"designation"}
-                />
-                <Input
-                    icon="feather-link"
-                    label={"Website"}
-                    labelId={"websiteInput"}
-                    placeholder={"Website"}
-                    name={"website"}
-                />
-                <Input
-                    icon="feather-dollar-sign"
-                    label={"VAT"}
-                    labelId={"vatInput"}
-                    placeholder={"VAT"}
-                    name={"vat"}
-                />
-                <TextArea
-                    icon="feather-map-pin"
-                    label={"Address"}
-                    labelId={"addressInput"}
-                    placeholder={"Address"}
-                />
-                <TextArea
-                    icon="feather-type"
-                    label={"description"}
-                    labelId={"descriptionInput"}
-                    placeholder={"Description"}
-                    row='5'
-                />
-            </div>
-            <hr className="my-0" />
-            <div className="card-body additional-info">
-                <div className="mb-4 d-flex align-items-center justify-content-between">
-                    <h5 className="fw-bold mb-0 me-4">
-                        <span className="d-block mb-2">Additional Information:</span>
-                        <span className="fs-12 fw-normal text-muted text-truncate-1-line">Communication details in case we want to connect with you.</span>
-                    </h5>
-                    <a href="#" className="btn btn-sm btn-light-brand">Add New</a>
-                </div>
+
                 <div className="row mb-4 align-items-center">
                     <div className="col-lg-4">
                         <label htmlFor="dateofBirth" className="fw-semibold">Date of Birth: </label>
@@ -157,6 +136,77 @@ const TabProfile = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div className="row mb-4 align-items-center">
+                    <div className="col-lg-4">
+                        <label className="fw-semibold">Gender: </label>
+                    </div>
+                    <div className="col-lg-8">
+                        <div className="d-flex gap-3">
+                            <div className="form-check">
+                                <input
+                                    className="form-check-input "
+                                    type="radio"
+                                    id="male"
+                                    name="gender"
+                                    value="male"
+                                    checked={gender === "male"}
+                                    onChange={(e) => setGender(e.target.value)}
+                                />
+                                <label className="form-check-label" htmlFor="male">Male</label>
+                            </div>
+                            <div className="form-check">
+                                <input
+                                    className="form-check-input "
+                                    type="radio"
+                                    id="female"
+                                    name="gender"
+                                    value="female"
+                                    checked={gender === "female"}
+                                    onChange={(e) => setGender(e.target.value)}
+                                />
+                                <label className="form-check-label " htmlFor="female">Female</label>
+                            </div>
+                            <div className="form-check">
+                                <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    id="other"
+                                    name="gender"
+                                    value="other"
+                                    checked={gender === "other"}
+                                    onChange={(e) => setGender(e.target.value)}
+                                />
+                                <label className="form-check-label" htmlFor="other">Other</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <Input
+                    icon='feather-briefcase'
+                    label={"Designation"}
+                    labelId={"designationInput"}
+                    placeholder={"Designation"}
+                    name={"designation"}
+                />
+                <Input
+                    icon="feather-link"
+                    label={"Website"}
+                    labelId={"websiteInput"}
+                    placeholder={"Website"}
+                    name={"website"}
+                />
+
+            </div>
+            <hr className="my-0" />
+            <div className="card-body additional-info">
+                <div className="mb-4 d-flex align-items-center justify-content-between">
+                    <h5 className="fw-bold mb-0 me-4">
+                        <span className="d-block mb-2">Address:</span>
+
+                    </h5>
                 </div>
                 <div className="row mb-4 align-items-center">
                     <div className="col-lg-4">
@@ -201,19 +251,78 @@ const TabProfile = () => {
                         />
                     </div>
                 </div>
-                <div className="row mb-4 align-items-center">
-                    <div className="col-lg-4">
-                        <label className="fw-semibold">Time Zone: </label>
-                    </div>
-                    <div className="col-lg-8">
-                        <SelectDropdown
-                            options={timezonesData}
-                            selectedOption={selectedOption}
-                            defaultSelect="Western Europe Time"
-                            onSelectOption={(option) => setSelectedOption(option)}
+                <div className="row mb-4 align-items-center ">
+                    <div >
+                        <Input
+                            icon='feather-map-pin'
+                            label={"Street Address"}
+                            labelId={"streetAddressInput"}
+                            placeholder={" Street Address"}
+                            name={"streetAddress"}
+                            value={streetAddress}
+                            onChange={(e) => setStreetAddress(e.target.value)}
                         />
                     </div>
+                    <div>
+                        <Input
+                            icon='feather-layers'
+                            label={"House Number"}
+                            labelId={"houseNumberInput"}
+                            placeholder={" House Number"}
+                            name={"houseNumber"}
+                            value={houseNumber}
+                            onChange={(e) => setHouseNumber(e.target.value)}
+                        />
+                    </div>
+                    <div >
+                        <Input
+                            icon='feather-layers'
+                            label={"Apartment Number"}
+                            labelId={"apartmentNumberInput"}
+                            placeholder={" Apartment Number"}
+                            name={"apartmentNumber"}
+                            value={apartmentNumber}
+                            onChange={(e) => setApartmentNumber(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <Input
+                            icon='feather-tag'
+                            label={"Zip Code"}
+                            labelId={"zipCodeInput"}
+                            placeholder={" Zip Code"}
+                            name={"zipCode"}
+                            value={zipCode}
+                            onChange={(e) => setZipCode(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <Input
+                            icon='feather-mail'
+                            label={"Postbox"}
+                            labelId={"postBoxInput"}
+                            placeholder={" Postbox Number"}
+                            name={"postBox"}
+                            value={postBox}
+                            onChange={(e) => setPostBox(e.target.value)}
+                        />
+                    </div>
+
                 </div>
+
+
+
+            </div>
+
+            <hr className="my-0" />
+            <div className="card-body additional-info">
+                <div className="mb-4 d-flex align-items-center justify-content-between">
+                    <h5 className="fw-bold mb-0 me-4">
+                        <span className="d-block mb-2">Other Information:</span>
+
+                    </h5>
+                </div>
+
                 <div className="row mb-4 align-items-center">
                     <div className="col-lg-4">
                         <label className="fw-semibold">Languages: </label>
@@ -225,59 +334,20 @@ const TabProfile = () => {
                         />
                     </div>
                 </div>
-                <div className="row mb-4 align-items-center">
-                    <div className="col-lg-4">
-                        <label className="fw-semibold">Currency: </label>
-                    </div>
-                    <div className="col-lg-8">
-                        <SelectDropdown
-                            options={currencyOptionsData}
-                            selectedOption={selectedOption}
-                            defaultSelect="usd"
-                            onSelectOption={(option) => setSelectedOption(option)}
-                        />
-                    </div>
+                <div>
+                    <Input
+                    icon="feather-link"
+                    label={"Website"}
+                    labelId={"websiteInput"}
+                    placeholder={"Website"}
+                    name={"website"}
+                />
                 </div>
-                <div className="row mb-4 align-items-center">
-                    <div className="col-lg-4">
-                        <label htmlFor="Input" className="fw-semibold">Group: </label>
-                    </div>
-                    <div className="col-lg-8">
-                        <MultiSelectTags
-                            options={group}
-                            defaultSelect={[group[4], group[2]]}
-                        />
-                    </div>
-                </div>
-                <div className="row mb-4 align-items-center">
-                    <div className="col-lg-4">
-                        <label className="fw-semibold">Status: </label>
-                    </div>
-                    <div className="col-lg-8">
-                        <SelectDropdown
-                            options={status}
-                            selectedOption={selectedOption}
-                            defaultSelect="active"
-                            onSelectOption={(option) => setSelectedOption(option)}
-                        />
-                    </div>
-                </div>
-                <div className="row mb-0 align-items-center">
-                    <div className="col-lg-4">
-                        <label className="fw-semibold">Privacy: </label>
-                    </div>
-                    <div className="col-lg-8">
-                        <SelectDropdown
-                            options={customerCreatePrivacyOptions}
-                            selectedOption={selectedOption}
-                            defaultSelect="everyone"
-                            onSelectOption={(option) => setSelectedOption(option)}
-                        />
-                    </div>
-                </div>
+
+
             </div>
         </div>
     )
 }
 
-export default TabProfile
+export default TabProfile 
