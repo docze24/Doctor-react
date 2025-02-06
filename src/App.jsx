@@ -10,6 +10,8 @@ import NavigationProvider from './contentApi/navigationProvider';
 import SideBarToggleProvider from './contentApi/sideBarToggleProvider';
 import { UserProvider } from './contentApi/userContext';
 import ThemeCustomizer from './components/shared/ThemeCustomizer';
+import { ProfileProvider } from './contentApi/ProfileContext';
+
 
 const App = () => {
 
@@ -17,11 +19,13 @@ const App = () => {
   return (
     <>
       <UserProvider>
+        <ProfileProvider>
         <NavigationProvider>
           <SideBarToggleProvider>
             <RouterProvider router={router} />
           </SideBarToggleProvider>
         </NavigationProvider>
+        </ProfileProvider>
       </UserProvider>
       <ThemeCustomizer />
     </>

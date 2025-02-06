@@ -1,29 +1,29 @@
-
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import topTost from "@/utils/topTost";
 import OtpVerification from "./OtpVerifyForm";
-import { FiGithub, FiEye, FiEyeOff } from 'react-icons/fi';
-import { FaGoogle, FaLinkedin } from "react-icons/fa";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-
+import { authApi } from '../../api';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from "../../contentApi/userContext";  // Import UserContext
 
 const practitioners = ["Solo Practice", "Group Practice", "Multi-Clinic Network"];
 const designations = ["Doctor", "Clinic Administrator", "Clinic Manager"];
 const countries = ["Luxembourg", "Belgium", "France"];
 
 const RegisterForm = () => {
-
   const { t, i18n } = useTranslation(['input', 'message']);
+  const { signup } = useContext(UserContext);  // Access signup function from UserContext
+  const navigate = useNavigate();
 
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-
+  
   const validationSchema = Yup.object({
     typeOfPractice: Yup.string().required("Type of practice is required"),
     designation: Yup.string().required("Designation is required"),
@@ -31,15 +31,25 @@ const RegisterForm = () => {
     email: Yup.string().email("Invalid email address").required("Email is required"),
     password: Yup.string()
       .required("Password is required")
-      .min(6, "Password must be at least 6 characters"),
+      .min(8, "Password must be at least 8 characters")
+      .matches(/[A-Z]/, "At least one uppercase letter is required")
+      .matches(/[a-z]/, "At least one lowercase letter is required")
+      .matches(/[0-9]/, "At least one number is required")
+      .matches(/[!@#$%^&*]/, "At least one special character is required"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .trim()
       .required("Confirm password is required"),
   });
+
+  
   const basicDetailsSchema = Yup.object({
     fullName: Yup.string().required("Full name is required"),
-    mobileNumber: Yup.string().matches(/^\d{10}$/, "Mobile number must be 10 digits").required("Mobile number is required"),
-    registration: Yup.string().matches(/^\d+$/, "Registration number must be numeric").required("Required for Profile Completion"),
+    registration: Yup.string().required("Medical Registration Number is required"),
+    mobileNumber: Yup.string()
+      .matches(/^\d{10}$/, "Mobile number must be 10 digits")
+      .required("Mobile number is required"),
+    terms: Yup.bool().oneOf([true], "You must agree to the terms and conditions"),
   });
 
   const handleSendOtp = (values) => {
@@ -48,15 +58,41 @@ const RegisterForm = () => {
     setStep(2);
   };
 
+  const handleSignupSubmit = async (values) => {
+    try {
+      const user = {
+        email: values.email,
+        password: values.password,
+        fullName: values.fullName,
+        typeOfPractice: values.typeOfPractice,
+        designation: values.designation,
+        country: values.country,
+        registration: values.registration,
+        mobileNumber: values.mobileNumber,
+      };
 
-  const handleBasicDetailsSubmit = () => {
-    topTost("Account created successfully!");
-    setTimeout(() => {
-      window.location.href = "/login";
-    }, 2000);
+      // Call signup API
+      const response = await authApi.signup(user);
+      if (response?.data?.status === 200) {
+
+        console.log("user data",user)
+        const accessToken = response?.data?.tokens?.access_token;
+        const refreshToken = response?.data?.tokens?.refresh_token;
+        const user = response?.data?.user;
+        signup(user, accessToken, refreshToken);  // Call the signup function from context
+        topTost(response?.data?.message, "success");
+
+        setTimeout(() => {
+          navigate('/en/dashboards');  // Redirect to dashboard after successful signup
+        }, 2000);
+      } else {
+        topTost(response?.data?.message, "error");
+      }
+    } catch (err) {
+      console.log("Signup error:", err);
+      topTost("Signup failed!", "error");
+    }
   };
-
-
 
   return (
     <div>
@@ -70,26 +106,8 @@ const RegisterForm = () => {
             <Form>
               <h2>Register</h2>
               <div className="mb-3">
-                <Field as="select" name="typeOfPractice" className="form-control">
-                  <option value=""> Practice Type</option>
-                  {practitioners.map((option, idx) => (
-                    <option key={idx} value={option}>{option}</option>
-                  ))}
-                </Field>
-                <ErrorMessage name="typeOfPractice" component="div" className="text-danger" />
-              </div>
-              <div className="mb-3">
-                <Field as="select" name="designation" className="form-control">
-                  <option value=""> Your Designation</option>
-                  {designations.map((option, idx) => (
-                    <option key={idx} value={option}>{option}</option>
-                  ))}
-                </Field>
-                <ErrorMessage name="designation" component="div" className="text-danger" />
-              </div>
-              <div className="mb-3">
-                <Field as="select" name="country" className="form-control">
-                  <option value=""> Country</option>
+                <Field as="select" name="country" className="form-control text-black-50">
+                  <option value="">Country</option>
                   {countries.map((option, idx) => (
                     <option key={idx} value={option}>{option}</option>
                   ))}
@@ -97,37 +115,57 @@ const RegisterForm = () => {
                 <ErrorMessage name="country" component="div" className="text-danger" />
               </div>
               <div className="mb-3">
-                <Field type="email" name="email" className="form-control" placeholder="Enter your email" />
+                <Field as="select" name="typeOfPractice" className="form-control text-black-50">
+                  <option value="">Practice Type</option>
+                  {practitioners.map((option, idx) => (
+                    <option key={idx} value={option}>{option}</option>
+                  ))}
+                </Field>
+                <ErrorMessage name="typeOfPractice" component="div" className="text-danger" />
+              </div>
+              <div className="mb-3">
+                <Field as="select" name="designation" className="form-control text-black-50">
+                  <option value="">Your Designation</option>
+                  {designations.map((option, idx) => (
+                    <option key={idx} value={option}>{option}</option>
+                  ))}
+                </Field>
+                <ErrorMessage name="designation" component="div" className="text-danger" />
+              </div>
+
+              <div className="mb-3 ">
+                <Field  type="email" name="email" className="form-control" placeholder="Enter your email" />
                 <ErrorMessage name="email" component="div" className="text-danger" />
               </div>
+
               <div className="mb-4 position-relative">
                 <div className="input-group">
                   <Field type={showPassword ? "text" : "password"} name="password" className="form-control" placeholder="Enter password" />
-
-                  <span className="input-group-text position-absolute eye-icon"
-                    style={{ right: "10px", top: "50%", transform: "translateY(-50%)", cursor: "pointer", backgroundColor: "white", border: "none" }}
+                  <span 
+                    className="input-group-text position-absolute eye-icon" 
+                    style={{ right: "10px", top: "50%", transform: "translateY(-50%)", cursor: "pointer", border: "none" }} 
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <FiEye /> : <FiEyeOff />}
                   </span>
                 </div>
-
                 <ErrorMessage name="password" component="div" className="text-danger" />
               </div>
-              <div className="mb-4 position-relative">
+
+              <div className="mb-4 position-relative ">
                 <div className="input-group">
                   <Field type={showConfirmPassword ? "text" : "password"} name="confirmPassword" className="form-control" placeholder="Confirm password" />
-
-                  <span className="input-group-text position-absolute eye-icon"
-                    style={{ right: "10px", top: "50%", transform: "translateY(-50%)", cursor: "pointer", backgroundColor: "white", border: "none" }}
+                  <span 
+                    className="input-group-text position-absolute eye-icon" 
+                    style={{ right: "10px", top: "50%", transform: "translateY(-50%)", cursor: "pointer", border: "none" }} 
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? <FiEye /> : <FiEyeOff />}
                   </span>
-
                 </div>
                 <ErrorMessage name="confirmPassword" component="div" className="text-danger" />
               </div>
+
               <button type="submit" className="btn btn-lg w-100 btn-primary">
                 Send OTP
               </button>
@@ -136,25 +174,25 @@ const RegisterForm = () => {
         </Formik>
       )}
       {step === 2 && <OtpVerification onOtpVerified={() => setStep(3)} email={email} />}
-
+      
       {step === 3 && (
         <Formik
           initialValues={{ fullName: "", mobileNumber: "", registration: "" }}
           validationSchema={basicDetailsSchema}
-          onSubmit={handleBasicDetailsSubmit}
+          onSubmit={handleSignupSubmit}  // Updated to handleSignupSubmit function
         >
           <Form>
             <h2 className="mb-4">User Details</h2>
             <div className="mb-3">
-              <Field type="text" name="fullName" className="form-control" placeholder=" Full name" />
+              <Field type="text" name="fullName" className="form-control" placeholder="Full name" />
               <ErrorMessage name="fullName" component="div" className="text-danger" />
             </div>
             <div className="mb-3">
-              <Field type="text" name="registration" className="form-control" placeholder=" Medical Registration Number" />
+              <Field type="text" name="registration" className="form-control" placeholder="Medical Registration Number" />
               <ErrorMessage name="registration" component="div" className="text-danger" />
             </div>
             <div className="mb-3">
-              <Field type="text" name="mobileNumber" className="form-control" placeholder=" Phone number" />
+              <Field type="text" name="mobileNumber" className="form-control" placeholder="Phone number" />
               <ErrorMessage name="mobileNumber" component="div" className="text-danger" />
             </div>
             <div className="mb-3 form-check">
@@ -162,36 +200,21 @@ const RegisterForm = () => {
               <label className="form-check-label">I agree to the terms and conditions and Privacy Policy</label>
               <ErrorMessage name="terms" component="div" className="text-danger" />
             </div>
-            <button type="submit" className="btn  btn-primary btn-lg w-100">Create Account</button>
+            <div className="mt-4">
+              <button type="submit" className="btn btn-lg btn-primary w-100">
+                Create Account
+              </button>
+            </div>
           </Form>
         </Formik>
       )}
-       <div className="w-100 mt-4 text-center mx-auto">
-        <div className="mb-3 border-bottom position-relative">
-          <span className="small py-1 px-3 text-uppercase text-muted bg-white position-absolute translate-middle">
-            or
-          </span>
-        </div>
-        <div className="d-flex align-items-center justify-content-center gap-2">
-          <a href="#" className="btn btn-light-brand flex-fill" data-bs-toggle="tooltip" data-bs-trigger="hover" title={t("loginWithFacebook", { ns: "input" })}>
-            <FaGoogle size={16} />
-          </a>
-          <a href="#" className="btn btn-light-brand flex-fill" data-bs-toggle="tooltip" data-bs-trigger="hover" title={t("loginWithTwitter", { ns: "input" })}>
-            <FaLinkedin size={16} />
-          </a>
-
-        </div>
-      </div>
-      <div className="mt-4 text-muted ">
-        <span> Already have an Account</span>
-        <Link to={`/${i18n.language}/login`} className="fw-bold">
-          Login
-        </Link>
-      </div>
-
-
     </div>
   );
 };
 
 export default RegisterForm;
+
+
+
+
+
