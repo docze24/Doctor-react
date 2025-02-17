@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useContext, useEffect, useState } from 'react'
 import Table from '@/components/patient/Table';
 import { FiAlertOctagon, FiArchive, FiClock, FiEdit3, FiEye, FiMoreHorizontal, FiPrinter, FiTrash2 } from 'react-icons/fi'
 import Dropdown from '@/components/shared/Dropdown';
@@ -8,8 +8,10 @@ import { leadTableData } from '@/utils/fackData/leadTableData';
 import TableSearch from '@/components/shared/TableSearch'
 import TablePagination from '@/components/shared/TablePagination'
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table'
+import { LanguageContext } from '../../contentApi/LanguageContext';
 
 const PatientList = () => {
+    const {t} = useContext(LanguageContext);
 
 
     const actions = [
@@ -81,7 +83,7 @@ const columns = [
 
     {
         accessorKey: 'customer',
-        header: () => 'Customer',
+        header: () => t("profile"),
         cell: (info) => {
             const roles = info.getValue();
             return (
@@ -103,27 +105,27 @@ const columns = [
     },
     {
         accessorKey: 'email',
-        header: () => 'Email',
+        header: () =>  t("email"),
         cell: (info) => <a href="apps-email.html">{info.getValue()}</a>
     },
-    {
-        accessorKey: 'source',
-        header: () => 'Source',
-        cell: (info) => {
-            const x = info.getValue()
-            return (
-                <div className="hstack gap-2">
-                    <div className="avatar-text avatar-sm">
-                        {getIcon(x.icon)}
-                    </div>
-                    <a href="#">{x.media}</a>
-                </div>
-            )
-        }
-    },
+    // {
+    //     accessorKey: 'source',
+    //     header: () => 'Source',
+    //     cell: (info) => {
+    //         const x = info.getValue()
+    //         return (
+    //             <div className="hstack gap-2">
+    //                 <div className="avatar-text avatar-sm">
+    //                     {getIcon(x.icon)}
+    //                 </div>
+    //                 <a href="#">{x.media}</a>
+    //             </div>
+    //         )
+    //     }
+    // },
     {
         accessorKey: 'phone',
-        header: () => 'Phone',
+        header: () =>  t("phone"),
         cell: (info) => <a href="tel:">{info.getValue()}</a>
         // meta: {
         //     className: "fw-bold text-dark"
@@ -131,16 +133,16 @@ const columns = [
     },
     {
         accessorKey: 'date',
-        header: () => 'Date',
+        header: () => t("date"),
     },
     {
         accessorKey: 'status',
-        header: () => 'Status',
+        header: () =>  t("status"),
         cell: (info) => <TableCell options={info?.getValue().status} defaultSelect={info?.getValue().defaultSelect} />
     },
     {
         accessorKey: 'actions',
-        header: () => "Actions",
+        header: () => t("actions"),
         cell: info => (
             <div className="hstack gap-2 justify-content-end">
                 <a href="proposal-view.html" className="avatar-text avatar-md">

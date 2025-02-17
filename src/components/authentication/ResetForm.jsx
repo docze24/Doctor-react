@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next';
+import { LanguageContext } from '../../contentApi/LanguageContext'
 
-const ResetForm = ({ path }) => {
-     const { t ,i18n } = useTranslation(['input', 'message']);
+const ResetForm = () => {
+   
+   const {t, i18n} = useContext(LanguageContext);
     return (
         <>
             <h2 className="fs-20 fw-bolder mb-4">{t("resetTitle", { ns: "message" })}</h2>

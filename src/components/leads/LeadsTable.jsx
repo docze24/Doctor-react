@@ -5,7 +5,8 @@ import Dropdown from '@/components/shared/Dropdown';
 import SelectDropdown from '@/components/shared/SelectDropdown';
 import getIcon from '@/utils/getIcon';
 import { leadTableData } from '@/utils/fackData/leadTableData';
-import { useTranslation } from 'react';
+//import { useTranslation } from 'react';
+
 
 
 const actions = [
@@ -34,7 +35,7 @@ const TableCell = memo(({ options, defaultSelect }) => {
 
 
 const LeadssTable = () => {
-    const { t } = useTranslation(['heading','nessage','button']);
+    // const { t } = useTranslation(['heading','message','button']);
     const columns = [
         {
             accessorKey: 'id',

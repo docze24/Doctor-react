@@ -1,0 +1,12 @@
+{
+  "roles": [
+    { "id": 1, "name": "Admin", "permissions": ["add_user", "edit_user", "delete_user", "view_roles", "edit_roles"] },
+    { "id": 2, "name": "Manager", "permissions": ["add_user", "edit_user", "view_roles"] },
+    { "id": 3, "name": "User", "permissions": ["view_users"] }
+  ],
+  "users": [
+    { "id": 1, "name": "John Doe", "role": "Admin" },
+    { "id": 2, "name": "Jane Smith", "role": "Manager" },
+    { "id": 3, "name": "Mark Lee", "role": "User" }
+  ]
+}

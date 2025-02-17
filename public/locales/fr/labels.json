@@ -8,6 +8,19 @@
       "dark": "Sombre",
       "location": "Emplacement",
     "phone": "Téléphone",
-    "email": "E-mail"
+    "email": "E-mail",
+    "verifyOtp": "Vérifier OTP",
+  "login": "Se connecter",
+  "register": "S'inscrire",
+  "submit": "Soumettre",
+  "resend": "Renvoyer",
+  "updateProfile": "Mettre à jour le profil",
+  "changeMethod": "Changer de méthode",
+  "createAccount": "Créer un compte",
+  "copyright": "Urheberrecht ©",
+  "help": "Hilfe",
+  "terms": "Geschäftsbedingungen",
+  "privacy": "Datenschutzrichtlinie"
+
 
 }

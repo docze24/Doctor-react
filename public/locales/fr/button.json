@@ -6,5 +6,7 @@
      "viewProposal": "Voir la Proposition",
      "delete": "Supprimer",
     "editProfile": "Modifier le profil",
-    "overview":"Aperçu"
+    "overview":"Aperçu",
+    "sendOtp": "Envoyer OTP",
+    "createAccount": "Créer un compte"
 }

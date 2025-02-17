@@ -6,6 +6,8 @@
      "viewProposal": "View Proposal",
      "delete": "Delete",
      "editProfile": "Edit Profile",
-      "overview":"Overview"
+      "overview":"Overview",
+      "sendOtp": "Send OTP",
+      "createAccount": "Create Account"
  
 }

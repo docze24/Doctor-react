@@ -1,11 +1,14 @@
-import React from 'react'
+import React from 'react';
 import { FiEye, FiPlus, FiStar } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import topTost from '@/utils/topTost';
-import { useTranslation } from 'react-i18next';
+import { LanguageContext } from "../../contentApi/LanguageContext";
+import { useContext } from 'react'
+
 
 const CustomersViewHeader = () => {
-    const {i18n} = useTranslation()
+     const {t,i18n} =useContext(LanguageContext);
+   
     
     const handleClick = () => {
         topTost()
@@ -17,11 +20,11 @@ const CustomersViewHeader = () => {
             </a>
             <a href="#" className="btn btn-icon btn-light-brand">
                 <FiEye size={16} className='me-2' />
-                <span>Follow</span>
+                <span>{t("follow",{ns:"button"})}</span>
             </a>
             <Link to={`/${i18n.language}/profile/edit`} className="btn btn-primary">
                 <FiPlus size={16} className='me-2' />
-                <span>Edit Profile</span>
+                <span>{t("editProfile",{ns:"button"})}</span>
             </Link>
         </div>
     )

@@ -10,7 +10,7 @@ import LanguageWrapper from "@/components/LanguageWrapper";
 // import LoginCover from "../pages/login-cover";
 //import AppsTasks from "../pages/apps-tasks";
 // import AppsNotes from "../pages/apps-notes";
-//import AppsCalender from "../pages/apps-calender";
+// import AppsCalender from "../pages/apps-calender";
 // import AppsStorage from "../pages/apps-storage";
 // import Proposalist from "../pages/proposal-list";
 // import CustomersList from "../pages/customers-list";
@@ -96,6 +96,16 @@ import ProposalCreate from "../pages/proposal/proposal-create";
 // import ProposalEdit from "../pages/proposal/proposal-edit";
 
 
+
+/******************ROOT ADMIN USERS************************** */
+/*########################################################*/
+
+import Users from '../pages/admin/users';
+import UserRoles from "../pages/admin/userRoles";
+import UserFormPage from '../components/Admin/UserForm';
+import RoleForm from '../components/Admin/RoleForm';
+
+
 //import LeadsList from "../pages/leadsList";
 //import CustomersList from "../pages/customers-list";
 import ProfileView from "../pages/profile-view";
@@ -116,7 +126,7 @@ export const router = createBrowserRouter([
 
     {
         path: "/:lang",
-        element: (<LanguageWrapper><LayoutAuth /> </LanguageWrapper>),
+        element: (<LanguageWrapper><LayoutAuth /></LanguageWrapper>),
         children: [
             // { path: "/", element: <Login /> },
             { path: "login", element: <Login /> },
@@ -127,8 +137,26 @@ export const router = createBrowserRouter([
     },
     {
         path: "/",
-        element: <Navigate to="/en/login" replace />, // Automatically redirect to /en
+        element: <Navigate to="/en/login" replace />, 
     },
+    {
+        path: "/:lang", 
+        element: <RootLayout />,  
+        children: [
+          {
+            path: "admin",
+            element: <RequireAuth requiredPermission="view_admin" />, 
+            children: [
+              { path: "users", element: <RequireAuth requiredPermission="view_users"><Users/></RequireAuth> },
+              { path: "users/create",element: <RequireAuth requiredPermission="add_users"><UserFormPage /></RequireAuth> },
+              { path: "users/edit/:id",element: <RequireAuth requiredPermission="edit_users"><UserFormPage /></RequireAuth>},
+              { path: "user-roles", element: <RequireAuth requiredPermission="view_roles"><UserRoles /></RequireAuth> },
+              { path: "user-roles/create", element: <RequireAuth requiredPermission="add_users"><RoleForm /></RequireAuth> },
+              { path: "user-roles/edit/:id", element: <RequireAuth requiredPermission="edit_users"><RoleForm /></RequireAuth> },
+            ],
+          },
+        ],
+      },
     {
         path: '/',
         element: <RequireAuth />,
@@ -140,7 +168,8 @@ export const router = createBrowserRouter([
                     //{ path: "/",    element: <Home />  },
                     { path: "dashboards", element: <Analytics /> },
                     { path: "patients/patient-list", element: <PatientList /> },
-                    //  { path: "/patients/patient-create",element:<PatientCreate/>},
+                    // { path: "/patients/patient-create",element:<PatientCreate/>},
+
 
 
                     { path: "profile/overview", element: <ProfileView /> },
@@ -168,3 +197,4 @@ export const router = createBrowserRouter([
 
 
 ])
+

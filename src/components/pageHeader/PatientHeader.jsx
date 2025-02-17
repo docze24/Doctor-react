@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { FiAlignRight, FiArrowLeft } from 'react-icons/fi'
-import { useTranslation } from 'react-i18next'
+import { LanguageContext } from '../../contentApi/LanguageContext'; 
 
 const PatientHeader = ({ children }) => {
     const [openSidebar, setOpenSidebar] = useState(false)
     const pathName = useLocation().pathname
 
-     const { t } = useTranslation(['button', 'heading']);
+     const {t}=useContext(LanguageContext);
    
     return (
         <div className="page-header">

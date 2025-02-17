@@ -1,12 +1,13 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { Link } from 'react-router-dom'
 import { emailList } from '../utils/fackData/emailList'
 import getIcon from '../utils/getIcon'
-import { useTranslation } from 'react-i18next'
+import { LanguageContext } from '../contentApi/LanguageContext'; 
 
 const EmailOverview = () => {
     const data = emailList.overviews
-      const { t,i18n } = useTranslation(["input","heading"]);
+
+      const {t , i18n} = useContext(LanguageContext);
 
     return (
         <div className="col-12">
