@@ -5,9 +5,9 @@ export const RoleContext = createContext();
 
 //  Dummy User Roles with Permissions
 const rolesData = [
-  { roleName: "admin", permissions: ["view_users", "add_users", "edit_users", "delete_users", "view_roles", "view_admin"] },
-  { roleName: "editor", permissions: ["view_users", "edit_users"] },
-  { roleName: "viewer", permissions: ["view_users"] }
+  { id:1, roleName: "admin", permissions: ["view_users","add_roles","edit_roles", "add_users", "edit_users", "delete_users", "view_roles", "view_admin"] },
+  { id:2,roleName: "editor", permissions: ["view_users", "edit_users"] },
+  { id:3 ,roleName: "viewer", permissions: ["view_users"] }
 ];
 
 export const RoleProvider = ({ children }) => {

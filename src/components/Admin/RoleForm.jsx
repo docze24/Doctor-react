@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRole } from "../../contentApi/RoleContext";
+import { FaArrowLeft, FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const RoleForm = () => {
-  const { addRole, editRole, getRoleById, roles=[] } = useRole(); //  Use RoleContext
+  const { addRole, editRole, roles = [] } = useRole();
   const navigate = useNavigate();
-  const { id } = useParams(); //  Get role ID from URL for edit
-  const isEditing = Boolean(id); //  Check if editing
-  const {lang} = useParams();
+  const { id, lang } = useParams();
+  const isEditing = Boolean(id);
 
   const [role, setRole] = useState({
     roleName: "",
@@ -16,40 +16,78 @@ const RoleForm = () => {
     status: "Active",
   });
 
-  //  Load Role Data for Editing
+  const [expandedSections, setExpandedSections] = useState({});
+  const [selectAll, setSelectAll] = useState(false);
+
+  // Sample Permissions Grouped
+  const permissionGroups = {
+    "CMS": ["Index", "Add", "Edit", "Change Status"],
+    "Common Master": ["Index", "Add", "Edit", "Change Status", "Sequence"],
+    "Inquiry": ["Index", "Download Csv"],
+    "Our Teams": ["Index", "Add", "Edit", "Change Status", "Sequence"]
+  };
+
+  // Load Role Data for Editing
   useEffect(() => {
     if (isEditing) {
-      const existingRole = getRoleById(id);
-      if (existingRole) {
-        setRole(existingRole);
-      }
+      const existingRole = roles.find(r => r.id === id);
+      if (existingRole) setRole(existingRole);
     }
   }, [id, roles]);
 
-  //  Handle Form Submit
+  // Handle Checkbox Change
+  const handlePermissionChange = (perm) => {
+    setRole((prev) => ({
+      ...prev,
+      permissions: prev.permissions.includes(perm)
+        ? prev.permissions.filter((p) => p !== perm)
+        : [...prev.permissions, perm],
+    }));
+  };
+
+  // Handle Select All Permissions
+  const handleSelectAll = () => {
+    if (!selectAll) {
+      const allPermissions = Object.values(permissionGroups).flat();
+      setRole((prev) => ({ ...prev, permissions: allPermissions }));
+    } else {
+      setRole((prev) => ({ ...prev, permissions: [] }));
+    }
+    setSelectAll(!selectAll);
+  };
+
+  // Toggle Expand/Collapse Sections
+  const toggleSection = (section) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
+
+  // Handle Form Submit
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log("Role Data to Submit: ", role);
-
     if (isEditing) {
-      editRole(id, role); // Update existing role
+      editRole(id, role);
     } else {
-      addRole(role.roleName,role.permissions); // Add new role
+      addRole(role.roleName, role.permissions);
     }
-
-    navigate(`/${lang}/admin/user-roles`); //  Redirect after save
+    navigate(`/${lang}/admin/user-roles`);
   };
 
   return (
     <div className="container mt-4">
-      <Card className="shadow-sm p-4">
-        <h3 className="mb-4">{isEditing ? "Edit User Role" : "Add User Role"}</h3>
+      {/* Header with Back Button */}
+      <div className="d-flex align-items-center mb-3">
+        <FaArrowLeft className="me-2 cursor-pointer" size={18} onClick={() => navigate(`/${lang}/admin/user-roles`)} />
+        <h3 className="mb-0">{isEditing ? "Edit User Role" : "Add User Role"}</h3>
+      </div>
 
+      <Card className="shadow-sm p-4">
         <Form onSubmit={handleSubmit}>
           {/* Role Name */}
           <Form.Group className="mb-3">
-            <Form.Label>Role Name *</Form.Label>
+            <Form.Label>Role Name <span className="text-danger">*</span></Form.Label>
             <Form.Control
               type="text"
               value={role.roleName}
@@ -59,29 +97,51 @@ const RoleForm = () => {
           </Form.Group>
 
           {/* Role Permissions */}
-          <h5>Role Permissions</h5>
-          <Row className="mb-3">
-            {["view_users", "add_users", "edit_users", "delete_users", "view_roles"].map((perm) => (
-              <Col md={3} key={perm}>
-                <Form.Check
-                  type="checkbox"
-                  label={perm.replace("_", " ")}
-                  checked={role.permissions.includes(perm)}
-                  onChange={(e) => {
-                    setRole((prev) => ({
-                      ...prev,
-                      permissions: e.target.checked
-                        ? [...prev.permissions, perm]
-                        : prev.permissions.filter((p) => p !== perm),
-                    }));
-                  }}
-                />
-              </Col>
-            ))}
-          </Row>
+          <h5 className="mt-4">Role Permissions</h5>
+          <Form.Check
+            type="checkbox"
+            label="Select All"
+            checked={selectAll}
+            onChange={handleSelectAll}
+            className="mb-2"
+          />
+
+          <Card className="mt-3 shadow-sm">
+            <Card.Body>
+              {Object.keys(permissionGroups).map((section) => (
+                <div key={section} className="mb-3">
+                  {/* Section Header */}
+                  <div
+                    className="d-flex justify-content-between align-items-center"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => toggleSection(section)}
+                  >
+                    <strong>{section}</strong>
+                    {expandedSections[section] ? <FaChevronUp /> : <FaChevronDown />}
+                  </div>
+
+                  {/* Permissions List */}
+                  {expandedSections[section] && (
+                    <Row className="mt-2">
+                      {permissionGroups[section].map((perm) => (
+                        <Col md={3} key={perm}>
+                          <Form.Check
+                            type="checkbox"
+                            label={perm}
+                            checked={role.permissions.includes(perm)}
+                            onChange={() => handlePermissionChange(perm)}
+                          />
+                        </Col>
+                      ))}
+                    </Row>
+                  )}
+                </div>
+              ))}
+            </Card.Body>
+          </Card>
 
           {/* Status */}
-          <Form.Group className="mb-3">
+          <Form.Group className="mt-4 mb-3">
             <Form.Label>Status</Form.Label>
             <Form.Select
               value={role.status}
@@ -94,7 +154,7 @@ const RoleForm = () => {
 
           {/* Buttons */}
           <div className="d-flex justify-content-end">
-            <Button variant="secondary" onClick={() => navigate("/admin/user-roles")} className="me-2">
+            <Button variant="secondary" onClick={() => navigate(`/${lang}/admin/user-roles`)} className="me-2">
               Cancel
             </Button>
             <Button type="submit" variant="primary">
