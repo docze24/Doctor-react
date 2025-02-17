@@ -4,17 +4,21 @@ import { UserContext } from '../../contentApi/userContext';
 import { FiFacebook, FiGithub, FiTwitter, FiEye, FiEyeOff } from 'react-icons/fi'; 
 import { Link } from 'react-router-dom';
 import { authApi } from '../../api';
-import { useTranslation } from 'react-i18next';
 import topTost from '@/utils/topTost';
 import { useFormik } from 'formik'; 
-import { loginSchema } from '../../schema/authSchema'; 
+import { loginSchema } from '../../schema/authSchema';
+import { LanguageContext } from '../../contentApi/LanguageContext'; 
 
 const LoginForm = ({ registerPath, resetPath }) => {
-    const { t, i18n } = useTranslation(['input', 'message']);
+  const {t ,i18n}=useContext(LanguageContext);
     const { login } = useContext(UserContext);
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
+
+    // console.log("🌍 Checking `t('login')` in LoginForm:", t("login"));
+    // console.log("🛠 All namespaces loaded:", i18n.options.ns);
+    // console.log("✅ Current language:", i18n.language);
 
     
     const formik = useFormik({

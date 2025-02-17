@@ -2,7 +2,9 @@ import React, { useState, useContext } from "react";
 import { UserContext } from "../../contentApi/userContext";
 import { FiLogOut, FiUser, FiSettings } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { LanguageContext } from "../../contentApi/LanguageContext";
+
+
 
 const dropdownItems = {
   profile: "/profile/overview",
@@ -13,7 +15,8 @@ const ProfileModal = () => {
   const { user, logout } = useContext(UserContext);
   const [profileHover, setProfileHover] = useState(false);
   const navigate = useNavigate();
-  const { t } = useTranslation(["input"]);
+  const {t ,i18n} =useContext(LanguageContext)
+  const currentLang = i18n.language || "en";
 
   // Handle profile hover
   const handleProfileHover = () => setProfileHover(true);
@@ -21,7 +24,10 @@ const ProfileModal = () => {
 
   // Handle navigation
   const handleItemClick = (route) => {
-    navigate(route); // Navigate to the specified route
+    const localizedRoute = `/${currentLang}${route}`;
+    console.log("Navigating to:", localizedRoute);
+    navigate(localizedRoute); 
+   
   };
 
   const handleLogout = () => {

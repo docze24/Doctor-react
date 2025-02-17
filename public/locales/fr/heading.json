@@ -1,4 +1,5 @@
 {
+    "registerTitle": "S'inscrire",
     "notificationsTitle": "Notifications",
     "emailReports": "Rapports de courriel",
     "emailCampaignReports": "Rapports des campagnes de courriel",
@@ -8,5 +9,18 @@
       "actions": "Menu des Actions",
       "followers": "Abonnés",
     "following": "Abonnements",
-    "engagement": "Engagement"
+    "engagement": "Engagement",
+    "userDetails": "Détails de l'utilisateur",
+
+    
+      "verifyEmail": "Vérifiez votre e-mail",
+      "welcomeBack": "Bon retour !",
+      "otpVerification": "Vérification OTP",
+      "profileSettings": "Paramètres du profil",
+      "changeLanguage": "Changer de langue",
+       "footer": "pied de page",
+       "action": "Actions"
+      
+      
+    
 }

@@ -2,10 +2,13 @@ import React from 'react'
 import { FiEye, FiHash } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 
+
+
 const RegisterForm = ({path}) => {
+    const { t } = useTranslation();
     return (
         <>
-            <h2 className="fs-20 fw-bolder mb-4">Register</h2>
+            <h2 className="fs-20 fw-bolder mb-4">{t("registerTitle")}</h2>
             <h4 className="fs-13 fw-bold mb-2">Manage all your Duralux crm</h4>
             <p className="fs-12 fw-medium text-muted">Let's get you all setup, so you can verify your personal
                 account and begine setting up your profile.</p>

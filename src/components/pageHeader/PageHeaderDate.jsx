@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FiFilter, FiPlus } from "react-icons/fi";
 import Checkbox from "@/components/shared/Checkbox";
 import { Link } from "react-router-dom";
 // import DateRange from "@/components/shared/DateRange"; // Correct import
-import { useTranslation } from "react-i18next";
-
+import { LanguageContext } from '../../contentApi/LanguageContext'; 
 const PageHeaderDate = () => {
   // const [toggleDateRange, setToggleDateRange] = useState(false);
-  const { i18n, t } = useTranslation();
+  const { i18n, t } = useContext(LanguageContext);
 
   // Updated filterItems with translations
   const filterItems = [

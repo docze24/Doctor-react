@@ -1,6 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { LanguageContext } from '../../contentApi/LanguageContext';
 
 const OtpVerification = ({ email, onOtpVerified }) => {
+    const {t} = useContext(LanguageContext)
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const inputRefs = useRef([]);
 
@@ -43,14 +45,14 @@ const OtpVerification = ({ email, onOtpVerified }) => {
     return (
         <div className="otp-container">
             <h2 className="fs-20 fw-bolder mb-4">
-                Verify Your Email
-                <a href="#" className="float-end fs-12 text-primary">Change Method</a>
+            {t("verifyEmail", { ns: "heading" })} 
+                <a href="#" className="float-end fs-12 text-primary">{t("changeMethod", { ns: "labels" })}</a>
             </h2>
             <h4 className="fs-13 fw-bold mb-2">
-                Please enter the one-time password sent to verify your email.
+            {t("enterOtp", { ns: "input" })}
             </h4>
             <p className="fs-12 fw-medium text-muted">
-                A code has been sent to <strong>{email}</strong>
+            {t("otpSent", { ns: "message" })}<strong>{email}</strong>
             </p>
             <form className="w-100 mt-4 pt-2" onSubmit={handleSubmit}>
                 <div id="otp" className="inputs d-flex flex-row justify-content-center mt-2">
@@ -69,12 +71,12 @@ const OtpVerification = ({ email, onOtpVerified }) => {
                 </div>
                 <div className="mt-5">
                     <button type="submit" className="btn btn-lg btn-primary w-100">
-                     Verify Otp
+                    {t("verifyOtp", { ns: "labels" })} 
                     </button>
                 </div>
                 <div className="mt-5 text-muted">
-                    <span>Didn't get the code? </span>
-                    <a href="#">Resend (1/3)</a>
+                    <span>{t("didntGetCode", { ns: "message" })}</span>
+                    <a href="#">{t("resend", { ns: "labels" })} (1/3)</a>
                 </div>
             </form>
         </div>

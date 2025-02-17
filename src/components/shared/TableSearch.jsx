@@ -1,48 +1,103 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next';
+import React, { useContext } from 'react';
+import { LanguageContext } from '../../contentApi/LanguageContext';
+import { Form, Row, Col, InputGroup, Button } from 'react-bootstrap';
 
-const TableSearch = ({table, setGlobalFilter, globalFilter}) => {
+const TableSearch = ({ setGlobalFilter, globalFilter }) => {
+  const { t } = useContext(LanguageContext);
 
-    const { t } = useTranslation("tables");
-    return (
-        <div className='row gy-2'>
-            <div className='col-sm-12 col-md-6 ps-0 m-0 pb-10'>
-                <div className='dataTables_length d-flex justify-content-md-start justify-content-center'>
-                    <label className='d-flex align-items-center gap-1'>
-                    {t("show",{ns:'tables'})}
-                        <select
-                            className='form-select form-select-sm w-auto pe-4'
-                            value={table.getState().pagination.pageSize}
-                            onChange={e => {
-                                table.setPageSize(Number(e.target.value))
-                            }}
-                        >
-                            {[10, 20, 30, 40, 50].map(pageSize => (
-                                <option key={pageSize} value={pageSize}>
-                                    {pageSize}
-                                </option>
-                            ))}
-                        </select>
-                        {t("entries",{ns:'tables'})}
-                    </label>
-                </div>
-            </div>
-            <div className='col-sm-12 col-md-6 ps-0 m-0 pb-10'>
-                <div className='dataTables_filter d-flex justify-content-md-end justify-content-center'>
-                    <label className='d-inline-flex align-items-center gap-2'>
-                    {t("search",{ns:'tables'})}
-                        <input
-                            type="text"
-                            value={globalFilter ?? ""}
-                            onChange={(e) => setGlobalFilter(e.target.value)}
-                            placeholder={t("search.",{ns:'tables'})}
-                            className="form-control form-control-sm"
-                        />
-                    </label>
-                </div>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div >
+      <Row className="align-items-end ">
 
-export default TableSearch
+        {/* 🔍 Search Section (Left Side) */}
+        <Col md={3} className="mb-3 mb-md-0">
+          <Form.Group>
+            <Form.Label className="fw-bold text-dark">Search by Email</Form.Label>
+            <InputGroup>
+              <Form.Control
+                type="text"
+                value={globalFilter ?? ""}
+                onChange={(e) => setGlobalFilter(e.target.value)}
+                placeholder="search"
+                style={{
+                  color: "#6c757d", 
+                  height: "45px", 
+                  fontSize: "14px", 
+                  borderRadius: "8px"
+                }}
+              />
+            </InputGroup>
+          </Form.Group>
+        </Col>
+
+        {/* 🎭 Select Role (Right-Aligned) */}
+        <Col md={3} className="mb-3 mb-md-0">
+          <Form.Group>
+            <Form.Label className="fw-bold text-dark">Select Role</Form.Label>
+            <Form.Select 
+              style={{
+                color: "#6c757d", 
+                height: "45px", 
+                fontSize: "14px", 
+                borderRadius: "8px"
+              }}>
+              <option value="">Select role</option>
+              <option>Admin</option>
+              <option>Manager</option>
+              <option>User</option>
+            </Form.Select>
+          </Form.Group>
+        </Col>
+
+        {/* 🔄 Status Dropdown (Right Side) */}
+        <Col md={2} className="mb-3 mb-md-0">
+          <Form.Group>
+            <Form.Label className="fw-bold text-dark">{t("status", { ns: "tables" })}</Form.Label>
+            <Form.Select 
+              style={{
+                color: "#6c757d", 
+                height: "45px", 
+                fontSize: "14px", 
+                borderRadius: "8px"
+              }}>
+              <option value="">Select Status</option>
+              <option>Active</option>
+              <option>Inactive</option>
+            </Form.Select>
+          </Form.Group>
+        </Col>
+
+        {/* 🔵 Reset & Search Buttons (Bigger, Centered) */}
+        <Col md={4} className="d-flex justify-content-end">
+          <Button 
+            variant="outline-primary" 
+            className="me-3 px-4 py-2" 
+            style={{
+              fontSize: "14px", 
+              width: "130px", 
+              height: "45px",
+              borderRadius: "8px",
+               marginBottom:"4px"
+            }}>
+            Reset
+          </Button>
+          <Button 
+            variant="primary" 
+            className="px-4 py-2" 
+            style={{
+              fontSize: "14px", 
+              width: "130px", 
+              height: "45px",
+              borderRadius: "8px",
+              marginBottom:"4px"
+            }}>
+           Search
+          </Button>
+        </Col>
+
+      </Row>
+    </div>
+  );
+};
+
+export default TableSearch;

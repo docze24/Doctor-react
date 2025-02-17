@@ -147,6 +147,35 @@ export const menuList = [
           subdropdownMenu: false
         }
       ]
+    },
+    {
+      id: 5,
+      name: {
+        en: "User",
+        fr: "Utilisateur"
+      },
+      path: "/:lang/admin",
+      icon: "feather-users",
+      dropdownMenu: [
+        {
+          id: 9,
+          name: {
+            en: "Users",
+            fr: "Utilisateurs"
+          },
+          path: "/:lang/admin/users",
+          subdropdownMenu: false
+        },
+        {
+          id: 10,
+          name: {
+            en: "Users-Roles",
+            fr: "Utilisateurs-Rôles"
+          },
+          path: "/:lang/admin/user-roles",
+          subdropdownMenu: false
+        }
+      ]
     }
   ];
   

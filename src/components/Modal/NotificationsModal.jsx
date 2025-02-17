@@ -1,7 +1,7 @@
-import React from 'react'
+import React ,{useContext} from 'react'
 import { FiBell, FiCheck, FiX } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { LanguageContext } from "../../contentApi/LanguageContext"; 
 
 const notificationsList = [
     {
@@ -29,7 +29,7 @@ const notificationsList = [
 ]
 const NotificationsModal = () => {
 
-    const { t } = useTranslation(["input","heading"]);
+   const { t } = useContext(LanguageContext);
     return (
         <div className="dropdown nxl-h-item">
             <div className="nxl-head-link me-3" data-bs-toggle="dropdown" role="button" data-bs-auto-close="outside">

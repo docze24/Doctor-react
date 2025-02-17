@@ -4,17 +4,20 @@ import * as Yup from "yup";
 import topTost from "@/utils/topTost";
 import OtpVerification from "./OtpVerifyForm";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useTranslation } from 'react-i18next';
 import { authApi } from '../../api';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from "../../contentApi/userContext";  // Import UserContext
+import { UserContext  } from "../../contentApi/userContext";  // Import UserContext
+import { LanguageContext } from "../../contentApi/LanguageContext";
+
 
 const practitioners = ["Solo Practice", "Group Practice", "Multi-Clinic Network"];
 const designations = ["Doctor", "Clinic Administrator", "Clinic Manager"];
 const countries = ["Luxembourg", "Belgium", "France"];
 
 const RegisterForm = () => {
-  const { t, i18n } = useTranslation(['input', 'message']);
+ 
+ const {t} = useContext(LanguageContext);
+
   const { signup } = useContext(UserContext);  // Access signup function from UserContext
   const navigate = useNavigate();
 
@@ -104,10 +107,10 @@ const RegisterForm = () => {
         >
           {({ values }) => (
             <Form>
-              <h2>Register</h2>
+              <h2>{t('registerTitle')}</h2>
               <div className="mb-3">
                 <Field as="select" name="country" className="form-control text-black-50">
-                  <option value="">Country</option>
+                  <option value="">{t('country')}</option>
                   {countries.map((option, idx) => (
                     <option key={idx} value={option}>{option}</option>
                   ))}
@@ -116,7 +119,7 @@ const RegisterForm = () => {
               </div>
               <div className="mb-3">
                 <Field as="select" name="typeOfPractice" className="form-control text-black-50">
-                  <option value="">Practice Type</option>
+                  <option value="">{t('practiceType')}</option>
                   {practitioners.map((option, idx) => (
                     <option key={idx} value={option}>{option}</option>
                   ))}
@@ -125,7 +128,7 @@ const RegisterForm = () => {
               </div>
               <div className="mb-3">
                 <Field as="select" name="designation" className="form-control text-black-50">
-                  <option value="">Your Designation</option>
+                  <option value="">{t('designation')}</option>
                   {designations.map((option, idx) => (
                     <option key={idx} value={option}>{option}</option>
                   ))}
@@ -134,13 +137,13 @@ const RegisterForm = () => {
               </div>
 
               <div className="mb-3 ">
-                <Field  type="email" name="email" className="form-control" placeholder="Enter your email" />
+                <Field  type="email" name="email" className="form-control" placeholder={t('email')} />
                 <ErrorMessage name="email" component="div" className="text-danger" />
               </div>
 
               <div className="mb-4 position-relative">
                 <div className="input-group">
-                  <Field type={showPassword ? "text" : "password"} name="password" className="form-control" placeholder="Enter password" />
+                  <Field type={showPassword ? "text" : "password"} name="password" className="form-control" placeholder={t('password')} />
                   <span 
                     className="input-group-text position-absolute eye-icon" 
                     style={{ right: "10px", top: "50%", transform: "translateY(-50%)", cursor: "pointer", border: "none" }} 
@@ -154,7 +157,7 @@ const RegisterForm = () => {
 
               <div className="mb-4 position-relative ">
                 <div className="input-group">
-                  <Field type={showConfirmPassword ? "text" : "password"} name="confirmPassword" className="form-control" placeholder="Confirm password" />
+                  <Field type={showConfirmPassword ? "text" : "password"} name="confirmPassword" className="form-control" placeholder={t('confirmPassword')} />
                   <span 
                     className="input-group-text position-absolute eye-icon" 
                     style={{ right: "10px", top: "50%", transform: "translateY(-50%)", cursor: "pointer", border: "none" }} 
@@ -167,7 +170,7 @@ const RegisterForm = () => {
               </div>
 
               <button type="submit" className="btn btn-lg w-100 btn-primary">
-                Send OTP
+              {t('sendOtp')}
               </button>
             </Form>
           )}
@@ -182,27 +185,27 @@ const RegisterForm = () => {
           onSubmit={handleSignupSubmit}  // Updated to handleSignupSubmit function
         >
           <Form>
-            <h2 className="mb-4">User Details</h2>
+            <h2 className="mb-4">  {t('userDetails',{ ns: "heading" })}</h2>
             <div className="mb-3">
-              <Field type="text" name="fullName" className="form-control" placeholder="Full name" />
+              <Field type="text" name="fullName" className="form-control" placeholder={t('fullName')} />
               <ErrorMessage name="fullName" component="div" className="text-danger" />
             </div>
             <div className="mb-3">
-              <Field type="text" name="registration" className="form-control" placeholder="Medical Registration Number" />
+              <Field type="text" name="registration" className="form-control" placeholder={t('registration')} />
               <ErrorMessage name="registration" component="div" className="text-danger" />
             </div>
             <div className="mb-3">
-              <Field type="text" name="mobileNumber" className="form-control" placeholder="Phone number" />
+              <Field type="text" name="mobileNumber" className="form-control" placeholder={t('mobileNumber')} />
               <ErrorMessage name="mobileNumber" component="div" className="text-danger" />
             </div>
             <div className="mb-3 form-check">
               <Field type="checkbox" name="terms" className="form-check-input" />
-              <label className="form-check-label">I agree to the terms and conditions and Privacy Policy</label>
+              <label className="form-check-label">{t('terms')}</label>
               <ErrorMessage name="terms" component="div" className="text-danger" />
             </div>
             <div className="mt-4">
               <button type="submit" className="btn btn-lg btn-primary w-100">
-                Create Account
+              {t('createAccount')}
               </button>
             </div>
           </Form>

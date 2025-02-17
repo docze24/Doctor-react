@@ -1,6 +1,6 @@
 {
     "fullName": "Full Name",
-    "email": "Email",
+    "email": "E-mail",
     "username": "Username",
     "password": "Password",
     "confirmPassword": "Confirm Password",
@@ -34,8 +34,24 @@
       "viewAll": "View All",
 
       "filter": "Filter",
-    "createNew": "Create New",
-    "manageFilter": "Manage Filter"
+      "createNew": "Create New",
+      "manageFilter": "Manage Filter",
+      "registerTitle": "Register",
+      "country": "Country",
+      "practiceType": "Practice Type",
+      "designation": "Your Designation",
+      "registration": "Medical Registration Number",
+      "mobileNumber": "Phone Number",
+      "terms": "I agree to the terms and conditions and Privacy Policy",
+       "otp": "One-Time Password",
+      "enterOtp": "Enter your OTP",
+      "status":"Status"
+  
+  
+    
+   
+
+    
     
 
   }

@@ -1,5 +1,5 @@
 {
-    "registerTitle": "SignUp",
+    
     "registerSubtitle": "Manage all your Docze CRM",
     "registerDescription": "Let's get you all set up, so you can verify your personal account and begin setting up your profile.",
     "generatePassword": "Generate Password",
@@ -25,6 +25,25 @@
     "loading": "Loading data...",
     "emailExample": "alex.della@outlook.com",
     "locationExample": "California, USA",
-    "phoneExample": "+01 (375) 2589 645"
+    "phoneExample": "+01 (375) 2589 645",
+
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "passwordLength": "Password must be at least 8 characters",
+    "passwordUppercase": "At least one uppercase letter is required",
+    "passwordLowercase": "At least one lowercase letter is required",
+    "passwordNumber": "At least one number is required",
+    "passwordSpecial": "At least one special character is required",
+    "passwordMatch": "Passwords must match",
+    "otpSent": "OTP sent to your email!",
+    "signupSuccess": "Signup successful!",
+    "signupFailed": "Signup failed!",
+  "invalidOtp": "Invalid OTP. Please try again.",
+  "loginSuccess": "You have successfully logged in.",
+  "registerSuccess": "Registration successful! Please check your email.",
+  "errorOccurred": "An error occurred. Please try again later.",
+  "forgotPassword": "Forgot your password?",
+  "didntGetCode": "Didn't get the code?",
+  "resendOtp": "Resend OTP"
   }
   

@@ -4,12 +4,12 @@ import NavigationManu from '@/components/navigationMenu/NavigationMenu'
 import Header from '@/components/header/Header'
 import useBootstrapUtils from '@/hooks/useBootstrapUtils'
 import SupportDetails from '@/components/supportDetails'
-
+import { LanguageProvider } from '../contentApi/LanguageContext'
 const RootLayout = () => {
     const pathName = useLocation().pathname
     useBootstrapUtils(pathName)
     return (
-        <>
+        <LanguageProvider>
             <Header />
             <NavigationManu />
             <main className="nxl-container">
@@ -18,7 +18,7 @@ const RootLayout = () => {
                 </div>
             </main>
             <SupportDetails />
-        </>
+         </LanguageProvider>
     )
 }
 

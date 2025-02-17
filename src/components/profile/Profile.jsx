@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BsPatchCheckFill } from "react-icons/bs";
 import { FiEdit, FiMail, FiMapPin, FiPhone, FiTrash2 } from "react-icons/fi";
 import { useProfile } from "../../contentApi/ProfileContext";
-import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom'
+import { LanguageContext } from "../../contentApi/LanguageContext";
 
 const Profile = () => {
 
-    const {i18n} = useTranslation()
+    const {t,i18n} =useContext(LanguageContext);
     const { profile } = useProfile(); 
 
     return (
@@ -36,15 +36,15 @@ const Profile = () => {
                     <div className="fs-12 fw-normal text-muted text-center d-flex flex-wrap gap-3 mb-4">
                         <div className="flex-fill py-3 px-4 rounded-1 border border-dashed border-gray-5">
                             <h6 className="fs-15 fw-bolder">{profile.followers}</h6>
-                            <p className="fs-12 text-muted mb-0">Followers</p>
+                            <p className="fs-12 text-muted mb-0">{t("followers",{ns:"heading"})}</p>
                         </div>
                         <div className="flex-fill py-3 px-4 rounded-1 border border-dashed border-gray-5">
                             <h6 className="fs-15 fw-bolder">{profile.following}</h6>
-                            <p className="fs-12 text-muted mb-0">Following</p>
+                            <p className="fs-12 text-muted mb-0">{t("following",{ns:"heading"})}</p>
                         </div>
                         <div className="flex-fill py-3 px-4 rounded-1 border border-dashed border-gray-5">
                             <h6 className="fs-15 fw-bolder">{profile.engagement}</h6>
-                            <p className="fs-12 text-muted mb-0">Engagement</p>
+                            <p className="fs-12 text-muted mb-0">{t("engagement",{ns:"heading"})}</p>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@ const Profile = () => {
                     <li className="hstack justify-content-between mb-4">
                         <span className="text-muted fw-medium hstack gap-3">
                             <FiMapPin size={16} />
-                            Location
+                            {t("location",{ns:"labels"})}
                         </span>
                         <a href="#" className="float-end">
                             {profile.location}
@@ -61,7 +61,7 @@ const Profile = () => {
                     <li className="hstack justify-content-between mb-4">
                         <span className="text-muted fw-medium hstack gap-3">
                             <FiPhone size={16} />
-                            Phone
+                            {t("phone",{ns:"labels"})}
                         </span>
                         <a href="#" className="float-end">
                             {profile.phone}
@@ -70,7 +70,7 @@ const Profile = () => {
                     <li className="hstack justify-content-between mb-0">
                         <span className="text-muted fw-medium hstack gap-3">
                             <FiMail size={16} />
-                            Email
+                            {t("email",{ns:"input"})}
                         </span>
                         <a href="#" className="float-end">
                             {profile.email}
@@ -80,11 +80,11 @@ const Profile = () => {
                 <div className="d-flex gap-2 text-center pt-4">
                     <a href="#" className="w-50 btn btn-light-brand">
                         <FiTrash2 size={16} className="me-2" />
-                        <span>Delete</span>
+                        <span>{t("delete",{ns:"button"})}</span>
                     </a>
                     <Link to={`/${i18n.language}/profile/edit`} className="btn btn-primary">
                         <FiEdit size={16} className='me-2' />
-                        <span>Edit Profile</span>
+                        <span>{t("editProfile",{ns:"button"})}</span>
                     </Link>
                 </div>
             </div>

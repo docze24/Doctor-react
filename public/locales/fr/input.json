@@ -32,6 +32,20 @@
 
      "filter": "Filtrer",
      "createNew": "Créer Nouveau",
-     "manageFilter": "Gérer le Filtre"
+     "manageFilter": "Gérer le Filtre",
+
+     "registerTitle": "S'inscrire",
+    "country": "Pays",
+    "practiceType": "Type de pratique",
+    "designation": "Votre désignation",
+    "registration": "Numéro d'enregistrement médical",
+    "mobileNumber": "Numéro de téléphone",
+    "terms": "J'accepte les termes et conditions ainsi que la politique de confidentialité",
+    "otp": "Mot de passe à usage unique",
+  
+    "enterOtp": "Entrez votre code OTP",
+     "status":"Statut"
+  
+    
   }
   

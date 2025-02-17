@@ -1,18 +1,66 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import React, { useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { LanguageProvider, LanguageContext } from "../contentApi/LanguageContext"; 
 
 const LanguageWrapper = ({ children }) => {
-  const { lang } = useParams(); // Get language from URL
-  const { i18n } = useTranslation();
+  return (
+    <LanguageProvider> 
+      <LanguageContent>{children}</LanguageContent>
+    </LanguageProvider>
+  );
+};
+
+const LanguageContent = ({ children }) => {
+  const { lang } = useParams();
+  const navigate = useNavigate();
+  const languageContext = useContext(LanguageContext);
+
+  if (!languageContext) {
+    console.error(" LanguageContext is undefined! Make sure LanguageProvider is wrapping the component.");
+    return null;
+  }
+
+  const { language, changeLanguage } = languageContext;
 
   useEffect(() => {
-    if (lang && lang !== i18n.language) {
-      i18n.changeLanguage(lang); // Update language
+    if (lang && lang !== language) {
+      changeLanguage(lang);
+    } else if (!lang) {
+      navigate(`/${language}`, { replace: true });
     }
-  }, [lang, i18n]);
+  }, [lang, language, navigate]);
 
-  return <>{children}</>; // Render child components
+  return <>{children}</>;
 };
 
 export default LanguageWrapper;
+
+
+// import React, { useEffect, useContext } from "react";
+// import { useParams, useNavigate } from "react-router-dom";
+// import { LanguageContext } from "../contentApi/LanguageContext";
+
+// const LanguageWrapper = ({ children }) => {
+//   const { lang } = useParams();
+//   const navigate = useNavigate();
+//   const languageContext = useContext(LanguageContext);
+
+//   if (!languageContext) {
+//     console.error("❌ LanguageContext is undefined! Make sure LanguageProvider is wrapping the component.");
+//     return null;
+//   }
+
+//   const { language, changeLanguage } = languageContext;
+
+//   useEffect(() => {
+//     if (!lang) {
+//       navigate(`/${language}`, { replace: true });
+//     } else if (lang !== language) {
+//       changeLanguage(lang);
+//     }
+//   }, [lang, language, navigate, changeLanguage]);
+
+//   return <>{children}</>;
+// };
+
+// export default LanguageWrapper;
