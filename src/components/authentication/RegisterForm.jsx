@@ -5,6 +5,7 @@ import topTost from "@/utils/topTost";
 import OtpVerification from "./OtpVerifyForm";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { authApi } from '../../api';
+
 import { useNavigate } from 'react-router-dom';
 import { UserContext  } from "../../contentApi/userContext";  // Import UserContext
 import { LanguageContext } from "../../contentApi/LanguageContext";
@@ -31,6 +32,7 @@ const RegisterForm = () => {
     typeOfPractice: Yup.string().required("Type of practice is required"),
     designation: Yup.string().required("Designation is required"),
     country: Yup.string().required("Country is required"),
+    name: Yup.string().required("Your Name is required"),
     email: Yup.string().email("Invalid email address").required("Email is required"),
     password: Yup.string()
       .required("Password is required")
@@ -62,32 +64,31 @@ const RegisterForm = () => {
   };
 
   const handleSignupSubmit = async (values) => {
+
+    console.log('handleSignupSubmit')
     try {
       const user = {
         email: values.email,
         password: values.password,
-        fullName: values.fullName,
-        typeOfPractice: values.typeOfPractice,
+        userType: values.typeOfPractice,
+        userName: values.email,
+        firstName: values.name,
+        lastName: values.name,
         designation: values.designation,
         country: values.country,
-        registration: values.registration,
-        mobileNumber: values.mobileNumber,
+        //registration: values.registration,
+        //mobileNumber: values.mobileNumber,
       };
+      setEmail(values.email);
+
+      //console.log('handleSignupSubmit',user)
 
       // Call signup API
       const response = await authApi.signup(user);
       if (response?.data?.status === 200) {
-
-        console.log("user data",user)
-        const accessToken = response?.data?.tokens?.access_token;
-        const refreshToken = response?.data?.tokens?.refresh_token;
-        const user = response?.data?.user;
-        signup(user, accessToken, refreshToken);  // Call the signup function from context
+        setStep(2);
         topTost(response?.data?.message, "success");
-
-        setTimeout(() => {
-          navigate('/en/dashboards');  // Redirect to dashboard after successful signup
-        }, 2000);
+        
       } else {
         topTost(response?.data?.message, "error");
       }
@@ -103,7 +104,7 @@ const RegisterForm = () => {
         <Formik
           initialValues={{ typeOfPractice: "", designation: "", country: "", email: "", password: "", confirmPassword: "" }}
           validationSchema={validationSchema}
-          onSubmit={handleSendOtp}
+          onSubmit={handleSignupSubmit}
         >
           {({ values }) => (
             <Form>
@@ -139,6 +140,11 @@ const RegisterForm = () => {
               <div className="mb-3 ">
                 <Field  type="email" name="email" className="form-control" placeholder={t('email')} />
                 <ErrorMessage name="email" component="div" className="text-danger" />
+              </div>
+
+              <div className="mb-3 ">
+                <Field  type="name" name="name" className="form-control" placeholder={t('name')} />
+                <ErrorMessage name="name" component="div" className="text-danger" />
               </div>
 
               <div className="mb-4 position-relative">
