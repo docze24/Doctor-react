@@ -1,9 +1,10 @@
+
 import React, { useState, useContext, useEffect } from "react";
 import { Form, Table, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { RoleContext } from "../../contentApi/RoleContext";
 import ButtonComp from "../../components/Admin/ButtonComp"; 
-import { FiEdit2 } from "react-icons/fi"; // ✅ Import Edit Icon
+import { FiEdit2 } from "react-icons/fi"; //  Import Edit Icon
 
 const UserRoles = () => {
   const { roles = [], hasPermission } = useContext(RoleContext);
@@ -11,10 +12,10 @@ const UserRoles = () => {
   const [statusFilter, setStatusFilter] = useState("");
   const navigate = useNavigate();
 
-  // ✅ Debugging the permission for Add Role Button
+  //  Debugging the permission for Add Role Button
   console.log("Checking add_roles permission:", hasPermission("add_roles"));
 
-  // ✅ Filter roles based on search & status
+  //  Filter roles based on search & status
   const filteredRoles = roles.filter((role) =>
     role.roleName.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (statusFilter ? (role.status || "Active") === statusFilter : true)
@@ -29,14 +30,14 @@ const UserRoles = () => {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="mb-0">User Roles</h2>
 
-        {/* ✅ "Add New Role" button properly aligned to the right */}
+        {/*  "Add New Role" button properly aligned to the right */}
         {hasPermission("add_roles") ? (
           <Button
             variant="primary"
             size="lg"
             className="fw-semibold px-4"
             onClick={() => navigate("create")}
-            style={{ height: "42px", marginLeft: "auto" }} // ✅ Aligns button to the right
+            style={{ height: "42px", marginLeft: "auto" }} //  Aligns button to the right
           >
             + Add New Role
           </Button>
@@ -45,7 +46,7 @@ const UserRoles = () => {
         )}
       </div>
 
-      {/* ✅ Search and Filter Section */}
+      {/*  Search and Filter Section */}
       <div className="card p-4 shadow-sm rounded-3">
         <div className="row g-3 align-items-center">
           <div className="col-md-5">
@@ -55,7 +56,7 @@ const UserRoles = () => {
               placeholder="Search Role"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ fontSize: "14px", height: "42px" }} // ✅ Consistent styling
+              style={{ fontSize: "14px", height: "42px" }} //  Consistent styling
             />
           </div>
           <div className="col-md-3">
@@ -63,7 +64,7 @@ const UserRoles = () => {
             <Form.Select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              style={{ fontSize: "14px", height: "42px" }} // ✅ Consistent styling
+              style={{ fontSize: "14px", height: "42px" }} //  Consistent styling
             >
               <option value="">All</option>
               <option value="Active">Active</option>
@@ -93,7 +94,7 @@ const UserRoles = () => {
         </div>
       </div>
 
-      {/* ✅ User Roles Table */}
+      {/*  User Roles Table */}
       <div className="card mt-4 shadow-sm rounded-3">
         <div className="card-body">
           <h6 className="fw-bold">Total Records: {filteredRoles.length}</h6>
@@ -111,15 +112,14 @@ const UserRoles = () => {
                   <td>{role.roleName}</td>
                   <td className="text-center">{role.status || "Active"}</td>
                   <td className="text-center">
-                    {/* ✅ Edit Button with Icon */}
+                    {/*  Edit Button with Icon */}
                     {hasPermission("edit_roles") && (
                       <Button
                         variant="outline-primary"
-                        className="d-flex align-items-center justify-content-center"
-                        style={{ padding: "6px 10px", borderRadius: "6px", border: "none" }}
+                        style={{ padding: "6px 10px", borderRadius: "6px", border: "none"}}
                         onClick={() => navigate(`/admin/user-roles/edit/${role.id}`)}
                       >
-                        <FiEdit2 size={18} /> {/* ✅ Properly Visible Edit Icon */}
+                        <FiEdit2 size={18}  /> {/*  Properly Visible Edit Icon */}
                       </Button>
                     )}
                   </td>
