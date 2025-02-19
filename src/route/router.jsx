@@ -100,10 +100,17 @@ import ProposalCreate from "../pages/proposal/proposal-create";
 /******************ROOT ADMIN USERS************************** */
 /*########################################################*/
 
-import Users from '../pages/admin/users';
+//import Users from '../pages/admin/users';
 import UserRoles from "../pages/admin/userRoles";
-import UserFormPage from '../components/Admin/UserForm';
-import RoleForm from '../components/Admin/RoleForm';
+// import UserFormPage from '../components/Admin/UserForm';
+//import RoleForm from '../components/Admin/RoleForm';
+import AddUser from "../pages/admin/addUsers";
+import EditUser from "../pages/admin/editUser";
+import UserList from "../pages/admin/userList";
+
+import AddRole from "../pages/Role/addRole";
+import EditRole from "../pages/Role/editRole";
+import RoleList from "../pages/Role/roleList";
 
 
 //import LeadsList from "../pages/leadsList";
@@ -145,14 +152,14 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "admin",
-            element: <RequireAuth requiredPermission="view_admin" />, 
+            element: <RequireAuth />, 
             children: [
-              { path: "users", element: <RequireAuth requiredPermission="view_users"><Users/></RequireAuth> },
-              { path: "users/create",element: <RequireAuth requiredPermission="add_users"><UserFormPage /></RequireAuth> },
-              { path: "users/edit/:id",element: <RequireAuth requiredPermission="edit_users"><UserFormPage /></RequireAuth>},
-              { path: "user-roles", element: <RequireAuth requiredPermission="view_roles"><UserRoles /></RequireAuth> },
-              { path: "user-roles/create", element: <RequireAuth requiredPermission="add_users"><RoleForm /></RequireAuth> },
-              { path: "user-roles/edit/:id", element: <RequireAuth requiredPermission="edit_users"><RoleForm /></RequireAuth> },
+              { path: "users", element: <UserList/> },
+              { path: "users/create",element: <AddUser /> },
+              { path: "users/edit/:id",element: <EditUser />},
+              { path: "user-roles", element: <RoleList /> },
+              { path: "user-roles/create", element: <AddRole /> },
+              { path: "user-roles/edit", element: <EditRole/>},
             ],
           },
         ],

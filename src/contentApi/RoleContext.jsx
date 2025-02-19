@@ -24,11 +24,11 @@ export const RoleProvider = ({ children }) => {
   ]);
 
   useEffect(() => {
-    console.log(" Current User Role:", userRole);
+   // console.log(" Current User Role:", userRole);
     // Log current permissions for the userRole
     const currentRole = roles.find(role => role.roleName === userRole);
     if (currentRole) {
-      console.log(" Permissions for this Role:", currentRole.permissions);
+     // console.log(" Permissions for this Role:", currentRole.permissions);
     }
   }, [userRole, roles]);
 
@@ -54,11 +54,11 @@ export const RoleProvider = ({ children }) => {
   //  **Function to Add Role**
   const addRole = (roleName, permissions, status = "Inactive") => {
     setRoles((prevRoles) => {
-      console.log(" Previous Roles List: ", prevRoles);
+     // console.log(" Previous Roles List: ", prevRoles);
   
       // Ensure role is unique
       if (prevRoles.some(role => role.roleName === roleName)) {
-        console.log(" Role already exists!");
+       // console.log(" Role already exists!");
         return prevRoles;
       }
   
@@ -71,7 +71,7 @@ export const RoleProvider = ({ children }) => {
       };
   
       const updatedRoles = [...prevRoles, newRole];
-      console.log(" Updated Roles List After Add: ", updatedRoles);
+     // console.log(" Updated Roles List After Add: ", updatedRoles);
       return updatedRoles;
     });
   };
