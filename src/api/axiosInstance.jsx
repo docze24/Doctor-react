@@ -14,9 +14,21 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (config) => {
       const token = getCookie('accessToken'); 
-      if (!publicRoutes.includes(config.url) && token) {
+      console.log('token',token);
+      // if (!publicRoutes.includes(config.url) && token) {
+      //   config.headers.Authorization = `Bearer ${token}`;
+      // }
+
+      if (token) {
+        // ✅ Only add Authorization if token exists
         config.headers.Authorization = `Bearer ${token}`;
       }
+
+      // ✅ Ensure `config.url` is not undefined before checking publicRoutes
+      if (config.url && publicRoutes.includes(config.url)) {
+        delete config.headers.Authorization; // 🔹 Remove Authorization for public routes
+      }
+
   
       return config;
     },

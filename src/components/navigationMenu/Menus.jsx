@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { menuList } from "@/utils/fackData/menuList"; // Import your menu list
+//import { menuList } from "@/utils/fackData/menuList"; // Import your menu list
 import getIcon from "@/utils/getIcon"; // Utility to fetch icons
 
 const Menus = () => {
@@ -11,6 +11,10 @@ const Menus = () => {
   const [activeChild, setActiveChild] = useState(""); // Active child
   const pathName = useLocation().pathname; // Current path from URL
   const { lang } = useParams(); // Get language (e.g., 'en', 'fr') from URL
+  const menuList='';
+  const [leftMenuList, setLeftMenuList] = useState([]);
+  
+  
 
   // Handle parent menu toggle
   const handleMainMenu = (e, name) => {
@@ -50,9 +54,57 @@ const Menus = () => {
     }
   }, [pathName]);
 
+  
+  useEffect( ()=> {
+    var leftMenuStr= localStorage.getItem("LeftMenuList");
+    var leftMenuObj= JSON.parse(leftMenuStr);
+    setLeftMenuList(leftMenuObj);
+  }, [] );
+  
   return (
     <ul>
-      {menuList.map(({ id, name, path, dropdownMenu, icon }) => (
+      <li key={'dashboard'} className={`nxl-item nxl-hasmenu ${activeParent === 'dashboard' ? "active nxl-trigger" : ""}`} >
+          <Link to="/en/dashboards"className="nxl-link text-capitalize" >
+            <span className="nxl-micon">{getIcon('feather-airplay')}</span>
+            <span className="nxl-mtext">{'dashboard'}</span>
+          </Link>
+      </li>    
+
+    
+
+ {leftMenuList.length > 0 && leftMenuList.map((menu) => (
+        menu.submenu ? (
+          <li key={menu.id} className="nxl-item nxl-hasmenu  nxl-trigger"  onClick={(e) => handleMainMenu(e,menu.module_name)}>
+            <a href="#" className="nxl-link text-capitalize">
+              <span className="nxl-micon">{getIcon(menu.icon)}</span>
+              <span className="nxl-mtext">{menu.module_label}</span>
+              <span className="nxl-arrow fs-16">
+              <FiChevronRight />
+            </span>
+              
+            </a>
+            <ul className={`nxl-submenu ${openDropdown === menu.module_name ? "nxl-menu-visible" : "nxl-menu-hidden"}`} >
+              {menu.submenu.map((sub) => (
+                <li key={sub.id} className="nxl-item">
+                  <Link to={`/en/admin/${sub.module_name}`} className="nxl-link text-capitalize">
+                    <span className="nxl-micon"></span>{sub.module_label}
+                  </Link>
+                  
+                </li>
+              ))}
+            </ul>
+          </li>
+        ) : (
+          <li key={menu.id} className="nxl-item">
+            <Link to={`/en/admin/${menu.module_name}`} className="nxl-link text-capitalize">
+              <span className="nxl-micon">{getIcon(menu.icon)}</span>
+              <span className="nxl-mtext">{menu.module_label}</span>
+            </Link>
+          </li>
+        )
+      ))}
+
+      {menuList && menuList.map(({ id, name, path, dropdownMenu, icon }) => (
         <li
           key={id}
           onClick={(e) => handleMainMenu(e, name[lang])} // Toggle parent dropdown
