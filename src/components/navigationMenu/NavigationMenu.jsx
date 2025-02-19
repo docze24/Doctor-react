@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect,useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import PerfectScrollbar from "react-perfect-scrollbar";
 import Menus from './Menus';
@@ -6,6 +6,9 @@ import { NavigationContext } from '../../contentApi/navigationProvider';
 import { LanguageContext } from '../../contentApi/LanguageContext';
 
 const NavigationManu = () => {
+
+   
+  
     const {t} =useContext(LanguageContext);
     const { navigationOpen, setNavigationOpen } = useContext(NavigationContext)
     const pathName = useLocation().pathname

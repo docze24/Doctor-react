@@ -34,13 +34,13 @@ const LoginForm = ({ registerPath, resetPath }) => {
                 const response = await authApi.login(user);
                 console.log({ response: response });
 
+                console.log('tokens',response?.data?.tokens?.accessToken)
                 if (response?.data?.status === 200) {
-                    const accessToken = response?.data?.tokens?.access_token;
-                    const refreshToken = response?.data?.tokens?.refresh_token;
+                    const accessToken = response?.data?.tokens?.accessToken;
+                    const refreshToken = response?.data?.tokens?.refreshToken;
                     const user = response?.data?.user;
                     login(user, accessToken, refreshToken);
                     topTost(response?.data?.message, "success");
-
                     setTimeout(() => {
                         navigate('/en/dashboards');
                     }, 2000);

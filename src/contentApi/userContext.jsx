@@ -12,8 +12,8 @@ export const UserProvider = ({ children }) => {
     // console.log("login called");
     setUser(user);
     setCookie('user', JSON.stringify(user), 7); 
-    setCookie('accessToken', JSON.stringify(accessToken), 7);
-    setCookie('refreshToken', JSON.stringify(refreshToken), 7);
+    setCookie('accessToken', accessToken, 7);
+    setCookie('refreshToken', refreshToken, 7);
   };
 
 
