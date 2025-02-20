@@ -1,17 +1,11 @@
 import React, { useState,useContext } from 'react'
-import PatientList from '@/components/patient/patientList'
 import Footer from '@/components/shared/Footer'
 import { Link, useLocation } from 'react-router-dom'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 
+import UserList from '@/components/users/user_list'
 import { FiAlignRight, FiArrowLeft,FiPlus } from 'react-icons/fi'
-
-import RoleList from '@/components/roles/role_list'
-
-const LeadsList = () => {
-      const [openSidebar, setOpenSidebar] = useState(false)
-      const pathName = useLocation().pathname
+const UserPage= () => {
       const {t}=useContext(LanguageContext);
-
     return (
         <>
            <div className="page-header">
@@ -21,7 +15,7 @@ const LeadsList = () => {
                         <Link to="#" onClick={() => setOpenSidebar(false)} className="page-header-right-close-toggle">
                             <FiArrowLeft size={16} className="me-2" />
                         </Link>
-                        <h5 className="m-b-10 text-capitalize">{t("patientmanagement", { ns: "heading" })}</h5>
+                        <h5 className="m-b-10 text-capitalize">User Managment</h5>
                     </div>
                 </div>
             </div>
@@ -29,7 +23,7 @@ const LeadsList = () => {
                 <div className="d-flex align-items-center gap-2 page-header-right-items-wrapper">
                     <Link to="/leads/create" className="btn btn-primary">
                         <FiPlus size={16} className='me-2' />
-                        <span>Create Customer</span>
+                        <span>Create User</span>
                     </Link>
                 </div>
             </div>
@@ -41,7 +35,7 @@ const LeadsList = () => {
                       <div className="card-body p-0">
                             <div className="table-responsive">
                               
-                               <RoleList/>
+                               <UserList/>
                              
                             </div>
                           </div>
@@ -53,5 +47,4 @@ const LeadsList = () => {
         </>
     )
 }
-
-export default LeadsList
+export default UserPage

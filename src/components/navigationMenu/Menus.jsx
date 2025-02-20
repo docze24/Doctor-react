@@ -53,7 +53,6 @@ const Menus = () => {
       setOpenDropdown("");
     }
   }, [pathName]);
-
   
   useEffect( ()=> {
     var leftMenuStr= localStorage.getItem("LeftMenuList");
