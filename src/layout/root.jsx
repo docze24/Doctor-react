@@ -12,7 +12,7 @@ const RootLayout = () => {
   useBootstrapUtils(pathName);
 
   const groupMenu = [
-    { name: "User Management", icon: "feather-airplay", submenu: ["users", "user_role"] },
+    { name: "User Management", icon: "feather-airplay", submenu: ["users", "user-roles"] },
   ];
 
   // Function to convert menuList1 into grouped and individual menu

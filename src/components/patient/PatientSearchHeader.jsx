@@ -3,7 +3,7 @@ import { FiBarChart, FiBriefcase, FiDollarSign, FiEye, FiFilter, FiFlag, FiPaper
 import { BsFiletypeCsv, BsFiletypeExe, BsFiletypePdf, BsFiletypeTsx, BsFiletypeXml, BsPrinter } from 'react-icons/bs';
 import Dropdown from '@/components/shared/Dropdown';
 import { Link } from 'react-router-dom';
-//import LeadsStatisticsTwo from "../widgetsStatistics/LeadsStatisticsTwo"
+import LeadsStatisticsTwo from "../widgetsStatistics/LeadsStatisticsTwo"
 
 const filterAction = [
     { label: "All", icon: <FiEye /> },
@@ -53,9 +53,9 @@ const PatientSearchHeader = () => {
 
             <div id="collapseOne" className="accordion-collapse collapse page-header-collapse">
                 <div className="accordion-body pb-2">
-                    {/* <div className="row">
+                    <div className="row">
                         <LeadsStatisticsTwo />
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </>

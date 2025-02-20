@@ -106,7 +106,7 @@ import UserRoles from "../pages/admin/userRoles";
 //import RoleForm from '../components/Admin/RoleForm';
 import AddUser from "../pages/admin/addUsers";
 import EditUser from "../pages/admin/editUser";
-import UserList from "../pages/admin/userList";
+import UserPage from "../pages/users/userList";
 
 import AddRole from "../pages/Role/addRole";
 import EditRole from "../pages/Role/editRole";
@@ -154,7 +154,7 @@ export const router = createBrowserRouter([
             path: "admin",
             element: <RequireAuth />, 
             children: [
-              { path: "users", element: <UserList/> },
+              { path: "users", element: <UserPage/> },
               { path: "users/create",element: <AddUser /> },
               { path: "users/edit/:id",element: <EditUser />},
               { path: "user-roles", element: <RoleList /> },
