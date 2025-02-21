@@ -100,10 +100,13 @@ import ProposalCreate from "../pages/proposal/proposal-create";
 /******************ROOT ADMIN USERS************************** */
 /*########################################################*/
 
+//import Users from '../pages/admin/users';
+import UserRoles from "../pages/admin/userRoles";
+// import UserFormPage from '../components/Admin/UserForm';
+//import RoleForm from '../components/Admin/RoleForm';
 
-
-import AddUser from "../pages/admin/addUsers";
-import EditUser from "../pages/admin/editUser";
+import AddUser from "../pages/users/addUser";
+import EditUser from "../pages/users/editUser";
 import UserPage from "../pages/users/userList";
 
 
