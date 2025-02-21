@@ -100,16 +100,15 @@ import ProposalCreate from "../pages/proposal/proposal-create";
 /******************ROOT ADMIN USERS************************** */
 /*########################################################*/
 
-//import Users from '../pages/admin/users';
-import UserRoles from "../pages/admin/userRoles";
-// import UserFormPage from '../components/Admin/UserForm';
-//import RoleForm from '../components/Admin/RoleForm';
+
+
 import AddUser from "../pages/admin/addUsers";
 import EditUser from "../pages/admin/editUser";
 import UserPage from "../pages/users/userList";
 
-import AddRole from "../pages/Role/addRole";
-import EditRole from "../pages/Role/editRole";
+
+ import AddRole from "../pages/Role/addRole";
+//import EditRole from "../pages/Role/editRole";
 import RoleList from "../pages/Role/roleList";
 
 
@@ -151,7 +150,7 @@ export const router = createBrowserRouter([
         element: <RootLayout />,  
         children: [
           {
-            path: "admin",
+            
             element: <RequireAuth />, 
             children: [
               { path: "users", element: <UserPage/> },
@@ -159,7 +158,7 @@ export const router = createBrowserRouter([
               { path: "users/edit/:id",element: <EditUser />},
               { path: "user-roles", element: <RoleList /> },
               { path: "user-roles/create", element: <AddRole /> },
-              { path: "user-roles/edit", element: <EditRole/>},
+             // { path: "user-roles/edit", element: <EditRole/>},
             ],
           },
         ],
