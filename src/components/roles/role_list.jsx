@@ -1,188 +1,306 @@
 import React, { memo, useContext, useEffect, useState } from 'react'
-import Table from '@/components/patient/Table';
 import { FiAlertOctagon, FiArchive, FiClock, FiEdit, FiEdit3, FiEye, FiMoreHorizontal, FiPrinter, FiTrash2 } from 'react-icons/fi'
-import Dropdown from '@/components/shared/Dropdown';
 import getIcon from '@/utils/getIcon';
-import { leadTableData } from '@/utils/fackData/leadTableData';
-import TableSearch from '@/components/shared/TableSearch'
-import TablePagination from '@/components/shared/TablePagination'
-import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table'
 import { LanguageContext } from '../../contentApi/LanguageContext';
-import { Form, Row, Col, InputGroup, Button } from 'react-bootstrap';
-const RoleList = () => {
+import { Form, Row, Col, InputGroup, Button,Table } from 'react-bootstrap';
+import ReactPaginate from "react-paginate";
+import { BiEditAlt, BiChevronLeft, BiChevronRight, BiData } from "react-icons/bi";
+import CardLoader from '../../components/shared/CardLoader';
+
+import { useLoading } from "../../contentApi/LoadingContext";
+
+import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
+
+import { roleApi } from '../../api';
+
+const RoleListTable = () => {
     const {t} = useContext(LanguageContext);
-    
-    const TableCell = memo(({ options, defaultSelect }) => {
-        const [selectedOption, setSelectedOption] = useState(null);
-    
-        return (
-            <SelectDropdown
-                options={options}
-                defaultSelect={defaultSelect}
-                selectedOption={selectedOption}
-                onSelectOption={(option) => setSelectedOption(option)}
-            />
-        );
-    });
-    
-// const [sorting, setSorting] = useState([])
-const [globalFilter, setGlobalFilter] = useState('')
-const [pagination, setPagination] = useState({
-        pageIndex: 0,
-        pageSize: 10,
-})
+    const [listTableData,setListTableData]=useState([])
 
-const columns = [
-    {
-        accessorKey: 'id',
-        header: ({ table }) => {
-            const checkboxRef = React.useRef(null);
-            useEffect(() => {
-                if (checkboxRef.current) {
-                    checkboxRef.current.indeterminate = table.getIsSomeRowsSelected();
-                }
-            }, [table.getIsSomeRowsSelected()]);
-        },
-        meta: {
-            headerClassName: 'width-30',
-        },
-    },
+  const [currentPage, setCurrentPage] = useState(1);
+  const [offset, setOffset] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+  const [perPage, setPerPage] = useState(2);
+  const [totalRecords, setTotalRecords] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState({ keyword: "",roleType: "",status: null,});
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [roleFilter, setRoleFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [ loading, setLoading ] = useState(false); //useLoading();
+  let filterCol = {};
+  const [activeIcon, setActiveIcon] = useState(filterCol);
+  const [sortBy, setSortBy] = useState('');
+  const [sortType, setSortType] = useState('');
 
-    {
-        accessorKey: 'customer',
-        header: () => t("profile"),
-        cell: (info) => {
-            const roles = info.getValue();
-            return (
-                <a href="#" className="hstack gap-3">
-                    {
-                        roles?.img ?
-                            <div className="avatar-image avatar-md">
-                                <img src={roles?.img} alt="" className="img-fluid" />
-                            </div>
-                            :
-                            <div className="text-white avatar-text user-avatar-text avatar-md">{roles?.name.substring(0, 1)}</div>
-                    }
-                    <div>
-                        <span className="text-truncate-1-line">{roles?.name}</span>
-                    </div>
-                </a>
-            )
-        }
-    },
-    {
-        accessorKey: 'email',
-        header: () =>  t("email"),
-        cell: (info) => <a href="apps-email.html">{info.getValue()}</a>
-    },
+  // const debouncedSearchKeyword = useDebounce(searchKeyword, 500);
+  // const debouncedRoleFilter = useDebounce(roleFilter, 500);
+  // const debouncedStatusFilter = useDebounce(statusFilter, 500);
+
+  const handleOnChange = (e) => {
+    setSearch({ ...search, [e.target.name]: e.target.value });
+
+
+    console.log('e.target.value',e.target.value);
+    if (e.target.name === "keyword") {
+      setSearchKeyword(e.target.value);
+      setOffset(0);
+      setCurrentPage(1);
+    }
+    if (e.target.name === "roleType") {
+      setRoleFilter(e.target.value);
+      setOffset(0);
+      setCurrentPage(1);
+    }
+    if (e.target.name === "status") {
+      setStatusFilter(e.target.value);
+      setOffset(0);
+      setCurrentPage(1);
+    }
+  };
+
+  // const handleRecordsPerPage = (e) => {
+  //   setPerPage(parseInt(e.target.value));
+  //   setOffset(0);
+  //   setCurrentPage(1);
+  // };
+
+  const getUsers = async () => {
+    setLoading(true);
+
+    setTimeout(()=>{
+        setLoading(false);
+    },1000)
+
+    try {
+       let parms = { page:currentPage, limit:perPage, sortBy, sortType };
+
+       const requestParms = { ...parms, ...search };
+
+    
+    console.log('RequestParms',requestParms);
    
-    {
-        accessorKey: 'phone',
-        header: () =>  t("phone"),
-        cell: (info) => <a href="tel:">{info.getValue()}</a>
-    },
-    {
-        accessorKey: 'date',
-        header: () => t("date"),
-    },
-    {
-        accessorKey: 'status',
-        header: () =>  t("status"),
-        cell: (info) => <>Active</>
-    },
-    {
-        accessorKey: 'actions',
-        header: () => t("actions"),
-        cell: info => (
-            <div className="hstack gap-2 justify-content-end">
-                <a href="proposal-view.html" className="avatar-text avatar-md">
-                    <FiEye />
-                </a>
-                <FiEdit />
-            </div>
-        ),
-        meta: {
-            headerClassName: 'text-end'
-        }
-    },
-]
 
-const table = useReactTable({
-        data: leadTableData,
-        columns,
-        state: {
-            globalFilter,
-            pagination
-        },
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        onGlobalFilterChange: setGlobalFilter,
-        getPaginationRowModel: getPaginationRowModel(),
-        onPaginationChange: setPagination,
-    })
+        const response = await roleApi.getRole(requestParms);
+        if (response?.data?.status === 200) {
+
+            console.log('response.data',response?.data?.data.users);
+            let resdata=response?.data?.data;
+            setListTableData(response?.data?.data.users)
+            setPageCount(Math.ceil(resdata.total/perPage));
+            setUsers(resdata.users);
+            setTotalRecords(resdata.total);
+
+        } else {
+            topTost(response?.data?.message, "error");
+        }
+
+    } catch (error) {
+      notifyError("Error: " + error?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+//   const [roletype, setRoleType] = useState([]);
+//   const getRoletypeListing = async () => {
+//     setLoading(true);
+//     try {
+//       const response = await getAllRoleslisting();
+//       if (response?.status === "success") {
+//         setRoleType(response.data);
+//       } else {
+//         notifyError(response?.message);
+//       }
+//     } catch (error) {
+//       notifyError("Error: " + error?.message);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     getRoletypeListing();
+//   }, []);
+
+  useEffect(() => {
+    getUsers();
+  }, [offset, currentPage, perPage, statusFilter, searchKeyword, sortBy, sortType]);
+
+  const handlePageClick = (e) => {
+    const selectedPage = e.selected;
+    const newOffset = selectedPage * perPage;
+    setCurrentPage(selectedPage + 1);
+    setOffset(newOffset);
+  };
+
+
+  /**************Table Sorting Data******************** */
+  //.import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
+  /*************************************************** */
+  const handleSorting = (e, sortBy, sortType) => {
+    setSortBy(sortBy);
+    if (sortType === "ASC") {
+      sortType = "DESC";
+    } else if (sortType === "DESC") {
+      sortType = "ASC";
+    } else {
+      sortType = "ASC";
+    }
+    setSortType(sortType);
+    let freshObj = filterCol;
+    freshObj[sortBy] = sortType;
+    setActiveIcon(freshObj);
+  };
+
+  const activeSortIcon = (sortBy) => {
+    if (activeIcon[sortBy] === "ASC") {
+      return (<span className="text-primary"> <FaSortUp /> </span>);
+    } else if (activeIcon[sortBy] === "DESC") {
+      return ( <span className="text-primary"> <FaSortDown /></span>);
+    } else {
+      return (<span><FaSort /> </span>
+      );
+    }
+  };
+
+
+  /******************END SORTING CODE******************** */
+  /****************************************************** */
+
+  // functionality to change status
+  const handleStatusChange = async (id) => {
+        try {
+            const response = await userApi.updateUserStatus(id);
+            if (response?.data?.status === 200) {
+                getUsers();
+                topTost(response?.data?.message, "success");
+
+            } else {
+                topTost(response?.data?.message, "error");
+            }
+        } catch (error) {
+            topTost("Error : " + error.message);
+        }
+  };
 
     
     return (
 
+            
             <div className='dataTables_wrapper dt-bootstrap5 no-footer'>
-                {/* <TableSearch table={table} setGlobalFilter={setGlobalFilter} globalFilter={globalFilter}/>  */}
+              {loading?<CardLoader refreshKey={loading}/>:""}
+                {/** SEARCH  */} 
                 <div class="header-search">
-
-                <div >
                     <Row className="align-items-end ">
                         <Col md={3} className="mb-3 mb-md-0">
-                        <Form.Group>
-                            <Form.Label className="fw-bold text-dark">Search by Email</Form.Label>
-                            <InputGroup>
-                                <Form.Control
-                                    type="text"
-                                    value={globalFilter ?? ""}
-                                    onChange={(e) => setGlobalFilter(e.target.value)}
-                                    placeholder="search"
-                                    
-                                />
-                            </InputGroup>
-                        </Form.Group>
+                            <Form.Group>
+                                <Form.Label className="fw-bold text-dark">Search by Email</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                         name="keyword"
+                                         value={search.keyword}
+                                         onChange={handleOnChange}
+                                         placeholder="Search user by name or email"
+                                         size="sm"
+                                         autoComplete="off"
+                                        
+                                    />
+                                </InputGroup>
+                            </Form.Group>
                         </Col>
-                       
                         <Col md={3} className="mb-3 mb-md-0">
                             <Form.Group>
                                 <Form.Label className="fw-bold text-dark">Select Role</Form.Label>
-                                <Form.Select >
-                                <option value="">Select role</option>
-                                <option>Admin</option>
-                                <option>Manager</option>
-                                <option>User</option>
+                                <Form.Select aria-label="Filter 1" size="sm" onChange={handleOnChange} name="status">
+                                    <option value="">Filter by status</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">In Active</option>
+
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-
-                     
-                        <Col md={2} className="mb-3 mb-md-0">
+                        {/* <Col md={2} className="mb-3 mb-md-0">
                             <Form.Group>
                                 <Form.Label className="fw-bold text-dark">{t("status", { ns: "tables" })}</Form.Label>
                                 <Form.Select>
                                 <option value="">Select Status</option>
-                                <option>Active</option>
-                                <option>Inactive</option>
+                                <option value={1}>Active</option>
+                                <option value={0}>Inactive</option>
                                 </Form.Select>
                             </Form.Group>
-                        </Col>
+                        </Col> */}
                         <Col md={4} className="d-flex justify-content-end">
-                        <Button  variant="outline-primary"  className="me-3 px-4 py-2"  > Reset</Button>
-                        <Button  variant="primary"  className="px-4 py-2" > Search </Button>
+                            <Button  variant="outline-primary"  className="me-3 px-4 py-2"  > Reset</Button>
+                            <Button  variant="primary"  className="px-4 py-2" > Search </Button>
                         </Col>
                     </Row>
+                </div>
+
+                <>
+                <Table  className="table alignMiddle mb-0" striped>
+                    <thead>
+                        <tr>
+                            <th className="text-center">S.No.</th>
+                            <th className="text-center" onClick={(e) => handleSorting(e, "name", sortType)}>Role Name  {activeSortIcon("role_name")}</th>
+                            <th className="text-center" >Created At</th>
+                            <th className="text-center" >Status</th>
+                            <th className="text-center" >Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {listTableData.length > 0 && (
+                        listTableData.map((item, index) => {
+                        return (
+                            
+                            <tr key={item.id}>
+                              <td className="colFixed text-center" width={40} > {(currentPage - 1) * perPage + index + 1}</td>
+                              <td className="text-nowrap text-center">{item.role ? item.role_name : " "}</td>
+                              <td className="text-nowrap text-center">{item.created_at ? item.created_at : " "}</td>
+                              <td className="text-nowrap text-center">{item.status ? item.status : " "}</td>
+                            </tr>
+                        );
+                        })
+                    )}
+                    </tbody>
+                </Table>
+                <hr/>
+                <div className="d-flex flex-md-row flex-column align-items-center justify-content-md-between justify-content-center py-2 gap-2">
+                    <div className="t-record d-flex gap-1 align-items-center text-muted">
+                        Total Users
+                        <span className="text-black semiBold">({10})</span>
+                    </div>
+                    <ReactPaginate
+                        previousLabel={<BiChevronLeft />}
+                        nextLabel={<BiChevronRight />}
+                        breakLabel={"..."}
+                        breakClassName={"break-me"}
+                        breakLinkClassName={"page-link"}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={1}
+                        pageRangeDisplayed={5}
+                        onPageChange={handlePageClick}
+                        containerClassName={
+                        "pagination gap-1 align-items-center justify-content-center m-0"
+                        }
+                        previousClassName={"page-item"}
+                        previousLinkClassName={"page-link page-link-prev"}
+                        pageClassName={"page-item"}
+                        pageLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link page-link-next"}
+                        subContainerClassName={"pages pagination"}
+                        activeClassName={"active"}
+                    />
                     </div>
 
-                </div>
-                
-                <Table data={leadTableData} columns={columns} />
-                <TablePagination table={table} />
+                </> 
+                  
+    
             </div>
        )
      
 }
 
-export default RoleList
+export default RoleListTable

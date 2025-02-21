@@ -109,8 +109,9 @@ import AddUser from "../pages/users/addUser";
 import EditUser from "../pages/users/editUser";
 import UserPage from "../pages/users/userList";
 
-import AddRole from "../pages/Role/addRole";
-import EditRole from "../pages/Role/editRole";
+
+ import AddRole from "../pages/Role/addRole";
+//import EditRole from "../pages/Role/editRole";
 import RoleList from "../pages/Role/roleList";
 
 
@@ -152,7 +153,7 @@ export const router = createBrowserRouter([
         element: <RootLayout />,  
         children: [
           {
-            path: "admin",
+            
             element: <RequireAuth />, 
             children: [
               { path: "users", element: <UserPage/> },
@@ -160,7 +161,7 @@ export const router = createBrowserRouter([
               { path: "users/edit/:id",element: <EditUser />},
               { path: "user-roles", element: <RoleList /> },
               { path: "user-roles/create", element: <AddRole /> },
-              { path: "user-roles/edit", element: <EditRole/>},
+             // { path: "user-roles/edit", element: <EditRole/>},
             ],
           },
         ],
