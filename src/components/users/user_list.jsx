@@ -5,6 +5,7 @@ import { LanguageContext } from '../../contentApi/LanguageContext';
 import { Form, Row, Col, InputGroup, Button,Table } from 'react-bootstrap';
 import ReactPaginate from "react-paginate";
 import { BiEditAlt, BiChevronLeft, BiChevronRight, BiData } from "react-icons/bi";
+import CardLoader from '../../components/shared/CardLoader'
 
 import { useLoading } from "../../contentApi/LoadingContext";
 
@@ -66,6 +67,9 @@ const UserList = () => {
 
   const getUsers = async () => {
     setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+  }, 1000);  
     try {
        let parms = { page:currentPage, limit:perPage, sortBy, sortType };
 
@@ -228,7 +232,9 @@ const UserList = () => {
                         </Col>
                     </Row>
                 </div>
-
+                <CardLoader refreshKey={loading} />
+                      {!loading && (
+                        <>
                     <Table  className="table alignMiddle mb-0" striped>
                         <thead>
                             <tr>
@@ -292,7 +298,8 @@ const UserList = () => {
                             activeClassName={"active"}
                         />
                         </div>
-    
+                        </>
+                  )}
             </div>
        )
      
