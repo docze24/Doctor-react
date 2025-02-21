@@ -5,6 +5,7 @@ import { LanguageContext } from '../../contentApi/LanguageContext';
 import { Form, Row, Col, InputGroup, Button,Table } from 'react-bootstrap';
 import ReactPaginate from "react-paginate";
 import { BiEditAlt, BiChevronLeft, BiChevronRight, BiData } from "react-icons/bi";
+import CardLoader from '../../components/shared/CardLoader';
 
 import { useLoading } from "../../contentApi/LoadingContext";
 
@@ -22,15 +23,15 @@ const UserList = () => {
   const [perPage, setPerPage] = useState(2);
   const [totalRecords, setTotalRecords] = useState(null);
   const [users, setUsers] = useState([]);
-  const [search, setSearch] = useState({ keyword: "",roleType: "",status: "",});
+  const [search, setSearch] = useState({ keyword: "",roleType: "",status: null,});
   const [searchKeyword, setSearchKeyword] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
-  const [ loading, setLoading ] = useState(""); //useLoading();
+  const [ loading, setLoading ] = useState(false); //useLoading();
   let filterCol = {};
   const [activeIcon, setActiveIcon] = useState(filterCol);
-  const [sortBy, setSortBy] = useState(null);
-  const [sortType, setSortType] = useState(null);
+  const [sortBy, setSortBy] = useState('');
+  const [sortType, setSortType] = useState('');
 
   // const debouncedSearchKeyword = useDebounce(searchKeyword, 500);
   // const debouncedRoleFilter = useDebounce(roleFilter, 500);
@@ -66,6 +67,11 @@ const UserList = () => {
 
   const getUsers = async () => {
     setLoading(true);
+
+    setTimeout(()=>{
+        setLoading(false);
+    },1000)
+
     try {
        let parms = { page:currentPage, limit:perPage, sortBy, sortType };
 
@@ -181,7 +187,9 @@ const UserList = () => {
     
     return (
 
+            
             <div className='dataTables_wrapper dt-bootstrap5 no-footer'>
+              {loading?<CardLoader refreshKey={loading}/>:""}
                 {/** SEARCH  */} 
                 <div class="header-search">
                     <Row className="align-items-end ">
@@ -229,69 +237,73 @@ const UserList = () => {
                     </Row>
                 </div>
 
-                    <Table  className="table alignMiddle mb-0" striped>
-                        <thead>
-                            <tr>
-                               <th className="text-center">S.No.</th>
-                               <th className="text-center" >User Role </th>
-                                <th className="text-center" onClick={(e) => handleSorting(e, "name", sortType)}>User Name  {activeSortIcon("name")}</th>
-                                <th className="text-center" onClick={(e) => handleSorting(e, "email", sortType)}>User Email  {activeSortIcon("email")}</th>
-                                <th className="text-center" >Username </th>
-                                <th className="text-center" >Created_at</th>
-                                <th className="text-center" >Status</th>
+                <>
+                <Table  className="table alignMiddle mb-0" striped>
+                    <thead>
+                        <tr>
+                            <th className="text-center">S.No.</th>
+                            <th className="text-center" >User Role </th>
+                            <th className="text-center" onClick={(e) => handleSorting(e, "name", sortType)}>User Name  {activeSortIcon("name")}</th>
+                            <th className="text-center" onClick={(e) => handleSorting(e, "email", sortType)}>User Email  {activeSortIcon("email")}</th>
+                            <th className="text-center" >Username </th>
+                            <th className="text-center" >Created_at</th>
+                            <th className="text-center" >Status</th>
+                          
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {listTableData.length > 0 && (
+                        listTableData.map((item, index) => {
+                        return (
+                            
+                            <tr key={item.id}>
+                              <td className="colFixed text-center" width={40} > {(currentPage - 1) * perPage + index + 1}</td>
+                              <td className="text-nowrap text-center">{item.role ? item.role.role_name : " "}</td>
+                            <td className="text-nowrap text-center">{item.name ? item.name : " "}</td>
+                            <td className="text-nowrap text-center">{item.email ? item.email : " "}</td>
+                            <td className="text-nowrap text-center">{item.username ? item.username : " "}</td>
+                            <td className="text-nowrap text-center">{item.created_at ? item.created_at : " "}</td>
+                            <td className="text-nowrap text-center">{item.status ? item.status : " "}</td>
                               
                             </tr>
-                        </thead>
+                        );
+                        })
+                    )}
+                    </tbody>
+                </Table>
+                <hr/>
+                <div className="d-flex flex-md-row flex-column align-items-center justify-content-md-between justify-content-center py-2 gap-2">
+                    <div className="t-record d-flex gap-1 align-items-center text-muted">
+                        Total Users
+                        <span className="text-black semiBold">({10})</span>
+                    </div>
+                    <ReactPaginate
+                        previousLabel={<BiChevronLeft />}
+                        nextLabel={<BiChevronRight />}
+                        breakLabel={"..."}
+                        breakClassName={"break-me"}
+                        breakLinkClassName={"page-link"}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={1}
+                        pageRangeDisplayed={5}
+                        onPageChange={handlePageClick}
+                        containerClassName={
+                        "pagination gap-1 align-items-center justify-content-center m-0"
+                        }
+                        previousClassName={"page-item"}
+                        previousLinkClassName={"page-link page-link-prev"}
+                        pageClassName={"page-item"}
+                        pageLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link page-link-next"}
+                        subContainerClassName={"pages pagination"}
+                        activeClassName={"active"}
+                    />
+                    </div>
 
-                        <tbody>
-                        {listTableData.length > 0 && (
-                            listTableData.map((item, index) => {
-                            return (
-                                
-                                <tr key={item.id}>
-                                 <td className="colFixed text-center" width={40} > {(currentPage - 1) * perPage + index + 1}</td>
-                                 <td className="text-nowrap text-center">{item.role ? item.role.role_name : " "}</td>
-                                <td className="text-nowrap text-center">{item.name ? item.name : " "}</td>
-                                <td className="text-nowrap text-center">{item.email ? item.email : " "}</td>
-                                <td className="text-nowrap text-center">{item.username ? item.username : " "}</td>
-                                <td className="text-nowrap text-center">{item.created_at ? item.created_at : " "}</td>
-                                <td className="text-nowrap text-center">{item.status ? item.status : " "}</td>
-                                 
-                                </tr>
-                            );
-                            })
-                        )}
-                        </tbody>
-                    </Table>
-                    <hr/>
-                    <div className="d-flex flex-md-row flex-column align-items-center justify-content-md-between justify-content-center py-2 gap-2">
-                        <div className="t-record d-flex gap-1 align-items-center text-muted">
-                            Total Users
-                            <span className="text-black semiBold">({10})</span>
-                        </div>
-                        <ReactPaginate
-                            previousLabel={<BiChevronLeft />}
-                            nextLabel={<BiChevronRight />}
-                            breakLabel={"..."}
-                            breakClassName={"break-me"}
-                            breakLinkClassName={"page-link"}
-                            pageCount={pageCount}
-                            marginPagesDisplayed={1}
-                            pageRangeDisplayed={5}
-                            onPageChange={handlePageClick}
-                            containerClassName={
-                            "pagination gap-1 align-items-center justify-content-center m-0"
-                            }
-                            previousClassName={"page-item"}
-                            previousLinkClassName={"page-link page-link-prev"}
-                            pageClassName={"page-item"}
-                            pageLinkClassName={"page-link"}
-                            nextClassName={"page-item"}
-                            nextLinkClassName={"page-link page-link-next"}
-                            subContainerClassName={"pages pagination"}
-                            activeClassName={"active"}
-                        />
-                        </div>
+                </> 
+                  
     
             </div>
        )
