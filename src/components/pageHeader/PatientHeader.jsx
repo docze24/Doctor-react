@@ -12,7 +12,8 @@ const PatientHeader = ({ children }) => {
     return (
         <div className="page-header">
             <div className="page-header-left d-flex align-items-center">
-                <div className="page-header-title">
+                <div className="page-header-title d-flex gap-2">
+                <FiArrowLeft size={16} className="me-2" />
                     <h5 className="m-b-10 text-capitalize">{t("patientmanagement", { ns: "heading" })}</h5>
                 </div>
             </div>
