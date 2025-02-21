@@ -21,11 +21,11 @@ const RoleList= () => {
             </div>
             <div className="page-header-right ms-auto">
                 <div className="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                    <Link to="/user-roles/create" className="btn btn-primary">
+                    <Link to="/en/user-roles/create" className="btn btn-primary">
                         <FiPlus size={16} className='me-2' />
                         <span>Create Role</span>
                     </Link>
-                    <Link to="/user-roles/download_csv" className="btn btn-primary">
+                    <Link to="/en/user-roles/download_csv" className="btn btn-primary">
                         <FiPlus size={16} className='me-2' />
                         <span>Download CSV</span>
                     </Link>
