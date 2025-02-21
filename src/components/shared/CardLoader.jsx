@@ -5,10 +5,7 @@ const CardLoader = ({ refreshKey }) => {
         <>
             {refreshKey && (
                 <div className="card-loader">
-                    <div className="spinner-border text-primary">
-                        
-                    </div>
-
+                    <div className="spinner-border text-primary"></div>
                 </div>
             )}
         </>

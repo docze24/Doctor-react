@@ -1,14 +1,13 @@
-import axiosInstance from './axiosInstance';
+ import axiosInstance from './axiosInstance';
 
 
 
- const createUser = (data)=> axiosInstance.post('doctor/user',data);
+  //const createUser = (data)=> axiosInstance.post('doctor-user',data);
 
- const editUser = (data)=> axiosInstance.post('user/edit',data);
+//  const editUser = (data)=> axiosInstance.post('user/edit',data);
 
 
  export default {
-   createUser,
-   editUser
+   createUser
   };
   
