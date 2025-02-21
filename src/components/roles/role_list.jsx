@@ -65,7 +65,7 @@ const RoleListTable = () => {
   //   setCurrentPage(1);
   // };
 
-  const getUsers = async () => {
+  const getRoles = async () => {
     setLoading(true);
 
     setTimeout(()=>{
@@ -81,12 +81,12 @@ const RoleListTable = () => {
     console.log('RequestParms',requestParms);
    
 
-        const response = await roleApi.getRole(requestParms);
+        const response = await roleApi.getUserRoles(requestParms);
         if (response?.data?.status === 200) {
 
             console.log('response.data',response?.data?.data.users);
             let resdata=response?.data?.data;
-            setListTableData(response?.data?.data.users)
+            setListTableData(response?.data?.data.roles)
             setPageCount(Math.ceil(resdata.total/perPage));
             setUsers(resdata.users);
             setTotalRecords(resdata.total);
@@ -124,7 +124,7 @@ const RoleListTable = () => {
 //   }, []);
 
   useEffect(() => {
-    getUsers();
+    getRoles();
   }, [offset, currentPage, perPage, statusFilter, searchKeyword, sortBy, sortType]);
 
   const handlePageClick = (e) => {
@@ -256,9 +256,10 @@ const RoleListTable = () => {
                             
                             <tr key={item.id}>
                               <td className="colFixed text-center" width={40} > {(currentPage - 1) * perPage + index + 1}</td>
-                              <td className="text-nowrap text-center">{item.role ? item.role_name : " "}</td>
+                              <td className="text-nowrap text-center">{item.role_name	 ? item.role_name: " "}</td>
                               <td className="text-nowrap text-center">{item.created_at ? item.created_at : " "}</td>
-                              <td className="text-nowrap text-center">{item.status ? item.status : " "}</td>
+                              <td className="text-nowrap text-center">{item.status? 'Active' : " Inactive"}</td>
+                              <td></td>
                             </tr>
                         );
                         })

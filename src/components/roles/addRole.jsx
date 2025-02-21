@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { BiCaretLeft, BiInfoCircle } from "react-icons/bi";
-import { useNavigate, useParams } from "react-router-dom";
+import { redirect, useNavigate, useParams } from "react-router-dom";
 import { Accordion, Card, Row, Col, Form, Button } from 'react-bootstrap';
 
 import { Link } from "react-router-dom";
 
 import { roleApi } from '../../api';
+import topTost from '@/utils/topTost';
 
-export default function AddRole() {
+export default function AddRoleForm() {
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [show, setShow] = useState(false);
     const [roles, setRoles] = useState([]);
+
+    const [loading, setLoading] = useState(false);
     
     const [isCRM, setIsCRM] = useState(0);
     const [isAccordionVisible, setIsAccordionVisible] = useState(true); 
@@ -32,66 +35,35 @@ export default function AddRole() {
 
     try {
             var requestParms=null;
-            const response = await userApi.getModuleAction(requestParms);
+            const response = await roleApi.getModuleAction(requestParms);
             if (response?.data?.status === 200) {
                 console.log('response.data',response?.data?.data.users);
                 let resdata=response?.data?.data;
-                setControllerList(resdata.users);
+
+
+                console.log('resdata',resdata);
+                setControllerList(resdata);
+                setRoles(resdata);
             } else {
-                topTost(response?.data?.message, "error");
+                topTost(response?.data?.message, "error |||||||||||");
             }
     
         } catch (error) {
-          notifyError("Error: " + error?.message);
+          
+          topTost(error?.message, "error");
         } finally {
           setLoading(false);
         }
 
 
-      const dummyData = {
-        role_type_name: "Admin", // Default role name
-        isCRM: 0, // CRM team checkbox state
-        roles: [
-            {
-                id: 1,
-                moduleName: "User Management",
-                moduleLevel: "Manage Users",
-                isChecked: false, // Main checkbox state
-                ModulesActions: [
-                    { id: 101, moduleId:1, actionLevel: "Create User", isChecked: false },
-                    { id: 102, moduleId:1, actionLevel: "Edit User", isChecked: false },
-                    { id: 103, moduleId:1, actionLevel: "Delete User", isChecked: false }
-                ]
-            },
-            {
-                id: 2,
-                moduleName: "Role Management",
-                moduleLevel: "Manage Roles",
-                isChecked: true, // Already checked
-                ModulesActions: [
-                    { id: 201,moduleId:2, actionLevel: "Create Role", isChecked: true },
-                    { id: 202,moduleId:2, actionLevel: "Edit Role", isChecked: false },
-                    { id: 203, moduleId:2 , actionLevel: "Delete Role", isChecked: false }
-                ]
-            },
-            {
-                id: 3,
-                moduleName: "Reports",
-                moduleLevel: "Access Reports",
-                isChecked: false,
-                ModulesActions: [
-                    { id: 301, actionLevel: "View Reports", isChecked: false },
-                    { id: 302, actionLevel: "Download Reports", isChecked: false }
-                ]
-            }
-        ]
-    };
-    
+   
     // setRoles(dummyData.roles);
     // setControllerList(dummyData.roles)
 
     }
     useEffect(() => {
+
+        console.log('fetchAllRoleData');
         fetchAllRoleData();
     }, []);
 
@@ -109,14 +81,14 @@ export default function AddRole() {
         return Promise.all(
             details.map(async (detail) => {
                 detail.isChecked = ischecked;
-                if (ischecked) {
-                    detail.isCheckedCount = (detail.ModulesActions).length
+                if (ischecked) { 	
+                    detail.isCheckedCount = (detail.moduleActions).length
                 }
                 else {
                     detail.isCheckedCount = 0;
                 }
 
-                let action = detail.ModulesActions.map((ac) => {
+                let action = detail.moduleActions.map((ac) => {
                     ac.isChecked = ischecked;
                 })
                 return detail;
@@ -146,9 +118,9 @@ export default function AddRole() {
                     (detail.isChecked = e.target.checked)
                 }
 
-                console.log("detail.ModulesActions", detail.ModulesActions);
-                 detail.ModulesActions.map((ac) => {
-                  console.log("detail.ModulesActions 111", attributLeval +'=='+ ac.moduleId);
+                console.log("detail.moduleActions", detail.moduleActions);
+                 detail.moduleActions.map((ac) => {
+                  console.log("detail.moduleActions 111", attributLeval +'=='+ ac.moduleId);
                     if (attributLeval == ac.moduleId) {
                         console.log("if condition call " + ac.id, attributLeval, ac.moduleId, e.target.checked)
                         ac.isChecked = e.target.checked
@@ -182,7 +154,7 @@ export default function AddRole() {
             details.map(async (detail) => {
 
                 let count = detail.isCheckedCount;
-                let action = detail.ModulesActions.map((ac) => {
+                let action = detail.moduleActions.map((ac) => {
                     if (parent_id == ac.moduleId) {
                         if (attributLeval == ac.id) {
                             ac.isChecked = e.target.checked;
@@ -211,25 +183,29 @@ export default function AddRole() {
 
 
     const getCheckdRoles = async (details) => {
+
+        
         let checkedRoleLocal = {};
         for (let x in details) {
-            let ac = details[x].ModulesActions;
+            let ac = details[x].moduleActions;
             for (let y in ac) {
                 let isCheckedcurrent = ac[y].isChecked;
                 if (isCheckedcurrent == true) {
-                    if (checkedRoleLocal[ac[y].moduleId] === undefined) {
-                        checkedRoleLocal = { ...checkedRoleLocal, [ac[y].moduleId]: [ac[y].id] };
+                    if (checkedRoleLocal[ac[y].module_name] === undefined) {
+                        checkedRoleLocal = { ...checkedRoleLocal, [ac[y].module_name]: [ac[y].action_name] };
                     }
                     else {
-                        var as = checkedRoleLocal[ac[y].moduleId];
+                        var as = checkedRoleLocal[ac[y].module_name];
                         if (as.indexOf(ac[y].id) < 0) {
-                            as.push(ac[y].id);
+                            as.push(ac[y].action_name);
                         }
                     }
                 }
                 console.log("Else conditions ", checkedRoleLocal)
             }
         }
+
+       
         return checkedRoleLocal;
     }
 
@@ -237,20 +213,83 @@ export default function AddRole() {
 
     const toggleAccordionVisibility = () => {
       setIsAccordionVisible(prevState => !prevState); // Toggle the visibility
-  }
+    }
+
+    const onSubmit = async (data) => {
+        console.log("checking data", data);
+        try {
+            //setShow(true);
+            let details = controllerList;
+            console.log("checkdData1 details", details);
+            let checkdData1 = await getCheckdRoles(details);
+            console.log("checkdData1", checkdData1);
+
+            const roledata = {
+                "role_name": data?.role_type_name,
+                "role_permission": JSON.stringify(checkdData1),
+                "org_id": 0,
+                "status": 1
+            };
+            const response = await roleApi.roleCreate(roledata);
+            if (response?.data?.status === 200) {
+                let resdata=response?.data?.data;
+                console.log('resdata',resdata);
+                navigate('/en/user-roles')
+                
+            } else {
+                topTost(response?.data?.message, "error");
+            }
+            
+        } catch (error) {
+            setShow(true);
+            topTost(error.message, "error")
+            
+        }
+    }
     return (
         <section className="d-flex flex-column h-auto container-xxl ">
-            <div className="bg-white p-3 d-flex align-items-center gap-3 mb-2 actionBar listing-cards mt-4">
-                <Link className="btn-icon ">
-                    <BiCaretLeft onClick={() => navigate(`/${lang}/admin/user-roles`)} />
-                </Link>
-                <label className=" mb-0 fw-bold fs-5 ">Add User Role</label>
-            </div>
+            {/* <div className="bg-white p-3 d-flex align-items-center gap-3 mb-2 actionBar listing-cards mt-4">
+                <label className="m-b-10 text-capitalize h4">Add User Role</label>
+            </div> */}
+
+            
             <section className="flex-fill">
                 <div className="bg-white listing-cards">
                     <div className="p-4">
-                        <form >
+                    <form onSubmit={handleSubmit(onSubmit)}>
 
+                            
+                        <Accordion>
+                                <div className="m-b-10 text-capitalize h4">Role Permissions</div>
+                                <Col md={12} className="d-flex gap-md-4 gap-2 pt-2 mt-2 align-items-center justify-content-between">
+                                    <div className="d-flex gap-md-4 gap-2">
+                                        <Form.Check
+                                            type="checkbox"
+                                            name="checkCRM"
+                                            id="checkCRM"
+                                            value={isCRM}
+                                            onChange={(e) => setIsCRM(e.target.checked ? 1 : 0)}
+                                            checked={isCRM === 1}
+                                            label="Assign this role to CRM team"
+                                        />
+                                    
+                                        <Form.Check
+                                            type="checkbox" 
+                                            id="SelectAllRole" 
+                                            onChange={handleChangeSelectAll} 
+                                            name="check-all"
+                                            label="Select All"
+                                        />
+                                    </div>
+
+                                    {/* Button aligned to right using justify-content-between */}
+                                    <Button variant="outline-primary" onClick={toggleAccordionVisibility} className="mt-2">
+                                        {isAccordionVisible ? "Hide" : "Show"} 
+                                    </Button>
+                                </Col>
+                            </Accordion>
+  
+                            
                             <Row className="mb-3">
                                 <Col >
                                     <Form.Group className="mb-md-0 mb-2">
@@ -260,36 +299,6 @@ export default function AddRole() {
                                 </Col>
                                 
                             </Row>
-                            <Accordion  >
-                              <div className=" mb-0 fw-bold fs-5">Role Permissions</div>
-                            <Col md={6} className="d-flex gap-md-4 gap-2 pt-2 mt-2">
-                                    {/* <Form.Check
-                                        type="checkbox"
-                                        name="checkCRM"
-                                        id="checkCRM"
-                                        value={isCRM}
-                                        onChange={(e) => setIsCRM(e.target.checked ? 1 : 0)}
-                                        checked={isCRM === 1}
-                                        label="Assign this role to CRM team"
-                                    /> */}
-                                  
-                                      <Form.Check
-                                        type="checkbox" 
-                                        id="SelectAllRole" 
-                                        onChange={handleChangeSelectAll} 
-                                        name="check-all"
-                                        label="Select All"
-                                    />                                   
-
-                                </Col>
-                                
-                                <Button variant="outline-primary" onClick={toggleAccordionVisibility} className="mt-2">
-                                  {isAccordionVisible ? "Hide" : "Show"} 
-                                </Button> 
-                            
-                            </Accordion>   
-                            
-                           
                            <Accordion defaultActiveKey="0" >
                                 <Card eventKey="1" className="mt-3 ">
                                     {(roles.length) > 0 ?
@@ -303,8 +312,8 @@ export default function AddRole() {
                                                                 <Accordion.Header >
                                                                     <input className="form-check-input" type="checkbox"
                                                                         key={user.id}
-                                                                        name={user.moduleName}
-                                                                        checkedClass={user.moduleName}
+                                                                        name={user.module_name}
+                                                                        checkedClass={user.module_name}
                                                                         parentname="selectAll"
                                                                         value={user.id}
                                                                         checked={trdy}
@@ -314,7 +323,7 @@ export default function AddRole() {
                                                                     <label class="form-check-label fw-bold ms-2  "
                                                                         for={`headCheckBox${user.id}`}
                                                                     >
-                                                                        {user.moduleLevel}
+                                                                        {user.module_label}
                                                                     </label>
                                                                 </Accordion.Header>
                                                             </div>
@@ -322,12 +331,12 @@ export default function AddRole() {
                                                         <Accordion.Body className="p-4">
                                                                 <Row>
                                                                     {user.
-                                                                        ModulesActions.map((ele, index) => {
-                                                                            var length = (user.ModulesActions).length
+                                                                        moduleActions.map((ele, index) => {
+                                                                            var length = (user.moduleActions).length
                                                                             return (
                                                                                 <Col xs={6} md={4} lg={3} key={index}>
                                                                                     <div class="form-check btn-checkbox " >
-                                                                                        <input className="{user.moduleName} form-check-input " type="checkbox"
+                                                                                        <input className="{user.module_name} form-check-input " type="checkbox"
                                                                                             value={ele.id}
                                                                                             parent_id={user.id}
                                                                                             parentname="selectSingle nod"
@@ -340,7 +349,7 @@ export default function AddRole() {
                                                                                         <label class="form-check-label text-dark"
                                                                                             for={ele.id}
                                                                                         >
-                                                                                            {ele.actionLevel}
+                                                                                            {ele.action_label}
                                                                                         </label>
                                                                                     </div>
                                                                                 </Col>

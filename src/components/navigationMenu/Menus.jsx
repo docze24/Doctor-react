@@ -85,7 +85,7 @@ const Menus = () => {
             <ul className={`nxl-submenu ${openDropdown === menu.module_name ? "nxl-menu-visible" : "nxl-menu-hidden"}`} >
               {menu.submenu.map((sub) => (
                 <li key={sub.id} className="nxl-item">
-                  <Link to={`/en/admin/${sub.module_name}`} className="nxl-link text-capitalize">
+                  <Link to={`/en/${sub.module_name}`} className="nxl-link text-capitalize">
                     <span className="nxl-micon"></span>{sub.module_label}
                   </Link>
                   
@@ -95,7 +95,7 @@ const Menus = () => {
           </li>
         ) : (
           <li key={menu.id} className="nxl-item">
-            <Link to={`/en/admin/${menu.module_name}`} className="nxl-link text-capitalize">
+            <Link to={`/en/${menu.module_name}`} className="nxl-link text-capitalize">
               <span className="nxl-micon">{getIcon(menu.icon)}</span>
               <span className="nxl-mtext">{menu.module_label}</span>
             </Link>
