@@ -1,73 +1,75 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { userApi } from '../../api'; // Import the userApi module
+import { userApi } from '../../api'; 
 import topTost from '@/utils/topTost';
-import axiosInstance from '../../api/axiosInstance'; // Import your axios instance
+
 
 export default function AddUser() {
   const [loading, setLoading] = useState(false);
-  const [roles, setRoles] = useState([
-    { id: 1, name: "Admin" },
-    { id: 2, name: "Editor" },
-  ]); // State to store the roles dynamically
+  const roles = [
+    { id: "4464105c-0bf4-488a-9a68-e7fba943e3a4", name: "Admin" },
+    { id: "6c7b2c6d-0bf4-4c4b-91eb-f3aee234abcd", name: "Editor" },
+  ];
   const navigate = useNavigate();
 
-  // Validation schema using Yup
+  
   const validationSchema = Yup.object().shape({
     type: Yup.string().required("Role is required"),
     name: Yup.string().min(4, "Minimum 4 characters").max(20, "Maximum 20 characters").required("Name is required"),
     email: Yup.string().email("Invalid email format").required("Email is required"),
     userName: Yup.string().min(4, "Minimum 4 characters").max(20, "Maximum 20 characters").required("User Name is required"),
-    number: Yup.string()
-      .matches(/^[0-9]+$/, "Only numbers allowed")
-      .min(10, "Must be 10 digits")
-      .max(10, "Must be 10 digits")
-      .required("Number is required"),
+    // number: Yup.string()
+    //   .matches(/^[0-9]+$/, "Only numbers allowed")
+    //   .min(10, "Must be 10 digits")
+    //   .max(10, "Must be 10 digits")
+    //   .required("Number is required"),
     password: Yup.string().min(8, "Minimum 8 characters").required("Password is required"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
     status: Yup.string().required("Status is required"),
-    address: Yup.string().max(100, "Address too long").required("Address is required"), // Adding address validation
   });
 
-  // Form submission handler
+  
   const onSubmit = async (data, { setSubmitting, resetForm }) => {
-    setLoading(true); // Show loading spinner
+    setLoading(true);
+    setSubmitting(true);
+
+    console.log(" Sending Data to API: ", data);
     try {
-      // Create user data to send in the POST request
       const userData = {
         user_type: "Organization",
         name: data.name,
         email: data.email,
         username: data.userName,
-        phone: data.number,  // Adding phone number
+       // phone: data.number, 
         password: data.password,
-        role: data.type, // Role selected dynamically
-        parent_id: 0, // Adjust this value as needed
-        address: data.address, // Address field
+        role: data.type,
+        parent_id: 0,
       };
 
-      // Make the POST request to create the user
-      const response = await axiosInstance.post('/doctor-user', userData);
+      //  API Call
+      const response = await userApi.createUser(userData);
+      console.log(" API Response:", response);
+
       if (response?.data?.status === 200) {
-        topTost("User Created Successfully", "success"); // Show success message
-        resetForm(); // Reset form after successful creation
-        setSubmitting(false);
-        setLoading(false);
+        topTost("User Created Successfully", "success");
+        resetForm();
         setTimeout(() => {
-          navigate("/admin/users"); // Redirect to the users list page
+          navigate("/admin/users");
         }, 2000);
       } else {
-        topTost(response?.data?.message, "error"); // Show error message if any
+        topTost(response?.data?.message, "error");
       }
     } catch (error) {
-      topTost("Error: " + error?.message, "error"); // Show error message on failure
+      console.error(" API Error: ", error);
+      topTost("Error: " + error?.message, "error");
     } finally {
-      setLoading(false); // Stop loading spinner
+      setLoading(false);
+      setSubmitting(false);
     }
   };
 
@@ -78,116 +80,84 @@ export default function AddUser() {
           <div className="p-4">
             <Formik
               initialValues={{
-                type: "", name: "", email: "", userName: "", number: "", password: "", confirmPassword: "", status: "", address: "",
+                type: "", name: "", email: "", userName: "", password: "", confirmPassword: "", status: "",
               }}
               validationSchema={validationSchema}
               onSubmit={onSubmit}
             >
-              {({ isSubmitting }) => (
-                <Form>
+              {({ handleSubmit, isSubmitting }) => (
+                <Form noValidate onSubmit={(e) => { e.preventDefault(); handleSubmit(e); }}>  
                   <Row>
-                    {/* Role Dropdown (Dynamic) */}
+
+                    {/* Role */}
                     <Col md={6}>
                       <Form.Group className="mb-3">
                         <Form.Label>Role <span className="text-red">*</span></Form.Label>
                         <Field as="select" name="type" className="form-control">
                           <option value="" disabled>Select Role</option>
-                          {/* Dynamically populate roles */}
                           {roles.map(role => (
-                            <option key={role.id} value={role.id}>
-                              {role.name}
-                            </option>
+                            <option key={role.id} value={role.id}>{role.name}</option>
                           ))}
                         </Field>
                         <ErrorMessage name="type" component="div" className="form-error text-danger small mt-1" />
                       </Form.Group>
                     </Col>
 
-                    {/* User Name Field */}
+                    {/* Name */}
                     <Col md={6}>
                       <Form.Group className="mb-3">
                         <Form.Label>Name <span className="text-red">*</span></Form.Label>
-                        <Field
-                          type="text"
-                          name="name"
-                          className="form-control"
-                          placeholder="Enter Name"
-                        />
+                        <Field type="text" name="name" className="form-control" placeholder="Enter Name" />
                         <ErrorMessage name="name" component="div" className="form-error text-danger small mt-1" />
                       </Form.Group>
                     </Col>
 
-                    {/* Email Field */}
+                    {/* Email */}
                     <Col md={6}>
                       <Form.Group className="mb-3">
                         <Form.Label>Email <span className="text-red">*</span></Form.Label>
-                        <Field
-                          type="email"
-                          name="email"
-                          className="form-control"
-                          placeholder="Enter Email"
-                        />
+                        <Field type="email" name="email" className="form-control" placeholder="Enter Email" />
                         <ErrorMessage name="email" component="div" className="form-error text-danger small mt-1" />
                       </Form.Group>
                     </Col>
 
-                    {/* User Name (Username Field) */}
+                    {/* User Name */}
                     <Col md={6}>
                       <Form.Group className="mb-3">
                         <Form.Label>Username <span className="text-red">*</span></Form.Label>
-                        <Field
-                          type="text"
-                          name="userName"
-                          className="form-control"
-                          placeholder="Enter Username"
-                        />
+                        <Field type="text" name="userName" className="form-control" placeholder="Enter Username" />
                         <ErrorMessage name="userName" component="div" className="form-error text-danger small mt-1" />
                       </Form.Group>
                     </Col>
 
-                    {/* Phone Number Field */}
+                    {/* Phone Number */}
                     <Col md={6}>
                       <Form.Group className="mb-3">
                         <Form.Label>Phone Number <span className="text-red">*</span></Form.Label>
-                        <Field
-                          type="text"
-                          name="number"
-                          className="form-control"
-                          placeholder="Enter Phone Number"
-                        />
+                        <Field type="text" name="number" className="form-control" placeholder="Enter Phone Number" />
                         <ErrorMessage name="number" component="div" className="form-error text-danger small mt-1" />
                       </Form.Group>
                     </Col>
 
-                    {/* Password Field */}
+                    {/* Password */}
                     <Col md={6}>
                       <Form.Group className="mb-3">
                         <Form.Label>Password <span className="text-red">*</span></Form.Label>
-                        <Field
-                          type="password"
-                          name="password"
-                          className="form-control"
-                          placeholder="Enter Password"
-                        />
+                        <Field type="password" name="password" className="form-control" placeholder="Enter Password" />
                         <ErrorMessage name="password" component="div" className="form-error text-danger small mt-1" />
                       </Form.Group>
                     </Col>
 
-                    {/* Confirm Password Field */}
+                    {/* Confirm Password */}
                     <Col md={6}>
                       <Form.Group className="mb-3">
                         <Form.Label>Confirm Password <span className="text-red">*</span></Form.Label>
-                        <Field
-                          type="password"
-                          name="confirmPassword"
-                          className="form-control"
-                          placeholder="Confirm Password"
-                        />
+                        <Field type="password" name="confirmPassword" className="form-control" placeholder="Confirm Password" />
                         <ErrorMessage name="confirmPassword" component="div" className="form-error text-danger small mt-1" />
                       </Form.Group>
                     </Col>
 
-                    {/* Status Field */}
+                    {/* Status */}
                     <Col md={6}>
                       <Form.Group className="mb-3">
                         <Form.Label>Status <span className="text-red">*</span></Form.Label>
@@ -199,8 +169,6 @@ export default function AddUser() {
                         <ErrorMessage name="status" component="div" className="form-error text-danger small mt-1" />
                       </Form.Group>
                     </Col>
-
-                    
                   </Row>
 
                   {/* Buttons */}
