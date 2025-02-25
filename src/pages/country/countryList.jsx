@@ -2,10 +2,10 @@ import React, { useState,useContext } from 'react'
 import Footer from '@/components/shared/Footer'
 import { Link, useLocation,useNavigate } from 'react-router-dom'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 
-import UserList from '@/components/users/user_list'
+import CountryList from '@/components/country/countrylist';
 import { FiAlignRight, FiArrowLeft,FiPlus } from 'react-icons/fi'
 import { Button } from 'react-bootstrap';
-const UserPage= () => {
+const CountryPage= () => {
       const {t}=useContext(LanguageContext);
       const navigate = useNavigate();
     return (
@@ -17,7 +17,7 @@ const UserPage= () => {
                         <Link to="/users" onClick={() => setOpenSidebar(false)} className="page-header-right-close-toggle">
                             <FiArrowLeft size={16} className="me-2 mt-1" />
                         </Link>
-                        <h5 className="m-b-10 text-capitalize h4">User Managment</h5>
+                        <h5 className="m-b-10 text-capitalize h4">Country Managment</h5>
                     </div>
                 </div>  
             </div>
@@ -27,10 +27,10 @@ const UserPage= () => {
                         <FiPlus size={16} className='me-2' />
                         <span>Create User</span>
                     </Link> */}
-                    <Button variant="primary" size="lg" className="fw-semibold px-4" onClick={() => navigate("create")}  >
+                    {/* <Button variant="primary" size="lg" className="fw-semibold px-4" onClick={() => navigate("create")}  >
                         <FiPlus size={16} className='me-2' />
                         Create Users
-                     </Button>
+                     </Button> */}
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@ const UserPage= () => {
                       <div className="card-body p-0">
                             <div className="table-responsive">
                               
-                               <UserList/>
+                               <CountryList/>
                              
                             </div>
                           </div>
@@ -53,4 +53,4 @@ const UserPage= () => {
         </>
     )
 }
-export default UserPage
+export default CountryPage
