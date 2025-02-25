@@ -1,57 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { statesApi,countriesApi } from '../../api';  
+import { statesApi } from '../../api';  
 import topTost from '@/utils/topTost';
 
-export default function AddState() {
+export default function EditState() {
   const [loading, setLoading] = useState(false);
-  const [countries, setCountries] = useState([]);
+  const [stateData, setStateData] = useState(null);  
   const navigate = useNavigate();
+  const { stateId } = useParams();  
+  console.log("use Params",useParams)
+  console.log("state Id",stateId);  
 
-  
+  // Fetch the state details for editing
   useEffect(() => {
-    const fetchCountries = async () => {
-     // console.log("Fetching countries")
+    const fetchState = async () => {
       try {
-        const response = await countriesApi.getCountryDD();  
+        const response = await statesApi.getStatesById(stateId);  // Fetch state by ID from API
         if (response?.data?.status === 200) {
-        //  console.log("Response data",response?.data)
-          setCountries(response?.data?.data);  
+          setStateData(response?.data?.data);  // Set the fetched state data
         } else {
-          topTost("Failed to load countries.", "error");
+          topTost("State not found.", "error");
         }
       } catch (error) {
         topTost("Error: " + error.message, "error");
       }
     };
-    fetchCountries();
-  }, []);
+    fetchState();
+  }, [stateId]);
 
-  // Validation schema for state
+  // Validation schema for the state form
   const validationSchema = Yup.object().shape({
     name: Yup.string().min(3, "Minimum 3 characters").max(50, "Maximum 50 characters").required("State name is required"),
-    country: Yup.string().required("Country is required"),
     status: Yup.string().required("Status is required"),
   });
 
+  // Handle form submission to update the state
   const onSubmit = async (data, { setSubmitting, resetForm }) => {
     setLoading(true);
     setSubmitting(true);
 
     try {
-      const stateData = {
+      const stateDataToUpdate = {
         stateName: data.name,
-        country_id: data.country,  
         status: data.status,
       };
 
-     
-      const response = await statesApi.createState(stateData); 
+      // API Call to update the state
+      const response = await statesApi.editState(stateId, stateDataToUpdate); // Pass the stateId for updating
       if (response?.data?.status === 200) {
-        topTost("State Added Successfully", "success");
+        topTost("State Updated Successfully", "success");
         resetForm();
         setTimeout(() => {
           navigate("/en/state");  
@@ -60,13 +60,18 @@ export default function AddState() {
         topTost(response?.data?.message, "error");
       }
     } catch (error) {
-      console.error(" API Error: ", error);
+      console.error("API Error: ", error);
       topTost("Error: " + error?.message, "error");
     } finally {
       setLoading(false);
       setSubmitting(false);
     }
   };
+
+  // If the stateData is still loading, show a loading state
+  if (!stateData) {
+    return <div>Loading...</div>;  // Or use a loading spinner here
+  }
 
   return (
     <section className="d-flex flex-column h-auto container-xxl">
@@ -75,7 +80,8 @@ export default function AddState() {
           <div className="p-4">
             <Formik
               initialValues={{
-                name: "", country: "", status: "",
+                name: stateData.stateName || "",  // Populate with existing state name
+                status: stateData.status || "",  // Populate with existing status
               }}
               validationSchema={validationSchema}
               onSubmit={onSubmit}
@@ -83,22 +89,6 @@ export default function AddState() {
               {({ handleSubmit, isSubmitting }) => (
                 <Form noValidate onSubmit={(e) => { e.preventDefault(); handleSubmit(e); }}>
                   <Row>
-                    
-
-                    {/* Country */}
-                    <Col md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Country <span className="text-red">*</span></Form.Label>
-                        <Field as="select" name="country" className="form-control">
-                          <option value="" disabled>Select Country</option>
-                          {countries.map(country => (
-                            <option  key={country.id} value={country.id}>{country.countryName }</option>
-                          ))}
-                        </Field>
-                        <ErrorMessage name="country" component="div" className="form-error text-danger small mt-1" />
-                      </Form.Group>
-                    </Col>
-
                     {/* State Name */}
                     <Col md={6}>
                       <Form.Group className="mb-3">
@@ -126,7 +116,7 @@ export default function AddState() {
                   <div className="d-flex text-center justify-content-center pt-5 m-0 gap-4">
                     <Button variant="danger btn-md-width" onClick={() => navigate("/en/state")}>Cancel</Button>
                     <Button type="submit" variant="primary btn-md-width" disabled={isSubmitting || loading}>
-                      {loading ? "Submitting..." : "Add State"}
+                      {loading ? "Updating..." : "Update State"}
                     </Button>
                   </div>
                 </Form>

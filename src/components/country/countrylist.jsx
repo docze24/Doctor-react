@@ -30,6 +30,7 @@ const CountryList = () => {
     const requestParams = { page: currentPage, limit: perPage, sortBy, sortType, keyword: searchKeyword, status: statusFilter };
     try {
       const response = await countriesApi.getCountries(requestParams);
+      console.log("Country api response",response)
       if (response?.data?.status === 200) {
         const resData = response?.data?.data;
         setListTableData(resData.countries);
