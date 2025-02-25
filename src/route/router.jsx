@@ -118,6 +118,11 @@ import CountryPage from "../pages/country/countryList";
 
 import StatePage from "../pages/state/stateList";
 import AddState from "../pages/state/addStates";
+import EditState from "../pages/state/editState";
+
+import CityPage from "../pages/City/cityList";
+import AddCities from "../pages/City/addCity";
+import EditCities from "../pages/City/editCity";
 
 
 
@@ -175,6 +180,13 @@ export const router = createBrowserRouter([
 
               { path: "state", element: <StatePage/> },
               { path: "state/create", element: <AddState/> },
+              { path: "state/edit/:stateId", element: <EditState/> },
+
+              { path: "city", element: <CityPage/> },
+              { path: "city/create", element: <AddCities/> },
+              { path: "city/edit/:cityId", element: <EditCities/> },
+
+
               
             ],
           },

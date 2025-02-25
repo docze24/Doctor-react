@@ -7,8 +7,16 @@ import axiosInstance from './axiosInstance';
     return axiosInstance.get(`country?${queryString}`);
   };
 
+  const getCountryDD = (data) => {
+    return axiosInstance.get(`country/dd`,data);
+  };
+
+  const getCountryById = (countryId) => axiosInstance.get(`/country/${countryId}`);
+
  export default {
-    getCountries
+    getCountries,
+    getCountryDD,
+    getCountryById
    
   };
   

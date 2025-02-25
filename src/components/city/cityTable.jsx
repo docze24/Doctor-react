@@ -8,10 +8,10 @@ import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import CardLoader from '../../components/shared/CardLoader';
 import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa';
 
-import { statesApi } from '../../api';
+import { citiesApi } from '../../api';
 import topTost from '@/utils/topTost';
 
-const StateList = () => {
+const CityList = () => {
   const { t } = useContext(LanguageContext);
   const [listTableData, setListTableData] = useState([]); // Initialize as an empty array
 
@@ -29,7 +29,7 @@ const StateList = () => {
   const navigate = useNavigate();
 
   // Fetch States
-  const getStates = async () => {
+  const getCity = async () => {
     setLoading(true);
 
     setTimeout(() => {
@@ -42,10 +42,10 @@ const StateList = () => {
 
       console.log('RequestParms', requestParms);
 
-      const response = await statesApi.getStates(requestParms);
+      const response = await citiesApi.getCity(requestParms);
       if (response?.data?.status === 200) {
         let resdata = response?.data?.data;
-        setListTableData(resdata.states || []); 
+        setListTableData(resdata.cities || []); 
         setPageCount(Math.ceil(resdata.total / perPage));
         setTotalRecords(resdata.total);
       } else {
@@ -57,6 +57,44 @@ const StateList = () => {
       setLoading(false);
     }
   };
+
+
+   // Toggle Status
+   const handleToggleStatus = async (cityId, currentStatus) => {
+    try {
+      const newStatus = currentStatus === 1 ? 0 : 1; // Toggle status between 1 (active) and 0 (inactive)
+
+      setListTableData(prevData =>
+        prevData.map(city => 
+          city.id === cityId ? { ...city, status: newStatus } : city
+        )
+      );
+
+      const response = await citiesApi.updateCityStatus(cityId, newStatus);
+      console.log("Status updated response:", response); 
+
+      if (response?.data?.status === 200) {
+        topTost(`City status updated successfully!`, "success");
+      } else {
+         // If backend update fails, revert status to previous value
+      setListTableData(prevData =>
+        prevData.map(city =>
+          city.id === cityId ? { ...city ,  status:currentStatus}:city
+        )
+    );
+        topTost(response?.data?.message || "Failed to update status", "error");
+      }
+    } catch (error) {
+        // In case of error, revert the status to previous value
+         setListTableData(prevData =>
+        prevData.map(city =>
+          city.id === cityId ? { ...city, status: currentStatus } : city
+        )
+      );
+      topTost("Error: " + error?.message, "error");
+    }
+  };
+
 
   // handle Input changes
   const handleOnChange = (e) => {
@@ -108,12 +146,17 @@ const StateList = () => {
 
   // Effect to call API
   useEffect(() => {
-    getStates();
+    getCity();
   }, [offset, currentPage, perPage, search, sortBy, sortType]);
 
   // Handle Edit
-  const handleEditState = (stateId) => {
-    navigate(`/en/state/edit/${stateId}`);  // Navigate to edit page with stateId
+  const handleEditCity = (cityId) => {
+    if (!cityId) {
+      console.error("ERROR: cityId is undefined!");
+      topTost("City ID is missing!", "error");
+      return;
+    }
+    navigate(`/en/city/edit/${cityId}`);
   };
 
   return (
@@ -124,13 +167,13 @@ const StateList = () => {
         <Row className="align-items-end ">
           <Col md={3} className="mb-3 mb-md-0">
             <Form.Group>
-              <Form.Label className="fw-bold text-dark">Search by State</Form.Label>
+              <Form.Label className="fw-bold text-dark">Search by City</Form.Label>
               <InputGroup>
                 <Form.Control
                   name="keyword"
                   value={search.keyword}
                   onChange={handleOnChange}
-                  placeholder="Search state by name"
+                  placeholder="Search city by name"
                   size="sm"
                   autoComplete="off"
                 />
@@ -158,8 +201,8 @@ const StateList = () => {
         <thead>
           <tr>
             <th className="text-center">S.No.</th>
-            <th className="text-center" onClick={(e) => handleSorting(e, "stateName", sortType)}>
-              State Name {activeSortIcon("stateName")}
+            <th className="text-center" onClick={(e) => handleSorting(e, "cityName", sortType)}>
+              City Name {activeSortIcon("cityName")}
             </th>
             <th className="text-center" onClick={(e) => handleSorting(e, "status", sortType)}>
               Status {activeSortIcon("status")}
@@ -174,11 +217,11 @@ const StateList = () => {
               return (
                 <tr key={item.id}>
                   <td className="colFixed text-center" width={40}> {(currentPage - 1) * perPage + index + 1}</td>
-                  <td className="text-nowrap text-center">{item.stateName ? item.stateName : " "}</td>
-                  <td className="text-nowrap text-center">{item.status ? (item.status === 1 ? 'Active' : 'Inactive') : " "}</td>
+                  <td className="text-nowrap text-center">{item.cityName ? item.cityName : " "}</td>
+                  <td className="text-nowrap text-center" style={{color:item.status === 1 ? "green":"red", cursor:"pointer"}} onClick={()=> handleToggleStatus(item.id,item.status)}> {item.status === 1 ? 'Active' : 'Inactive'}</td>
                   <td className="text-nowrap text-center">{item.createdAt ? item.createdAt : " "}</td>
                   <td>
-                    <Button variant="outline-primary" onClick={() => handleEditState(item.id || item.stateId || item.state_id)}>
+                    <Button  onClick={() => handleEditCity(item.id || item.cityId || item.city_id)}>
                       Edit
                     </Button>
                   </td>
@@ -189,9 +232,9 @@ const StateList = () => {
         </tbody>
       </Table>
       <hr />
-      <div className="d-flex flex-md-row flex-column align-items-center justify-content-md-between justify-content-center py-2 gap-2">
+      <div className="d-flex flex-md-row flex-column align-items-center justify-content-md-between justify-content-center py-2 px-3 gap-2 ">
         <div className="t-record d-flex gap-1 align-items-center text-muted">
-          Total States
+          Total Cities
           <span className="text-black semiBold">({totalRecords})</span>
         </div>
         <ReactPaginate
@@ -219,4 +262,4 @@ const StateList = () => {
   );
 };
 
-export default StateList;
+export default CityList;

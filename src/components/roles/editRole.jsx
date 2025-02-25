@@ -27,7 +27,7 @@ export default function EditRoleForm() {
     const fetchAllRoleData = async () => {
         try {
             const response = await roleApi.getModuleAction();
-            console.log("Full Response Data:", response);
+           // console.log("Full Response Data:", response);
             if (response?.data?.status === 200) {
                 setRoles(response?.data?.data);
                 setControllerList(response?.data?.data);
