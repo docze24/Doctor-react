@@ -10,7 +10,7 @@ import topTost from '@/utils/topTost';
 export default function AddUser() {
   const [loading, setLoading] = useState(false);
   const roles = [
-    { id: "4464105c-0bf4-488a-9a68-e7fba943e3a4", name: "Admin" },
+    { id: "4464105c-0bf4-488a-9a68-e7fba943e3c6", name: "Testor" },
     { id: "6c7b2c6d-0bf4-4c4b-91eb-f3aee234abcd", name: "Editor" },
   ];
   const navigate = useNavigate();

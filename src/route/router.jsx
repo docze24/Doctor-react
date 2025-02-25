@@ -101,7 +101,7 @@ import ProposalCreate from "../pages/proposal/proposal-create";
 /*########################################################*/
 
 //import Users from '../pages/admin/users';
-import UserRoles from "../pages/admin/userRoles";
+//import UserRoles from "../pages/admin/userRoles";
 // import UserFormPage from '../components/Admin/UserForm';
 //import RoleForm from '../components/Admin/RoleForm';
 
@@ -111,8 +111,14 @@ import UserPage from "../pages/users/userList";
 
 
  import AddRole from "../pages/Role/addRole";
-//import EditRole from "../pages/Role/editRole";
+import EditRole from "../pages/Role/editRole";
 import RoleList from "../pages/Role/roleList";
+
+import CountryPage from "../pages/country/countryList";
+
+import StatePage from "../pages/state/stateList";
+import AddState from "../pages/state/addStates";
+
 
 
 //import LeadsList from "../pages/leadsList";
@@ -159,9 +165,17 @@ export const router = createBrowserRouter([
               { path: "users", element: <UserPage/> },
               { path: "users/create",element: <AddUser /> },
               { path: "users/edit/:id",element: <EditUser />},
+
               { path: "user-roles", element: <RoleList /> },
               { path: "user-roles/create", element: <AddRole /> },
-             // { path: "user-roles/edit", element: <EditRole/>},
+              { path: "user-roles/edit/:id", element: <EditRole/>},
+
+              { path: "country", element: <CountryPage/> },
+              
+
+              { path: "state", element: <StatePage/> },
+              { path: "state/create", element: <AddState/> },
+              
             ],
           },
         ],
@@ -176,18 +190,18 @@ export const router = createBrowserRouter([
                 children: [
                     //{ path: "/",    element: <Home />  },
                     { path: "dashboards", element: <Analytics /> },
-                    { path: "patients/patient-list", element: <PatientList /> },
+                    { path: "patients/patient-list", element: <AddState/> },
                     // { path: "/patients/patient-create",element:<PatientCreate/>},
 
 
 
-                    { path: "profile/overview", element: <ProfileView /> },
-                    { path: "profile/edit", element: <ProfileEdit /> },
+                    { path: "profile/overview", element: <ProfileView />},
+                    { path: "profile/edit", element: <ProfileEdit />},
 
                     { path: "proposal/proposal-list", element: <Proposalist /> },
                     { path: "proposal/proposal-create", element: <ProposalCreate /> },
                     { path: "proposal/proposal-view", element: <ProposalView /> },
-                    //  { path: "/proposal/edit", element: <ProposalEdit/> },
+                    // { path: "/proposal/edit", element: <ProposalEdit/> },
 
                 ]
             },

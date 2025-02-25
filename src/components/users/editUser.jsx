@@ -81,7 +81,7 @@ export default function EditUser() {
       if (response?.data?.status === 200) {
         topTost("User Updated Successfully", "success");
         setTimeout(() => {
-          navigate(`/admin/users/${id}`); 
+          navigate(`/en/users/${id}`); 
         }, 2000);
       } else {
         topTost(response?.data?.message, "error");
@@ -202,7 +202,7 @@ export default function EditUser() {
 
                     {/* Buttons */}
                     <div className="d-flex justify-content-center pt-4 gap-3">
-                      <Button variant="danger" onClick={() => navigate("/admin/users")}>Cancel</Button>
+                      <Button variant="danger" onClick={() => navigate("/en/users")}>Cancel</Button>
                       <Button type="submit" variant="primary" disabled={isSubmitting}>Update User</Button>
                     </div>
                   </Form>

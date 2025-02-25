@@ -12,11 +12,21 @@ const roleCreate = (postData) => {
   return axiosInstance.post('roles',postData);
 };
 
+const getRoleById = (roleId) => {
+  return axiosInstance.get(`/roles/${roleId}`);
+};
+
+const updateRole = (roleId, roleData) => {
+  return axiosInstance.put(`roles/${roleId}`, roleData);
+};
+
 
 
 export default {
   getUserRoles,
   getModuleAction,
   roleCreate,
-  leftMenu
+  leftMenu,
+  getRoleById,
+  updateRole,
 };
