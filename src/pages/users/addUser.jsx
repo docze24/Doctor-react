@@ -5,7 +5,7 @@ import Footer from '@/components/shared/Footer'
 import {  FiArrowLeft } from 'react-icons/fi'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 
 
-const addUser = () => {
+const AddUsers = () => {
      const {t}=useContext(LanguageContext);
      const navigate = useNavigate();
 
@@ -33,4 +33,4 @@ const addUser = () => {
     )
 }
 
-export default addUser;
+export default AddUsers;

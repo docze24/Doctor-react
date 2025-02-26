@@ -102,7 +102,7 @@ import ProposalCreate from "../pages/proposal/proposal-create";
 
 
 
-import AddUser from "../pages/users/addUser";
+import AddUsers from "../pages/users/addUser";
 import EditUser from "../pages/users/editUser";
 import UserPage from "../pages/users/userList";
 
@@ -165,7 +165,7 @@ export const router = createBrowserRouter([
             element: <RequireAuth />, 
             children: [
               { path: "users", element: <UserPage/> },
-              { path: "users/create",element: <AddUser /> },
+              { path: "users/create",element: <AddUsers /> },
               { path: "users/edit/:id",element: <EditUser />},
 
               { path: "user-roles", element: <RoleList /> },
