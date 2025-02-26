@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { roleApi } from '../../api';
 import topTost from '@/utils/topTost';
 
-export default function AddRoleForm() {
+const  AddRoleForm =()=> {
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [show, setShow] = useState(false);
     const [roles, setRoles] = useState([]);
@@ -386,3 +386,4 @@ export default function AddRoleForm() {
 }
 
 
+export default AddRoleForm;

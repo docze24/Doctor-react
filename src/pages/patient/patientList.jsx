@@ -1,7 +1,7 @@
 import React from 'react'
 import PatientHeader from '@/components/pageHeader/PatientHeader'
 import PatientSearchHeader from '@/components/patient/PatientSearchHeader'
-import PatientList from '@/components/patient/patientList'
+import PatientList from '@/components/patient/PatientList'
 import Footer from '@/components/shared/Footer'
 
 const LeadsList = () => {

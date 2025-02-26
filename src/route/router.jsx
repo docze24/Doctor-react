@@ -100,19 +100,16 @@ import ProposalCreate from "../pages/proposal/proposal-create";
 /******************ROOT ADMIN USERS************************** */
 /*########################################################*/
 
-//import Users from '../pages/admin/users';
-//import UserRoles from "../pages/admin/userRoles";
-// import UserFormPage from '../components/Admin/UserForm';
-//import RoleForm from '../components/Admin/RoleForm';
+
 
 import AddUser from "../pages/users/addUser";
 import EditUser from "../pages/users/editUser";
 import UserPage from "../pages/users/userList";
 
 
- import AddRole from "../pages/Role/addRole";
-import EditRole from "../pages/Role/editRole";
-import RoleList from "../pages/Role/roleList";
+ import AddRole from "../pages/role/addRole";
+import EditRole from "../pages/role/editRole";
+import RoleList from "../pages/role/roleList";
 
 import CountryPage from "../pages/country/countryList";
 
@@ -120,9 +117,9 @@ import StatePage from "../pages/state/stateList";
 import AddState from "../pages/state/addStates";
 import EditState from "../pages/state/editState";
 
-import CityPage from "../pages/City/cityList";
-import AddCities from "../pages/City/addCity";
-import EditCities from "../pages/City/editCity";
+import CityPage from "../pages/city/cityList";
+import AddCities from "../pages/city/addCity";
+import EditCities from "../pages/city/editCity";
 
 
 

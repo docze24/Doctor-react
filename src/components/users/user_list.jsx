@@ -5,7 +5,7 @@ import { CiEdit } from "react-icons/ci";
 import { Form, Row, Col, InputGroup, Button, Table } from 'react-bootstrap';
 import ReactPaginate from "react-paginate";
 import { BiChevronLeft, BiChevronRight} from "react-icons/bi";
-import CardLoader from '../../components/shared/CardLoader';
+import CardLoader from '../shared/CardLoader';
 
 
 import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'

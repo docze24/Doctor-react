@@ -1,6 +1,6 @@
 
 import { useContext } from 'react'
-import EditRoleForm from '@/components/roles/editRole'
+import EditRoleForm from '@/components/roles/EditRoleForm'
 import Footer from '@/components/shared/Footer'
 import {  FiArrowLeft } from 'react-icons/fi'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 

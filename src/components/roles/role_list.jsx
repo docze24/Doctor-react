@@ -6,7 +6,7 @@ import { LanguageContext } from '../../contentApi/LanguageContext';
 import { Form, Row, Col, InputGroup, Button, Table } from 'react-bootstrap';
 import ReactPaginate from "react-paginate";
 import { BiEditAlt, BiChevronLeft, BiChevronRight, BiData } from "react-icons/bi";
-import CardLoader from '../../components/shared/CardLoader';
+import CardLoader from '../shared/CardLoader';
 
 import { useLoading } from "../../contentApi/LoadingContext";
 

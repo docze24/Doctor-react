@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { statesApi } from '../../api';  
 import topTost from '@/utils/topTost';
 
-export default function EditState() {
+const EditState = () => {
   const [loading, setLoading] = useState(false);
   const [stateData, setStateData] = useState(null);  
   const navigate = useNavigate();
@@ -128,3 +128,4 @@ export default function EditState() {
     </section>
   );
 }
+ export default EditState;

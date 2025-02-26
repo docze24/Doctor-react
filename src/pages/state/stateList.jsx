@@ -2,7 +2,7 @@ import React, { useState,useContext } from 'react'
 import Footer from '@/components/shared/Footer'
 import { Link, useLocation,useNavigate } from 'react-router-dom'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 
-import StateList from '../../components/state/stateTable';
+import StateList from '../../components/state/StateTable';
 import { FiAlignRight, FiArrowLeft,FiPlus } from 'react-icons/fi'
 import { Button } from 'react-bootstrap';
 const StatePage = () => {

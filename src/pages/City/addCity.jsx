@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import AddCity from '@/components/city/addCityForm';
+import AddCity from '@/components/city/AddCityForm';
 import Footer from '@/components/shared/Footer'
 import {  FiArrowLeft } from 'react-icons/fi'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 

@@ -20,6 +20,10 @@ const updateRole = (roleId, roleData) => {
   return axiosInstance.put(`roles/${roleId}`, roleData);
 };
 
+const getRolesDD = (data) => {
+  return axiosInstance.get(`roles/dd`,data);
+};
+
 
 
 export default {
@@ -29,4 +33,5 @@ export default {
   leftMenu,
   getRoleById,
   updateRole,
+  getRolesDD
 };

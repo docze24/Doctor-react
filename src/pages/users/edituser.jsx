@@ -1,11 +1,12 @@
 import { useContext } from 'react'
-import EditUser from '@/components/users/editUser';
+import EditUsers from '@/components/users/EditUserForm';
+
 import Footer from '@/components/shared/Footer'
 import {  FiArrowLeft } from 'react-icons/fi'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 
 import { useNavigate } from 'react-router-dom';
 
-const editUser = () => {
+const EditUser = () => {
      const {t}=useContext(LanguageContext);
      const navigate = useNavigate();
 
@@ -27,7 +28,7 @@ const editUser = () => {
                     </div>  
             <div className='main-content'>
                 <div className='row'>
-                   <EditUser/>
+                   <EditUsers/>
                 </div>
             </div>
             <Footer />
@@ -35,4 +36,4 @@ const editUser = () => {
     )
 }
 
-export default editUser;
+export default EditUser;

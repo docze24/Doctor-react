@@ -5,8 +5,9 @@ import * as Yup from "yup";
 import { Row, Col, Button } from "react-bootstrap";
 import { userApi } from '../../api'; 
 import  topTost  from '../../utils/topTost'; 
+import CardLoader from '../shared/CardLoader';
 
-export default function EditUser() {
+export default function EditUsers () {
   const { id } = useParams(); 
   console.log("User Id",id)
   const [show, setShow] = useState(false); 
@@ -47,12 +48,12 @@ export default function EditUser() {
           setUser(userResponse.data.data); 
         } else {
           topTost("User not found!", "error");
-          navigate("/admin/users"); 
+          navigate("/en/users"); 
         }
       } catch (error) {
         console.error("Error fetching data:", error);
         topTost("Error fetching user details", "error");
-        navigate("/admin/users"); 
+        navigate("/en/users"); 
       } finally {
         setLoading(false); 
       }
@@ -100,7 +101,7 @@ export default function EditUser() {
         <div className="bg-white listing-cards">
           <div className="p-4">
             {loading ? (
-              <p>Loading...</p> 
+             <CardLoader refreshKey={loading}  />
             ) : user ? (
               <Formik
                 initialValues={{

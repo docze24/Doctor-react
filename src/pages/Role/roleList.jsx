@@ -2,7 +2,7 @@ import React, { useState,useContext } from 'react'
 import Footer from '@/components/shared/Footer'
 import { Link, useLocation } from 'react-router-dom'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 
-import RoleListTable from '@/components/roles/role_list'
+import RoleListTable from '@/components/roles/Role_list'
 import { FiAlignRight, FiArrowLeft,FiPlus } from 'react-icons/fi'
 const RoleList= () => {
       const {t}=useContext(LanguageContext);
