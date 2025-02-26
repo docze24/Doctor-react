@@ -202,7 +202,7 @@ export const router = createBrowserRouter([
                 children: [
                     //{ path: "/",    element: <Home />  },
                     { path: "dashboards", element: <Analytics /> },
-                    { path: "patients/patient-list", element: <AddState/> },
+                    { path: "patients/patient-list", element: <PatientList/> },
                     // { path: "/patients/patient-create",element:<PatientCreate/>},
 
 

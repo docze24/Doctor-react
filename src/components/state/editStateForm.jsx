@@ -18,9 +18,9 @@ export default function EditState() {
   useEffect(() => {
     const fetchState = async () => {
       try {
-        const response = await statesApi.getStatesById(stateId);  // Fetch state by ID from API
+        const response = await statesApi.getStatesById(stateId);  
         if (response?.data?.status === 200) {
-          setStateData(response?.data?.data);  // Set the fetched state data
+          setStateData(response?.data?.data);
         } else {
           topTost("State not found.", "error");
         }
@@ -48,8 +48,8 @@ export default function EditState() {
         status: data.status,
       };
 
-      // API Call to update the state
-      const response = await statesApi.editState(stateId, stateDataToUpdate); // Pass the stateId for updating
+      
+      const response = await statesApi.editState(stateId, stateDataToUpdate); 
       if (response?.data?.status === 200) {
         topTost("State Updated Successfully", "success");
         resetForm();

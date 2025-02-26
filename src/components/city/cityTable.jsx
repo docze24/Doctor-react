@@ -1,5 +1,4 @@
 import React, {  useContext, useEffect, useState } from 'react';
-import { FiAlertOctagon, FiArchive, FiClock, FiEdit, FiEdit3, FiEye, FiMoreHorizontal, FiPrinter, FiTrash2 } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { LanguageContext } from '../../contentApi/LanguageContext';
 import { Form, Row, Col, InputGroup, Button, Table } from 'react-bootstrap';
@@ -76,7 +75,7 @@ const CityList = () => {
       if (response?.data?.status === 200) {
         topTost(`City status updated successfully!`, "success");
       } else {
-         // If backend update fails, revert status to previous value
+         
       setListTableData(prevData =>
         prevData.map(city =>
           city.id === cityId ? { ...city ,  status:currentStatus}:city
@@ -85,7 +84,7 @@ const CityList = () => {
         topTost(response?.data?.message || "Failed to update status", "error");
       }
     } catch (error) {
-        // In case of error, revert the status to previous value
+        
          setListTableData(prevData =>
         prevData.map(city =>
           city.id === cityId ? { ...city, status: currentStatus } : city
@@ -263,3 +262,6 @@ const CityList = () => {
 };
 
 export default CityList;
+
+
+

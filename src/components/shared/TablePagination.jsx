@@ -1,6 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next';
 
+
 const TablePagination = ({table}) => {
     const { t } = useTranslation("tables");
 
