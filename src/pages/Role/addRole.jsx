@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import AddRoleForm from '@/components/roles/addRole'
+import AddRoleForm from '@/components/roles/AddRoleForm'
 import Footer from '@/components/shared/Footer'
 import {  FiArrowLeft } from 'react-icons/fi'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 

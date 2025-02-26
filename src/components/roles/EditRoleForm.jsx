@@ -6,7 +6,7 @@ import { Accordion, Card, Row, Col, Form, Button } from "react-bootstrap";
 import { roleApi } from '../../api';
 import topTost from '@/utils/topTost';
 
-export default function EditRoleForm() {
+const EditRoleForm = () => {
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [loading, setLoading] = useState(true);
     const [roles, setRoles] = useState([]);
@@ -268,3 +268,4 @@ export default function EditRoleForm() {
         </section>
     );
 }
+export default EditRoleForm;

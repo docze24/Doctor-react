@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import EditCity from '@/components/city/editCityForm';
+import EditCity from '@/components/city/EditCityForm';
 import Footer from '@/components/shared/Footer'
 import {  FiArrowLeft } from 'react-icons/fi'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 

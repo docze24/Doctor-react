@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { countriesApi, statesApi, citiesApi } from '../../api';  
 import topTost from '@/utils/topTost';
 
-export default function EditCity() {
+const EditCity =()=> {
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
@@ -243,3 +243,4 @@ console.log("City ID:", cityId);
     </section>
   );
 }
+export default EditCity;

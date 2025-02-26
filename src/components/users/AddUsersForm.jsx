@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { userApi } from '../../api'; 
+import { userApi ,roleApi } from '../../api'; 
 import topTost from '@/utils/topTost';
+
 
 
 export default function AddUser() {
   const [loading, setLoading] = useState(false);
-  const roles = [
-    { id: "4464105c-0bf4-488a-9a68-e7fba943e3c6", name: "Testor" },
-    { id: "6c7b2c6d-0bf4-4c4b-91eb-f3aee234abcd", name: "Editor" },
-  ];
+  const [roles, setRoles] = useState([]);
+  // const roles = [
+  //   { id: "4464105c-0bf4-488a-9a68-e7fba943e3c6", name: "Testor" },
+  //   { id: "6c7b2c6d-0bf4-4c4b-91eb-f3aee234abcd", name: "Editor" },
+  // ];
   const navigate = useNavigate();
 
   
@@ -33,6 +35,23 @@ export default function AddUser() {
     status: Yup.string().required("Status is required"),
   });
 
+  useEffect(() => {
+    const fetchRoles = async () => {
+     // console.log("Fetching countries")
+      try {
+        const response = await roleApi.getRolesDD();  
+        if (response?.data?.status === 200) {
+        //  console.log("Response data",response?.data)
+        setRoles(response?.data?.data);  
+        } else {
+          topTost("Failed to load Roles", "error");
+        }
+      } catch (error) {
+        topTost("Error: " + error.message, "error");
+      }
+    };
+    fetchRoles();
+  }, []);
   
   const onSubmit = async (data, { setSubmitting, resetForm }) => {
     setLoading(true);
@@ -59,7 +78,7 @@ export default function AddUser() {
         topTost("User Created Successfully", "success");
         resetForm();
         setTimeout(() => {
-          navigate("/admin/users");
+          navigate("/en/users");
         }, 2000);
       } else {
         topTost(response?.data?.message, "error");
@@ -96,7 +115,7 @@ export default function AddUser() {
                         <Field as="select" name="type" className="form-control">
                           <option value="" disabled>Select Role</option>
                           {roles.map(role => (
-                            <option key={role.id} value={role.id}>{role.name}</option>
+                            <option key={role.id} value={role.id}>{role.role_name}</option>
                           ))}
                         </Field>
                         <ErrorMessage name="type" component="div" className="form-error text-danger small mt-1" />

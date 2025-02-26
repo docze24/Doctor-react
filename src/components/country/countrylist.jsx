@@ -3,7 +3,7 @@ import { LanguageContext } from '../../contentApi/LanguageContext';
 import { Form, Row, Col, InputGroup, Button, Table } from 'react-bootstrap';
 import ReactPaginate from "react-paginate";
 import { BiEditAlt, BiChevronLeft, BiChevronRight, BiData } from "react-icons/bi";
-import CardLoader from '../../components/shared/CardLoader';
+import CardLoader from '../shared/CardLoader';
 import { countriesApi } from '../../api';
 import topTost from '@/utils/topTost';
 import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa';

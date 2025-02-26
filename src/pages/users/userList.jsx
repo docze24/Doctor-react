@@ -2,7 +2,7 @@ import React, { useState,useContext } from 'react'
 import Footer from '@/components/shared/Footer'
 import { Link, useLocation,useNavigate } from 'react-router-dom'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 
-import UserList from '@/components/users/user_list'
+import UserList from '@/components/users/User_list'
 import { FiAlignRight, FiArrowLeft,FiPlus } from 'react-icons/fi'
 import { Button } from 'react-bootstrap';
 const UserPage= () => {

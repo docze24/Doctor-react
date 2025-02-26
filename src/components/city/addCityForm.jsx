@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { countriesApi, statesApi, citiesApi } from '../../api';  
 import topTost from '@/utils/topTost';
 
-export default function AddCity() {
+const  AddCity =()=> {
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]); 
@@ -198,3 +198,4 @@ export default function AddCity() {
     </section>
   );
 }
+ export default AddCity;

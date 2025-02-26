@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import AddStates from '../../components/state/addStateForm';
+import AddStates from '../../components/state/AddStateForm';
 import Footer from '@/components/shared/Footer'
 import {  FiArrowLeft } from 'react-icons/fi'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 
