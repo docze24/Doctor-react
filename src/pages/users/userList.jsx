@@ -14,7 +14,7 @@ const UserPage= () => {
             <div className="page-header-left d-flex align-items-center">
                 <div className="page-header-title">
                     <div className="d-flex d-ms-none gap-2">
-                        <Link to="/users" onClick={() => setOpenSidebar(false)} className="page-header-right-close-toggle">
+                        <Link to="" onClick={() => setOpenSidebar(false)} className="page-header-right-close-toggle">
                             <FiArrowLeft size={16} className="me-2 mt-1" />
                         </Link>
                         <h5 className="m-b-10 text-capitalize h4">User Managment</h5>
@@ -36,8 +36,8 @@ const UserPage= () => {
         </div>
             <div className='main-content'>
                 <div className='row'>
-                <div className="col-lg-12">
-                  <div className="card stretch stretch-full function-table">
+                <div className="col-lg-">
+                  <div className="card stretch stretch-full ">
                       <div className="card-body p-0">
                             <div className="table-responsive">
                               

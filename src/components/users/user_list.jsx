@@ -1,14 +1,12 @@
 import React, { memo, useContext, useEffect, useState } from 'react'
-import { FiAlertOctagon, FiArchive, FiClock, FiEdit, FiEdit3, FiEye, FiMoreHorizontal, FiPrinter, FiTrash2 } from 'react-icons/fi'
-import getIcon from '@/utils/getIcon';
 import { useNavigate } from 'react-router-dom';
 import { LanguageContext } from '../../contentApi/LanguageContext';
+import { CiEdit } from "react-icons/ci";
 import { Form, Row, Col, InputGroup, Button, Table } from 'react-bootstrap';
 import ReactPaginate from "react-paginate";
-import { BiEditAlt, BiChevronLeft, BiChevronRight, BiData } from "react-icons/bi";
+import { BiChevronLeft, BiChevronRight} from "react-icons/bi";
 import CardLoader from '../../components/shared/CardLoader';
 
-import { useLoading } from "../../contentApi/LoadingContext";
 
 import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
 
@@ -91,7 +89,7 @@ const UserList = () => {
       const response = await userApi.getUsers(requestParms);
       if (response?.data?.status === 200) {
 
-        console.log('response.data', response?.data?.data.users);
+       // console.log('response.data', response?.data?.data.users);
         let resdata = response?.data?.data;
         setListTableData(response?.data?.data.users)
         setPageCount(Math.ceil(resdata.total / perPage));
@@ -237,8 +235,8 @@ const UserList = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Col> */}
-          <Col md={4} className="d-flex justify-content-end">
-            <Button variant="outline-primary" className="me-3 px-4 py-2"  > Reset</Button>
+          <Col md={4} className="d-flex justify-content-end   ">
+            <Button variant="outline-primary" className="me-3 px-4 py-3 "  > Reset</Button>
             <Button variant="primary" className="px-4 py-2" > Search </Button>
           </Col>
         </Row>
@@ -274,9 +272,7 @@ const UserList = () => {
                     <td className="text-nowrap text-center">{item.created_at ? item.created_at : " "}</td>
                     <td className="text-nowrap text-center">{item.status ? item.status : " "}</td>
                     <td>
-                      <Button variant="outline-primary" onClick={() => handleEditUsers(item.id)} >
-                        Edit
-                      </Button>
+                      <CiEdit size={"18px"} onClick={()=>handleEditUsers(item.id)}/>
                     </td>
 
                   </tr>
@@ -286,8 +282,8 @@ const UserList = () => {
           </tbody>
         </Table>
         <hr />
-        <div className="d-flex flex-md-row flex-column align-items-center justify-content-md-between justify-content-center py-2 gap-2">
-          <div className="t-record d-flex gap-1 align-items-center text-muted">
+        <div className="d-flex flex-md-row flex-column align-items-center px-4 justify-content-md-between justify-content-center py-2 gap-2">
+          <div className="t-record d-flex gap-1 align-items-center text-muted ">
             Total Users
             <span className="text-black semiBold">({10})</span>
           </div>

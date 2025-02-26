@@ -9,9 +9,9 @@ import topTost from '@/utils/topTost';
 export default function AddCity() {
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
-  const [states, setStates] = useState([]); // For storing states based on selected country
-  const [selectedCountry, setSelectedCountry] = useState(""); // Track selected country
-  const [selectedState, setSelectedState] = useState(""); // Track selected state if any
+  const [states, setStates] = useState([]); 
+  const [selectedCountry, setSelectedCountry] = useState(""); 
+  const [selectedState, setSelectedState] = useState(""); 
   const navigate = useNavigate();
 
   // Fetch countries when component mounts
@@ -66,7 +66,7 @@ export default function AddCity() {
       const cityData = {
         cityName: data.name,
         country_id: data.country,  
-        state_id: data.state, // Send the selected state as part of data
+        state_id: data.state, 
         status: data.status,
       };
 
@@ -115,8 +115,8 @@ export default function AddCity() {
                           className="form-control" 
                           onChange={(e) => {
                             const { value } = e.target;
-                            setSelectedCountry(value); // Update selected country state
-                            setSelectedState(""); // Reset selected state
+                            setSelectedCountry(value);
+                            setSelectedState(""); 
                             setStates([]); 
                             setFieldValue("country", value);
                             setFieldValue("state", "");
