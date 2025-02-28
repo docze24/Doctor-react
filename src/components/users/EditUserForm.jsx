@@ -14,8 +14,8 @@ export default function EditUsers () {
   const [loading, setLoading] = useState(true); 
   const [user, setUser] = useState(null); 
   const [roles, setRoles] = useState([
-    { id: "1", name: "Admin" },
-    { id: "2", name: "Editor" },
+    // { id: "1", name: "Admin" },
+    // { id: "2", name: "Editor" },
   ]); 
   const navigate = useNavigate(); 
 
@@ -66,10 +66,10 @@ export default function EditUsers () {
     try {
       const updatedUserData = {
         userId: id,
-        type: values.type,
+        type: values.user_type,
         name: values.name,
         email: values.email,
-        userName: values.userName,
+        userName: values.username,
         number: values.number,
         password: values.password,
         confirmPassword: values.confirmPassword,
@@ -105,12 +105,12 @@ export default function EditUsers () {
             ) : user ? (
               <Formik
                 initialValues={{
-                  type: user.type || "",
-                  name: user.name || "",
-                  email: user.email || "",
-                  userName: user.userName || "",
-                  number: user.number || "",
-                  password: user.password || "",
+                  type: user?.user_type || "",
+                  name: user?.name || "",
+                  email: user?.email || "",
+                  userName: user?.username || "",
+                  number: user?.number || "",
+                  password: user?.password || "",
                   confirmPassword: user.confirmPassword || "",
                   status: user.status || "Active",
                 }}
