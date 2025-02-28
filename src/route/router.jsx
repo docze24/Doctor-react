@@ -100,14 +100,12 @@ import ProposalCreate from "../pages/proposal/proposal-create";
 /******************ROOT ADMIN USERS************************** */
 /*########################################################*/
 
-
-
 import AddUsers from "../pages/users/addUser";
 import EditUser from "../pages/users/editUser";
 import UserPage from "../pages/users/userList";
 
 
- import AddRole from "../pages/role/addRole";
+import AddRole from "../pages/role/addRole";
 import EditRole from "../pages/role/editRole";
 import RoleList from "../pages/role/roleList";
 
