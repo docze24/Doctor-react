@@ -1,7 +1,6 @@
 import React, { memo, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { FiAlertOctagon, FiArchive, FiClock, FiEdit, FiEdit3, FiEye, FiMoreHorizontal, FiPrinter, FiTrash2 } from 'react-icons/fi'
-import getIcon from '@/utils/getIcon';
+import { CiEdit } from "react-icons/ci";
 import { LanguageContext } from '../../contentApi/LanguageContext';
 import { Form, Row, Col, InputGroup, Button, Table } from 'react-bootstrap';
 import ReactPaginate from "react-paginate";
@@ -237,8 +236,8 @@ const RoleListTable = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Col> */}
-          <Col md={4} className="d-flex justify-content-end">
-            <Button variant="outline-primary" className="me-3 px-4 py-2"  > Reset</Button>
+          <Col md={4} className="d-flex justify-content-end   ">
+            <Button variant="outline-primary" className="me-3 px-4 py-3 "  > Reset</Button>
             <Button variant="primary" className="px-4 py-2" > Search </Button>
           </Col>
         </Row>
@@ -266,10 +265,8 @@ const RoleListTable = () => {
                     <td className="text-nowrap text-center">{item.role_name ? item.role_name : " "}</td>
                     <td className="text-nowrap text-center">{item.created_at ? item.created_at : " "}</td>
                     <td className="text-nowrap text-center">{item.status ? 'Active' : " Inactive"}</td>
-                    <td>
-                      <Button variant="outline-primary"  onClick={() => handleEditRole(item.id)} >
-                        Edit
-                      </Button>
+                    <td className="text-nowrap text-center">
+                      <CiEdit size={"18px"} onClick={() => handleEditRole(item.id)} />
                     </td>
                   </tr>
                 );
@@ -278,10 +275,10 @@ const RoleListTable = () => {
           </tbody>
         </Table>
         <hr />
-        <div className="d-flex flex-md-row flex-column align-items-center justify-content-md-between justify-content-center py-2 gap-2">
-          <div className="t-record d-flex gap-1 align-items-center text-muted">
-            Total Users
-            <span className="text-black semiBold">({10})</span>
+        <div className="d-flex flex-md-row flex-column align-items-center px-4 justify-content-md-between justify-content-center py-2 gap-2">
+          <div className="t-record d-flex gap-1 align-items-center text-muted ">
+            Total Country
+            <span className="text-black semiBold">({totalRecords})</span>
           </div>
           <ReactPaginate
             previousLabel={<BiChevronLeft />}
