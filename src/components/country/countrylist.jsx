@@ -5,6 +5,7 @@ import ReactPaginate from "react-paginate";
 import { BiEditAlt, BiChevronLeft, BiChevronRight, BiData } from "react-icons/bi";
 import CardLoader from '../shared/CardLoader';
 import { countriesApi } from '../../api';
+import { CiEdit } from "react-icons/ci";
 import topTost from '@/utils/topTost';
 import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa';
 
@@ -23,14 +24,14 @@ const CountryList = () => {
   const [sortType, setSortType] = useState('');
   const [activeIcon, setActiveIcon] = useState({});
 
-  
+
   const getCountries = async () => {
     setLoading(true);
 
     const requestParams = { page: currentPage, limit: perPage, sortBy, sortType, keyword: searchKeyword, status: statusFilter };
     try {
       const response = await countriesApi.getCountries(requestParams);
-      console.log("Country api response",response)
+      console.log("Country api response", response)
       if (response?.data?.status === 200) {
         const resData = response?.data?.data;
         setListTableData(resData.countries);
@@ -46,7 +47,7 @@ const CountryList = () => {
     }
   };
 
-  
+
   const handlePageClick = (e) => {
     const selectedPage = e.selected;
     setCurrentPage(selectedPage + 1);
@@ -98,7 +99,7 @@ const CountryList = () => {
   return (
     <div className="dataTables_wrapper dt-bootstrap5 no-footer">
       {loading && <CardLoader refreshKey={loading} />}
-      
+
       {/* Search and Filters */}
       <div className="header-search">
         <Row className="align-items-end">
@@ -131,9 +132,9 @@ const CountryList = () => {
               </Form.Select>
             </Form.Group>
           </Col>
-          <Col md={4} className="d-flex justify-content-end">
-            <Button variant="outline-primary" className="me-3">Reset</Button>
-            <Button variant="primary">Search</Button>
+          <Col md={4} className="d-flex justify-content-end   ">
+            <Button variant="outline-primary" className="me-3 px-4 py-3 "  > Reset</Button>
+            <Button variant="primary" className="px-4 py-2" > Search </Button>
           </Col>
         </Row>
       </div>
@@ -172,32 +173,33 @@ const CountryList = () => {
       </Table>
 
       {/* Pagination */}
-      <div className="d-flex justify-content-between py-2">
-        <div className="text-muted">
-          Total Countries <strong>({totalRecords})</strong>
-        </div>
+     <div className="d-flex flex-md-row flex-column align-items-center px-4 justify-content-md-between justify-content-center py-2 gap-2">
+          <div className="t-record d-flex gap-1 align-items-center text-muted ">
+            Total Roles
+            <span className="text-black semiBold">({totalRecords})</span>
+          </div>
         <ReactPaginate
-            previousLabel={<BiChevronLeft />}
-            nextLabel={<BiChevronRight />}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
-            breakLinkClassName={"page-link"}
-            pageCount={pageCount}
-            marginPagesDisplayed={1}
-            pageRangeDisplayed={5}
-            onPageChange={handlePageClick}
-            containerClassName={
-              "pagination gap-1 align-items-center justify-content-center m-0"
-            }
-            previousClassName={"page-item"}
-            previousLinkClassName={"page-link page-link-prev"}
-            pageClassName={"page-item"}
-            pageLinkClassName={"page-link"}
-            nextClassName={"page-item"}
-            nextLinkClassName={"page-link page-link-next"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
+          previousLabel={<BiChevronLeft />}
+          nextLabel={<BiChevronRight />}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          breakLinkClassName={"page-link"}
+          pageCount={pageCount}
+          marginPagesDisplayed={1}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={
+            "pagination gap-1 align-items-center justify-content-center m-0"
+          }
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link page-link-prev"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link page-link-next"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+        />
       </div>
     </div>
   );

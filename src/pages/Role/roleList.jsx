@@ -15,7 +15,7 @@ const RoleList= () => {
                         <Link to="#" onClick={() => setOpenSidebar(false)} className="page-header-right-close-toggle">
                             <FiArrowLeft size={16} className="me-2" />
                         </Link>
-                        <h5 className="m-b-10 text-capitalize">Role Managment</h5>
+                        <h5 className="m-b-10 text-capitalize h4">Roles Managment</h5>
                     </div>
                 </div>
             </div>

@@ -248,7 +248,7 @@ const UserList = () => {
             <tr>
               <th className="text-center">S.No.</th>
               <th className="text-center" >User Role </th>
-              <th className="text-center" onClick={(e) => handleSorting(e, "name", sortType)}>User Name  {activeSortIcon("name")}</th>
+              <th className="text-center" onClick={(e) => handleSorting(e, "name", sortType)}> Name  {activeSortIcon("name")}</th>
               <th className="text-center" onClick={(e) => handleSorting(e, "email", sortType)}>User Email  {activeSortIcon("email")}</th>
               <th className="text-center" >Username </th>
               <th className="text-center" >Created_at</th>
@@ -271,7 +271,7 @@ const UserList = () => {
                     <td className="text-nowrap text-center">{item.username ? item.username : " "}</td>
                     <td className="text-nowrap text-center">{item.created_at ? item.created_at : " "}</td>
                     <td className="text-nowrap text-center">{item.status ? item.status : " "}</td>
-                    <td>
+                    <td className="text-nowrap text-center">
                       <CiEdit size={"18px"} onClick={()=>handleEditUsers(item.id)}/>
                     </td>
 
@@ -285,7 +285,7 @@ const UserList = () => {
         <div className="d-flex flex-md-row flex-column align-items-center px-4 justify-content-md-between justify-content-center py-2 gap-2">
           <div className="t-record d-flex gap-1 align-items-center text-muted ">
             Total Users
-            <span className="text-black semiBold">({10})</span>
+            <span className="text-black semiBold">({totalRecords})</span>
           </div>
           <ReactPaginate
             previousLabel={<BiChevronLeft />}

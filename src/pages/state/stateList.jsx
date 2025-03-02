@@ -14,7 +14,7 @@ const StatePage = () => {
             <div className="page-header-left d-flex align-items-center">
                 <div className="page-header-title">
                     <div className="d-flex d-ms-none gap-2">
-                        <Link to="/users" onClick={() => setOpenSidebar(false)} className="page-header-right-close-toggle">
+                        <Link to="/en/users" onClick={() => setOpenSidebar(false)} className="page-header-right-close-toggle">
                             <FiArrowLeft size={16} className="me-2 mt-1" />
                         </Link>
                         <h5 className="m-b-10 text-capitalize h4">State Managment</h5>
