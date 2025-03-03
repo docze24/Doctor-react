@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { FiAlignLeft, FiArrowLeft, FiArrowRight, FiChevronRight, FiMaximize, FiMinimize, FiMoon, FiPlus, FiSun, } from "react-icons/fi";
- import LanguagesModal from '../modal/LanguagesModal';
- import NotificationsModal from '../modal/NotificationsModal';
+ import LanguagesModal from '../Modal/LanguagesModal';
+ import NotificationsModal from '../Modal/NotificationsModal';
 import ProfileModal from '../Modal/ProfileModal';
- import SearchModal from '../modal/SearchModal';
+ import SearchModal from '../Modal/SearchModal';
 //import TimesheetsModal from '../Modal/TimesheetsModal';
  // import HeaderDropDownModal from '../modal/HeaderDropDownModal';
  // import MegaMenu from './megaManu/MegaMenu';

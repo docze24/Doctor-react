@@ -23,8 +23,8 @@ const LoginForm = ({ registerPath, resetPath }) => {
     
     const formik = useFormik({
         initialValues: {
-            email: 'michael.davis@medservices.org',
-            password: 'docze_123#',
+            email: '',
+            password: '',
             rememberMe: false,
         },
         validationSchema: loginSchema,  

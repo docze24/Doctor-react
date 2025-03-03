@@ -1,47 +1,45 @@
 import React, { useState,useContext } from 'react'
 import Footer from '@/components/shared/Footer'
-import { Link, useLocation,useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { LanguageContext } from '../../contentApi/LanguageContext'; 
-import UserList from '@/components/users/User_list'
+import RoleListTable from '@/components/roles/RolesList'
 import { FiAlignRight, FiArrowLeft,FiPlus } from 'react-icons/fi'
-import { Button } from 'react-bootstrap';
-const UserPage= () => {
+const RoleList= () => {
       const {t}=useContext(LanguageContext);
-      const navigate = useNavigate();
     return (
         <>
            <div className="page-header">
             <div className="page-header-left d-flex align-items-center">
                 <div className="page-header-title">
                     <div className="d-flex d-ms-none gap-2">
-                        <Link to="" onClick={() => setOpenSidebar(false)} className="page-header-right-close-toggle">
-                            <FiArrowLeft size={16} className="me-2 mt-1" />
+                        <Link to="#" onClick={() => setOpenSidebar(false)} className="page-header-right-close-toggle">
+                            <FiArrowLeft size={16} className="me-2" />
                         </Link>
-                        <h5 className="m-b-10 text-capitalize h4">User Managment</h5>
+                        <h5 className="m-b-10 text-capitalize">Role Managment</h5>
                     </div>
-                </div>  
+                </div>
             </div>
             <div className="page-header-right ms-auto">
                 <div className="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                    {/* <Link to="/leads/create" className="btn btn-primary">
+                    <Link to="/en/user-roles/create" className="btn btn-primary">
                         <FiPlus size={16} className='me-2' />
-                        <span>Create User</span>
-                    </Link> */}
-                    <Button variant="primary" size="lg" className="fw-semibold px-4" onClick={() => navigate("create")}  >
+                        <span>Create Role</span>
+                    </Link>
+                    <Link to="/en/user-roles/download_csv" className="btn btn-primary">
                         <FiPlus size={16} className='me-2' />
-                        Create Users
-                     </Button>
+                        <span>Download CSV</span>
+                    </Link>
                 </div>
             </div>
         </div>
             <div className='main-content'>
                 <div className='row'>
-                <div className="col-lg-">
-                  <div className="card stretch stretch-full ">
+                <div className="col-lg-12">
+                  <div className="card stretch stretch-full function-table">
                       <div className="card-body p-0">
                             <div className="table-responsive">
                               
-                               <UserList/>
+                               <RoleListTable/>
                              
                             </div>
                           </div>
@@ -53,4 +51,4 @@ const UserPage= () => {
         </>
     )
 }
-export default UserPage
+export default RoleList

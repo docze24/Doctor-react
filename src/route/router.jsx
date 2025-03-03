@@ -102,24 +102,24 @@ import ProposalCreate from "../pages/proposal/proposal-create";
 
 
 
-import AddUsers from "../pages/users/addUser";
-import EditUser from "../pages/users/editUser";
-import UserPage from "../pages/users/userList";
+import AddUsers from "../pages/users/AddUser";
+import EditUser from "../pages/users/EditUser";
+import UserPage from "../pages/users/UserList";
 
 
- import AddRole from "../pages/role/addRole";
-import EditRole from "../pages/role/editRole";
-import RoleList from "../pages/role/roleList";
+ import AddRole from "../pages/role/AddRole";
+import EditRole from "../pages/role/EditRole";
+import RoleList from "../pages/role/RoleList";
 
-import CountryPage from "../pages/country/countryList";
+import CountryPage from "../pages/country/CountryList";
 
-import StatePage from "../pages/state/stateList";
-import AddState from "../pages/state/addStates";
-import EditState from "../pages/state/editState";
+import StatePage from "../pages/state/StateList";
+import AddState from "../pages/state/AddStates";
+import EditState from "../pages/state/EditState";
 
-import CityPage from "../pages/city/cityList";
-import AddCities from "../pages/city/addCity";
-import EditCities from "../pages/city/editCity";
+import CityPage from "../pages/city/CityList";
+import AddCities from "../pages/city/AddCity";
+import EditCities from "../pages/city/EditCity";
 
 
 
