@@ -60,7 +60,7 @@ export default function AddUser() {
     console.log(" Sending Data to API: ", data);
     try {
       const userData = {
-        user_type: "Organization",
+        user_type: data.user_type,
         name: data.name,
         email: data.email,
         username: data.userName,
