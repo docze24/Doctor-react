@@ -1,0 +1,22 @@
+{
+   "registerTitle": "SignUp",
+    "notificationsTitle": "Notifications",
+     "emailReports": "Email Reports",
+    "emailCampaignReports": "Email Campaign Reports",
+    "themesetting":"Theme Settings",
+    "patientmanagement":"Patient Management",
+     "leadTable": "Lead Table",
+      "actions": "Action Menu",
+      "followers": "Followers",
+    "following": "Following",
+    "engagement": "Engagement",
+    "userDetails": "User Details",
+    "verifyEmail": "Verify Your Email",
+  "welcomeBack": "Welcome Back!",
+  "otpVerification": "OTP Verification",
+  "profileSettings": "Profile Settings",
+  "changeLanguage": "Change Language",
+  "footer": "Footer",
+  "action": "Actions"
+  
+}

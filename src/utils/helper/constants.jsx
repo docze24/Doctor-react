@@ -1,0 +1,1 @@
+export const publicRoutes = ['/doctor/login', '/login', '/signup', '/forgot-password'];
